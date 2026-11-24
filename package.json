@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "test": "node --test test/*.test.js",
+    "test:e2e": "playwright test",
     "generate:avatars": "node scripts/generate-avatars.mjs && node scripts/generate-thumbnails.mjs",
     "generate:thumbnails": "node scripts/generate-thumbnails.mjs",
     "generate:watermark": "node scripts/generate-watermark.mjs"
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@napi-rs/canvas": "1.2.0",
+    "@playwright/test": "1.58.2",
     "@types/node": "26.6.6",
     "@types/react": "19.3.0",
     "typescript": "7.0.2"
