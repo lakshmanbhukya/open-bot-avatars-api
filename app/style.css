@@ -1,25 +1,8 @@
-* { box-sizing: border-box }
-body { margin: 0; background: #f7f6ef; color: #1e2823; font-family: "DM Sans", Arial, sans-serif }
-main { width: min(1080px, 90%); margin: auto }
-header { display: flex; gap: .6rem; align-items: center; padding: 1.5rem 0; border-bottom: 1px solid #babeb3; font-weight: 750 }
-header span { font-size: 1.8rem; color: #397551 }
-section { display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: 7%; padding: clamp(3rem, 8vw, 7rem) 0 }
-h1 { margin: 0; font-size: clamp(3.2rem, 6.5vw, 6rem); letter-spacing: -.075em; line-height: .99 }
-p { line-height: 1.55; color: #535e54 }
-.intro p { max-width: 38ch; margin: 1.6rem 0; font-size: 1.08rem }
-a { color: inherit; text-underline-offset: .2em }
-.endpoint { display: inline-flex; gap: 1rem; align-items: center; background: #22382b; color: white; border-radius: .5rem; padding: .95rem 1.2rem; text-decoration: none; font-family: monospace }
-.endpoint b { color: #b6e5a9 }
-.studio { border: 1px solid #a8b7a5; border-radius: 1.2rem; overflow: hidden; background: #fff }
-.preview { background-color: #e0ead6; background-image: radial-gradient(#afc1a7 1px, transparent 1px); background-size: 14px 14px; display: grid; place-items: center; aspect-ratio: 1.4 }
-.preview img { width: 70%; height: auto }
-.actions, footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem }
-button { background: #edf3e7; border: 1px solid #acbba4; padding: .7rem 1rem; border-radius: .5rem; color: inherit; font: inherit; cursor: pointer }
-.actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; text-align: center }
-.actions a { align-self: center }
-.status { margin: 0 1rem 1rem }
-.status:empty { margin: 0 }
-footer { border-top: 1px solid #babeb3; padding: 1.5rem 0; flex-wrap: wrap }
-footer p { margin: .35rem 0 }
-code { overflow-wrap: anywhere }
-@media (max-width: 700px) { section { grid-template-columns: 1fr; gap: 2rem } }
+html { color-scheme: dark; background: #111; }
+body { margin: 0; }
+.studio-loading { display: grid; min-height: 100dvh; place-items: center; color: #9a9a9a; font: 16px 'Geist Variable', sans-serif; }
+.legal { box-sizing: border-box; width: min(920px, 100%); padding: 32px 24px; margin: auto; color: #f2f2f2; font: 16px/1.6 'Geist Variable', sans-serif; }
+.legal a { color: inherit; }
+.legal h1 { font-size: clamp(2rem, 5vw, 3rem); }
+.legal pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; }
+.legal footer { margin-top: 32px; }
