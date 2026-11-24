@@ -2,9 +2,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export function usePrefersReducedMotion(): boolean {
   const query = "(prefers-reduced-motion: reduce)";
-  const [reduced, setReduced] = useState(() => typeof matchMedia !== "undefined" && matchMedia(query).matches);
+  const [reduced, setReduced] = useState(true);
   useEffect(() => {
     const mql = matchMedia(query);
+    setReduced(mql.matches);
     const onChange = () => setReduced(mql.matches);
     mql.addEventListener("change", onChange);
     return () => mql.removeEventListener("change", onChange);
@@ -14,25 +15,30 @@ export function usePrefersReducedMotion(): boolean {
 
 /** useState mirrored to localStorage. `revive` may reject stored data by returning undefined. */
 export function useStoredState<T>(key: string, initial: T, revive?: (raw: unknown) => T | undefined) {
-  const [value, setValue] = useState<T>(() => {
+  const [value, setValue] = useState<T>(initial);
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
     try {
       const raw = localStorage.getItem(key);
-      if (raw === null) return initial;
-      const parsed: unknown = JSON.parse(raw);
-      const revived = revive ? revive(parsed) : (parsed as T);
-      return revived === undefined ? initial : revived;
+      if (raw !== null) {
+        const parsed: unknown = JSON.parse(raw);
+        const revived = revive ? revive(parsed) : (parsed as T);
+        if (revived !== undefined) setValue(revived);
+      }
     } catch {
-      return initial;
+      // A missing or invalid preference keeps the default.
     }
-  });
+    setLoaded(true);
+  }, [key, revive]);
   useEffect(() => {
+    if (!loaded) return;
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch {
       // Storage may be full or disabled; the studio still works for this session.
     }
-  }, [key, value]);
-  return [value, setValue] as const;
+  }, [key, value, loaded]);
+  return [value, setValue, loaded] as const;
 }
 
 /** Returns a flash flag that turns on for a moment after `trigger()`. */

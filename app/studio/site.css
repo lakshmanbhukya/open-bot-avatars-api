@@ -7,6 +7,12 @@
     position: relative;
     isolation: isolate;
 
+    .site-content { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .site-content > div:not([hidden]) { display: contents; }
+    .site-content:focus { outline: none; }
+    .skip-link { position: fixed; top: 8px; left: 8px; z-index: 20; padding: 12px; background: var(--text); color: var(--bg); opacity: 0; pointer-events: none; transform: translateY(-160%); }
+    .skip-link:focus { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
     /*
      * Watermark: the name in Geist Mono, small and repeating in staggered rows, turned diagonally,
      * just above the ground. The tile is drawn by scripts/generate-watermark.mjs. A fixed layer twice the

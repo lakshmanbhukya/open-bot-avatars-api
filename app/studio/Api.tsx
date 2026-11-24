@@ -8,7 +8,7 @@ import { ApiAvatar } from "./ApiAvatar";
 const labels: Record<string, string> = { "open-bot-avatar": "Open Bot Avatar", "bot-avatars": "Libraries.dev Bot Avatars" };
 type Pick = (typeof catalog)[number] & { url: string; requestUrl: string; style: string };
 
-export function Api() {
+export function Api({ active = true }: { active?: boolean }) {
   const [collection, setCollection] = useState("");
   const [style, setStyle] = useState("flat");
   const [mode, setMode] = useState("choose");
@@ -131,7 +131,7 @@ export function Api() {
   return <main className="page docs api-page api-landing">
     <section className="api-hero" aria-label="Live API demo">
       <div className="api-response" aria-busy={loading}>
-        <div className={`api-response-image${showPng ? " is-png" : ""}`}>{preview && pick && (showPng
+        <div className={`api-response-image${showPng ? " is-png" : ""}`}>{preview && pick && (showPng || !active
           ? <div className="api-preview"><img src={preview} alt={`${pick.name}, transparent PNG response`} width="512" height="512" /></div>
           : <ApiAvatar key={`${pick.collection}/${pick.id}/${pick.style}`} {...pick} src={preview} />)}</div>
         <div className="api-response-caption">

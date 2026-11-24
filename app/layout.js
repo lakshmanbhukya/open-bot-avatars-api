@@ -5,6 +5,7 @@ import "./studio/studio.css";
 import "./studio/site.css";
 import "./studio/api.css";
 import { SITE_URL } from "./lib/site-url";
+import { App } from "./studio/App";
 
 export const metadata = {
   metadataBase: new URL(
@@ -29,7 +30,7 @@ export const metadata = {
 export default function Layout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body><App>{children}</App></body>
     </html>
   );
 }

@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BotAvatar } from "./BotAvatar";
 import dynamic from "next/dynamic";
 import { href, useRoute, type Route } from "./navigation";
@@ -10,7 +13,6 @@ import { Api } from "./Api";
 
 const loading = () => <main className="page" role="status">Loading…</main>;
 const Studio = dynamic(() => import("./Studio").then(module => module.Studio), { loading });
-const Docs = dynamic(() => import("./Docs").then(module => module.Docs), { loading });
 
 const GITHUB_URL = "https://github.com/lakshmanbhukya/open-bot-avatars-api";
 
@@ -20,18 +22,31 @@ const NAV: { route: Route; label: string }[] = [
   { route: "docs", label: "Docs" },
 ];
 
-export function App() {
+export function App({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
   const route = useRoute();
+  const [visited, setVisited] = useState({ api: route === "api", studio: route === "studio" });
+  const content = useRef<HTMLDivElement>(null);
+  const previousRoute = useRef(route);
+  useEffect(() => {
+    if (!["/", "/editor", "/docs"].includes(pathname)) return;
+    setVisited(previous => ({ ...previous, [route]: true }));
+    document.title = route === "api" ? "OpenBot Avatars API" : `${route === "studio" ? "Avatar editor" : "API docs"} | OpenBot Avatars API`;
+    if (previousRoute.current !== route) content.current?.focus({ preventScroll: true });
+    previousRoute.current = route;
+  }, [route, pathname]);
   const reducedMotion = usePrefersReducedMotion();
-  const [look, setLook] = useStoredState(
+  const [look, setLook, lookReady] = useStoredState(
     "open-bot-avatar:look",
     DEFAULT_LOOK,
     reviveLook,
   );
+  if (!["/", "/editor", "/docs"].includes(pathname)) return children;
   return (
     <div className={`avatar-studio route-${route}`}>
+      <a className="skip-link" href="#main-content">Skip to content</a>
       <header className="site-top">
-        <a
+        <Link
           className="brand"
           href={href.api}
           aria-label="OpenBot Avatars API, home"
@@ -45,16 +60,16 @@ export function App() {
             label=""
           />
           <span className="brand-name">OpenBot Avatars API</span>
-        </a>
+        </Link>
         <nav className="site-nav" aria-label="Site">
           {NAV.map((n) => (
-            <a
+            <Link
               key={n.route}
               href={href[n.route]}
               aria-current={route === n.route ? "page" : undefined}
             >
               {n.label}
-            </a>
+            </Link>
           ))}
           <a
             href={GITHUB_URL}
@@ -71,13 +86,11 @@ export function App() {
           </a>
         </nav>
       </header>
-      {route === "studio" ? (
-        <Studio look={look} setLook={setLook} />
-      ) : route === "api" ? (
-        <Api />
-      ) : (
-        <Docs />
-      )}
+      <div id="main-content" className="site-content" tabIndex={-1} ref={content}>
+        <div hidden={route !== "api"}>{(visited.api || route === "api") && <Api active={route === "api"} />}</div>
+        <div hidden={route !== "studio"}>{(visited.studio || route === "studio") && (lookReady ? <Studio look={look} setLook={setLook} active={route === "studio"} /> : loading())}</div>
+        {route === "docs" && children}
+      </div>
       <footer className="credit">
         <span>by Lakshman Bhukya</span>
         <a href="/license">Credits &amp; licenses</a>
