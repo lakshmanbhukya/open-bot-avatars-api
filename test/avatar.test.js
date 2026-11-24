@@ -1,5 +1,6 @@
 ﻿import test from 'node:test'
 import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
 import { examples, renderAvatarSvg } from 'open-bot-avatar'
 import { botAvatarPresets, parseColor } from 'bot-avatars'
 import { createCanvas, loadImage } from '@napi-rs/canvas'
@@ -10,6 +11,23 @@ import upstream from '../app/lib/upstream/open-bot-avatar.json' with { type: 'js
 
 const get = (query = '', headers) => GET(new Request('http://localhost/api/avatar' + query, { headers }))
 const bytes = async response => Buffer.from(await response.arrayBuffer())
+
+test('every catalog finish has a small, decodable gallery thumbnail', async () => {
+  let thumbnailBytes = 0
+  let originalBytes = 0
+  for (const entry of catalog) {
+    for (const style of entry.styles) {
+      const base = `public/avatars/v3/${entry.collection}/${entry.id}${style === 'original' ? '-original' : ''}`
+      const data = await readFile(`${base}-thumb.webp`)
+      const image = await loadImage(data)
+      assert.equal(image.width, 224, base)
+      assert.equal(image.height, 224, base)
+      thumbnailBytes += data.length
+      originalBytes += (await readFile(`${base}.png`)).length
+    }
+  }
+  assert.ok(thumbnailBytes < originalBytes / 5, 'Gallery thumbnails should save at least 80% of image bytes')
+})
 
 test('random endpoint serves a PNG and returns an exact reusable URL', async () => {
   const response = await get()

@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "test": "node --test test/*.test.js",
-    "generate:avatars": "node scripts/generate-avatars.mjs",
+    "generate:avatars": "node scripts/generate-avatars.mjs && node scripts/generate-thumbnails.mjs",
+    "generate:thumbnails": "node scripts/generate-thumbnails.mjs",
     "generate:watermark": "node scripts/generate-watermark.mjs"
   },
   "dependencies": {
