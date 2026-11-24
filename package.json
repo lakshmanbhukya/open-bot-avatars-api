@@ -20,7 +20,7 @@
     "open-bot-avatar": "0.4.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "sugar-high": "2.6.4"
+    "sugar-high": "2.7.0"
   },
   "devDependencies": {
     "@napi-rs/canvas": "1.2.0",
