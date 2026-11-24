@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode, type RefObject } from "react";
 import type { AvatarDefinition, AvatarMaterial, AvatarMood, AvatarState } from "open-bot-avatar";
 import { BotAvatar } from "../BotAvatar";
 import { Icon } from "./ui";
@@ -7,6 +7,7 @@ import { FaceToggle, MaterialToggle, MOODS, STATES, StatePills } from "./pickers
 export type ViewAngle = { yaw: number; pitch: number };
 
 interface StageProps {
+  previewRef: RefObject<HTMLDivElement | null>;
   definition: AvatarDefinition;
   color: string;
   material: AvatarMaterial;
@@ -32,7 +33,7 @@ const clampPitch = (p: number) => Math.max(-PITCH_LIMIT, Math.min(PITCH_LIMIT, p
 /** Keep yaw in -π..π so a reset never spins the long way round. */
 const wrap = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
 
-export function Stage({ definition, color, material, state, mood, followCursor, still, reducedMotion, reduced, view, onView, onState, onMood, onMaterial, children }: StageProps) {
+export function Stage({ previewRef, definition, color, material, state, mood, followCursor, still, reducedMotion, reduced, view, onView, onState, onMood, onMaterial, children }: StageProps) {
   const drag = useRef<{ id: number; x: number; y: number; start: ViewAngle } | null>(null);
   const [dragging, setDragging] = useState(false);
   const easing = useRef(0);
@@ -120,6 +121,7 @@ export function Stage({ definition, color, material, state, mood, followCursor, 
 
   const preview = (
     <div
+      ref={previewRef}
       className={dragging ? "stage-view is-dragging" : "stage-view"}
       tabIndex={0}
       role="group"

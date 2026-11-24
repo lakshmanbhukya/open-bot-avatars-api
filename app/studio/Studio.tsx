@@ -3,7 +3,7 @@ import { DEFAULT_COLOR, examples } from "open-bot-avatar";
 import { GALLERY } from "./gallery";
 import { Actions } from "./studio/Actions";
 import { BotPanel, type LibraryEntry } from "./studio/BotPanel";
-import { usePrefersReducedMotion } from "./studio/hooks";
+import { usePrefersReducedMotion, useStoredState } from "./studio/hooks";
 import { PALETTE, colorOf, defaultColor, withColor, type LookState } from "./studio/look";
 import { readShare } from "./studio/share";
 import { Settings } from "./studio/Settings";
@@ -36,14 +36,15 @@ function byColor(entries: LibraryEntry[]): LibraryEntry[] {
 
 const LIBRARY = byColor([...STARTERS, ...GALLERY_ENTRIES]);
 
-/** The studio opens on a random starter or gallery avatar, picked once per page load. */
-const OPENING = LIBRARY[Math.floor(Math.random() * LIBRARY.length)]?.key ?? "";
+const OPENING = LIBRARY[0]?.key ?? "";
+const reviveSelection = (value: unknown) => typeof value === "string" && LIBRARY.some(entry => entry.key === value) ? value : undefined;
 
 const FRONT: ViewAngle = { yaw: 0, pitch: 0 };
 
 /** A catalog editor for the original Open Bot designs. */
-export function Studio({ look, setLook }: { look: LookState; setLook: Dispatch<SetStateAction<LookState>> }) {
-  const [selectedKey, setSelectedKey] = useState(OPENING);
+export function Studio({ look, setLook, active = true }: { look: LookState; setLook: Dispatch<SetStateAction<LookState>>; active?: boolean }) {
+  const [selectedKey, setSelectedKey] = useStoredState("open-bot-avatar:selection", OPENING, reviveSelection);
+  const previewRef = useRef<HTMLDivElement>(null);
   const [view, setView] = useState<ViewAngle>(FRONT);
   const [animatePreview, setAnimatePreview] = useState(true);
   const selected = LIBRARY.find(entry => entry.key === selectedKey) ?? LIBRARY[0];
@@ -57,10 +58,8 @@ export function Studio({ look, setLook }: { look: LookState; setLook: Dispatch<S
     [selected, setLook],
   );
 
-  const shared = useRef(true);
   useEffect(() => {
-    if (!shared.current) return;
-    shared.current = false;
+    if (!active) return;
     const link = readShare(window.location.search);
     const target = LIBRARY.find(entry => entry.definition.id === link.avatar);
     if (target) setSelectedKey(target.key);
@@ -71,7 +70,7 @@ export function Studio({ look, setLook }: { look: LookState; setLook: Dispatch<S
       return next;
     });
     if (window.location.search) window.history.replaceState(window.history.state, "", window.location.pathname + window.location.hash);
-  }, [setLook]);
+  }, [active, setLook, setSelectedKey]);
 
   if (!selected) return <main className="empty"><p>No catalog avatars are available.</p></main>;
 
@@ -79,13 +78,14 @@ export function Studio({ look, setLook }: { look: LookState; setLook: Dispatch<S
     <div className="app">
       <main className="editor">
         <Stage
+          previewRef={previewRef}
           definition={selected.definition}
           color={color}
           material={look.material}
           state={look.state}
           mood={look.mood}
-          still={!animatePreview}
-          followCursor={animatePreview && look.followCursor}
+          still={!active || !animatePreview || reduced}
+          followCursor={active && animatePreview && !reduced && look.followCursor}
           reducedMotion={reducedMotion}
           reduced={!animatePreview || reduced}
           view={view}
@@ -94,7 +94,7 @@ export function Studio({ look, setLook }: { look: LookState; setLook: Dispatch<S
           onMood={(mood) => patchLook({ mood })}
           onMaterial={(material) => patchLook({ material })}
         >
-          <Actions entry={selected} color={color} material={look.material} state={look.state} mood={look.mood} />
+          <Actions entry={selected} color={color} material={look.material} state={look.state} mood={look.mood} view={view} previewRef={previewRef} />
         </Stage>
 
         <section className="picker" aria-labelledby="catalog-heading">
