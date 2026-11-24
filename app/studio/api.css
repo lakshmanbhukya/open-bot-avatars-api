@@ -41,8 +41,7 @@
     .api-field .popover { width: max(100%, 230px); min-width: 0; }
     .api-options-body { height: 350px; overflow-y: auto; scrollbar-width: thin; scrollbar-gutter: stable; }
     .api-catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; padding: 4px; }
-    .api-catalog button { display: grid; justify-items: center; gap: 4px; padding: 3px; border: 1px solid transparent; border-radius: 12px; background: transparent; font-size: 12px; color: var(--muted); }
-    .api-catalog button[aria-pressed="true"] { border-color: var(--line-strong); background: var(--raised); }
+    .api-catalog button { display: grid; justify-items: center; gap: 4px; padding: 3px; border: 0; background: transparent; font-size: 12px; color: var(--muted); }
     .api-catalog button:is(:hover, :focus-visible, [aria-pressed="true"]) { color: var(--text); }
     .api-catalog button:is(:hover, :focus-visible, [aria-pressed="true"]) img {
       filter: drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000);
