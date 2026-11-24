@@ -25,6 +25,7 @@
     .api-landing .btn { min-height: 44px; height: auto; padding: 10px 16px; justify-content: center; text-decoration: none; white-space: nowrap; }
     .api-request .btn-primary { min-width: 150px; }
     .api-request .api-call-status { min-height: 44px; margin: 12px 0; font-size: 12px; }
+    .api-request .api-call-status.is-error { color: var(--err); }
     .api-explore-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; text-underline-offset: 4px; }
     .api-options, .api-usage { padding: 36px 0; border-top: 1px solid var(--line); scroll-margin-top: 24px; }
     .api-section-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; }
@@ -38,9 +39,10 @@
     .api-landing .api-field .menu > .btn { width: 100%; min-height: 52px; justify-content: flex-start; padding: 8px 12px; text-align: left; white-space: normal; color: var(--text); font-size: 13px; }
     .api-field .menu > .btn .icon:last-child { margin-left: auto; }
     .api-field .popover { width: max(100%, 230px); min-width: 0; }
-    .api-options-body { height: 350px; overflow-y: auto; scrollbar-width: thin; }
+    .api-options-body { height: 350px; overflow-y: auto; scrollbar-width: thin; scrollbar-gutter: stable; }
     .api-catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; padding: 4px; }
-    .api-catalog button { display: grid; justify-items: center; gap: 4px; padding: 3px; border: 0; background: transparent; font-size: 12px; color: var(--muted); }
+    .api-catalog button { display: grid; justify-items: center; gap: 4px; padding: 3px; border: 1px solid transparent; border-radius: 12px; background: transparent; font-size: 12px; color: var(--muted); }
+    .api-catalog button[aria-pressed="true"] { border-color: var(--line-strong); background: var(--raised); }
     .api-catalog button:is(:hover, :focus-visible, [aria-pressed="true"]) { color: var(--text); }
     .api-catalog button:is(:hover, :focus-visible, [aria-pressed="true"]) img {
       filter: drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000);
@@ -76,6 +78,7 @@
       .api-preview { max-width: 260px; }
       .is-png .api-preview { max-width: 250px; }
       .api-request h1 { font-size: 34px; br { display: none; } }
+      .api-endpoint { min-height: 88px; }
       .api-options-body { height: 330px; }
       .api-catalog { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
       .api-filters { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }

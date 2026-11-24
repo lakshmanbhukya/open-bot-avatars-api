@@ -3,12 +3,12 @@
 import { BotAvatar } from "./BotAvatar";
 import dynamic from "next/dynamic";
 import { href, useRoute, type Route } from "./navigation";
-import { useStoredState } from "./studio/hooks";
+import { usePrefersReducedMotion, useStoredState } from "./studio/hooks";
 import { DEFAULT_LOOK, reviveLook } from "./studio/look";
 import { LOGO, LOGO_COLOR } from "./logo";
 import { Api } from "./Api";
 
-const loading = () => <main className="page" role="status">Loading?</main>;
+const loading = () => <main className="page" role="status">Loading…</main>;
 const Studio = dynamic(() => import("./Studio").then(module => module.Studio), { loading });
 const Docs = dynamic(() => import("./Docs").then(module => module.Docs), { loading });
 
@@ -22,6 +22,7 @@ const NAV: { route: Route; label: string }[] = [
 
 export function App() {
   const route = useRoute();
+  const reducedMotion = usePrefersReducedMotion();
   const [look, setLook] = useStoredState(
     "open-bot-avatar:look",
     DEFAULT_LOOK,
@@ -39,7 +40,8 @@ export function App() {
             className="avatar-view brand-avatar"
             definition={LOGO}
             color={LOGO_COLOR}
-            followPointer
+            followPointer={!reducedMotion}
+            reducedMotion={reducedMotion}
             label=""
           />
           <span className="brand-name">OpenBot Avatars API</span>

@@ -129,7 +129,7 @@ export function Api() {
           <button className="btn btn-primary" disabled={loading} onClick={callApi}><Icon name="rotate" />{loading ? "Calling API…" : "Call API"}</button>
           <button className="btn" disabled={!canCopy} onClick={() => void copy(endpoint, "Endpoint copied.")}><Icon name="copy" />Copy endpoint</button>
         </div>
-        <p className="api-call-status" role="status">{error || message || (loading ? "Fetching image…" : "Image received. Call again for a random avatar.")}</p>
+        <p className={`api-call-status${error ? " is-error" : ""}`} role={error ? "alert" : "status"}>{error || message || (loading ? "Fetching image…" : "Image received. Call again for a random avatar.")}</p>
         <a className="api-explore-link" href="#avatar-options">Explore avatar options <Icon name="arrow" /></a>
       </div>
     </section>

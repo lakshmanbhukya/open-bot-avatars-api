@@ -12,14 +12,14 @@ export function readRoute(hash: string, search: string): Route {
   return ROUTES[hash] ?? "api";
 }
 
-/** Hash routes, so every page works from GitHub Pages without server rewrites. */
+/** Hash routes keep editor and picker links on the same page. */
 export function useRoute(): Route {
   const read = (): Route => readRoute(window.location.hash, window.location.search);
   const [route, setRoute] = useState<Route>(read);
   useEffect(() => {
     const onChange = () => {
       setRoute(read());
-      window.scrollTo(0, 0);
+      if (Object.hasOwn(ROUTES, window.location.hash)) window.scrollTo(0, 0);
     };
     window.addEventListener("hashchange", onChange);
     return () => window.removeEventListener("hashchange", onChange);
