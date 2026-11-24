@@ -38,10 +38,19 @@ npm run dev
 
 Open [localhost:3000](http://localhost:3000) to browse avatars, try the editor, and read the API docs.
 
+The [editor](https://open-bot-avatars-api.vercel.app/editor) exports the current preview as a transparent PNG or a flat SVG. The [API docs](https://open-bot-avatars-api.vercel.app/docs) include copyable integration examples. Selections stay in place when switching between these pages.
+
 ```sh
 npm test
 npm run build
 npm start
+```
+
+For desktop and mobile browser checks, build the app first, then run:
+
+```sh
+npx playwright install chromium
+npm run test:e2e
 ```
 
 For deployment, set `SITE_URL` to your public origin before building. Vercel detects its production domain automatically. Include the `public` directory with your deployment.
