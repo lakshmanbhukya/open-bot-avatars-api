@@ -6,7 +6,9 @@ Bot avatars for profile pictures, chat interfaces, and apps. Open source, MIT li
 
 - **41 designs** from Open Bot Avatar and Libraries.dev.
 - **Transparent PNGs**, repeatable seeds, and reusable image URLs.
-- **Live editor** with animation, colors, moods, and PNG/SVG downloads.
+- **Live editor** with animation, colors, moods, and PNG/SVG downloads from [Open Bot Avatar](https://github.com/DominikScholz/open-bot-avatar) 
+
+<p><img src="docs/look01.png" width="100%" alt="OpenBot Avatars API homepage showing a green plush flower avatar and an API request example"></p>
 
 ## Use an avatar
 
