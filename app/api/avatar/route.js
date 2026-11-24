@@ -1,6 +1,5 @@
 import { createHash, randomUUID } from 'node:crypto'
-import { readFile } from 'node:fs/promises'
-import path from 'node:path'
+import { avatarAsset } from '../../lib/avatar-assets.js'
 import catalog from '../../lib/catalog.json' with { type: 'json' }
 import { GET as legacyAvatar } from '../../lib/legacy-avatar.js'
 import { rateLimit } from '../../lib/rate-limit.js'
@@ -56,8 +55,15 @@ export async function GET(request) {
   const entry = candidates[id !== null ? 0 : bytes.readUInt32BE() % candidates.length]
   const query = new URLSearchParams({ v: '3', collection: entry.collection, avatar: entry.id, format, style })
   const file = entry.id + (style === 'original' ? '-original' : '') + '.' + format
-  const data = await readFile(path.join(process.cwd(), 'public', 'avatars', 'v3', entry.collection, file))
-  const etag = '"' + createHash('sha256').update(data).digest('hex') + '"'
+  let asset
+  try {
+    asset = await avatarAsset(entry.collection, file)
+  } catch {
+    return Response.json({ error: 'This avatar is temporarily unavailable. Please try again shortly.' }, {
+      status: 503, headers: { ...cors, 'Access-Control-Expose-Headers': 'Retry-After', 'Cache-Control': 'no-store', 'Retry-After': '5' }
+    })
+  }
+  const { data, etag } = asset
   const headers = {
     ...cors,
     'Content-Type': format === 'svg' ? 'image/svg+xml; charset=utf-8' : 'image/png',
