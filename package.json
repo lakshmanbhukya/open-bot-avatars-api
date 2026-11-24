@@ -1,0 +1,19 @@
+{
+  "name": "open-bot-avatars-api",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "next": "16.4.6",
+    "open-bot-avatar": "0.4.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  }
+}
