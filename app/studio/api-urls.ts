@@ -7,6 +7,14 @@ export function imageUrl(collection = "", style = "flat", avatar = "", seed = ""
   return `/api/avatar?${params}`;
 }
 
+export function retryDelaySeconds(value: string | null, now = Date.now()) {
+  if (!value) return 0;
+  const seconds = Number(value);
+  if (Number.isFinite(seconds)) return Math.max(0, Math.ceil(seconds));
+  const date = Date.parse(value);
+  return Number.isFinite(date) ? Math.max(0, Math.ceil((date - now) / 1000)) : 0;
+}
+
 export function usageExample(kind: string, url: string) {
   if (kind === "URL") return url;
   if (kind === "React") return `<img\n  src=${JSON.stringify(url)}\n  width={64}\n  height={64}\n  alt="Bot avatar"\n/>`;

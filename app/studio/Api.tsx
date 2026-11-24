@@ -1,12 +1,17 @@
-import { useEffect, useState } from "react";
+"use client";
+
+import { lazy, Suspense, useEffect, useState } from "react";
+import Link from "next/link";
 import catalog from "../lib/catalog.json";
-import { copyText } from "./studio/files";
+import { SITE_URL } from "../lib/site-url";
+import { useFlash } from "./studio/hooks";
+import { copyText, downloadBlob } from "./studio/files";
 import { Icon, MenuButton, Segmented } from "./studio/ui";
-import { imageUrl, usageExample } from "./api-urls";
-import { ApiAvatar } from "./ApiAvatar";
+import { imageUrl, usageExample, retryDelaySeconds } from "./api-urls";
+const ApiAvatar = lazy(() => import("./ApiAvatar").then(module => ({ default: module.ApiAvatar })));
 
 const labels: Record<string, string> = { "open-bot-avatar": "Open Bot Avatar", "bot-avatars": "Libraries.dev Bot Avatars" };
-type Pick = (typeof catalog)[number] & { url: string; requestUrl: string; style: string };
+type Pick = (typeof catalog)[number] & { url: string; requestUrl: string; style: string; blob: Blob; preview: string };
 
 export function Api({ active = true }: { active?: boolean }) {
   const [collection, setCollection] = useState("");
@@ -15,24 +20,34 @@ export function Api({ active = true }: { active?: boolean }) {
   const [seed, setSeed] = useState("");
   const [request, setRequest] = useState<{ url: string; serial: number } | null>(null);
   const [pick, setPick] = useState<Pick | null>(null);
-  const [preview, setPreview] = useState("");
-  const [previewMode, setPreviewMode] = useState("auto");
+  const preview = pick?.preview ?? "";
+  const [downloading, setDownloading] = useState(false);
+  const [previewMode, setPreviewMode] = useState<"png" | "animated">("animated");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [origin, setOrigin] = useState("");
+  const [toastVisible, flashToast] = useFlash(3000);
   const [example, setExample] = useState("HTML");
+  const [retryAt, setRetryAt] = useState(0);
+  const [retryIn, setRetryIn] = useState(0);
+
+  useEffect(() => {
+    if (!retryAt) return;
+    const update = () => setRetryIn(Math.max(0, Math.ceil((retryAt - Date.now()) / 1000)));
+    update();
+    const timer = window.setInterval(update, 1000);
+    return () => window.clearInterval(timer);
+  }, [retryAt]);
 
   function load(url: string) {
+    if (Date.now() < retryAt) return;
     setLoading(true);
     setError("");
     setMessage("");
-    setPreviewMode("auto");
     setRequest(previous => ({ url, serial: (previous?.serial ?? 0) + 1 }));
   }
 
   useEffect(() => {
-    setOrigin(window.location.origin);
     const params = new URLSearchParams(window.location.search);
     const entry = catalog.find(item => item.collection === params.get("collection") && item.id === params.get("avatar"));
     const requestedCollection = params.get("collection") ?? "";
@@ -66,6 +81,9 @@ export function Api({ active = true }: { active?: boolean }) {
       try {
         const response = await fetch(requestedUrl, { signal: controller.signal });
         if (!response.ok) {
+          const delay = retryDelaySeconds(response.headers.get("Retry-After"));
+          setRetryAt(delay ? Date.now() + delay * 1000 : 0);
+          setRetryIn(delay);
           const problem = await response.json().catch(() => null);
           throw Error(typeof problem?.error === "string" ? problem.error : `Could not load this avatar (HTTP ${response.status}). Please try again.`);
         }
@@ -76,9 +94,10 @@ export function Api({ active = true }: { active?: boolean }) {
         if (!entry) throw Error("The API returned an unknown avatar.");
         const blob = await response.blob();
         if (controller.signal.aborted) return;
-        setPreview(URL.createObjectURL(blob));
-        setPick({ ...entry, url, requestUrl: requestedUrl, style: params.get("style") ?? "flat" });
+        setPick({ ...entry, url, requestUrl: requestedUrl, style: params.get("style") ?? "flat", blob, preview: URL.createObjectURL(blob) });
         setLoading(false);
+        setRetryAt(0);
+        setRetryIn(0);
       } catch (problem) {
         if (!controller.signal.aborted) {
           setLoading(false);
@@ -94,46 +113,70 @@ export function Api({ active = true }: { active?: boolean }) {
 
   const canCopy = !!pick && !loading && !error;
   const requestUrl = request?.url ?? imageUrl();
-  const selectedUrl = canCopy ? `${origin}${mode === "seed" ? pick.requestUrl : pick.url}` : "";
-  const submittedSeed = new URLSearchParams(requestUrl.split("?")[1]).get("seed") ?? "user-42";
-  const endpoint = `${origin}${mode === "seed" ? requestUrl : canCopy ? pick.url : requestUrl}`;
-  const snippet = usageExample(example, selectedUrl || `${origin}${imageUrl()}`);
+  const selectedSeed = new URLSearchParams(pick?.requestUrl.split("?")[1]).get("seed") ?? "";
+  const selectedUrl = canCopy ? `${SITE_URL}${selectedSeed ? pick.requestUrl : pick.url}` : "";
+  const submittedSeed = new URLSearchParams(requestUrl.split("?")[1]).get("seed") ?? "";
+  const endpoint = selectedUrl || `${SITE_URL}${requestUrl}`;
+  const snippet = usageExample(example, selectedUrl || `${SITE_URL}${imageUrl()}`);
 
   async function copy(text: string, success: string) {
     setMessage(await copyText(text) ? success : "Select and copy the URL or example below.");
+    flashToast();
+  }
+
+  async function download(format: "png" | "svg") {
+    if (!canCopy || !pick || downloading) return;
+    const selected = pick;
+    setDownloading(true);
+    setMessage(`Downloading ${selected.name}…`);
+    try {
+      let blob = selected.blob;
+      if (format === "svg") {
+        const params = new URLSearchParams({ v: "3", collection: selected.collection, avatar: selected.id, style: selected.style, format });
+        const response = await fetch(`/api/avatar?${params}`, { signal: AbortSignal.timeout(20_000) });
+        if (!response.ok) throw Error(`Could not download ${selected.name} (HTTP ${response.status}). Please try again.`);
+        if (!response.headers.get("Content-Type")?.startsWith("image/svg+xml") || response.headers.get("X-Avatar-Id") !== selected.id || response.headers.get("X-Avatar-Collection") !== selected.collection) {
+          throw Error("The download did not match the selected avatar. Please try again.");
+        }
+        blob = await response.blob();
+      }
+      downloadBlob(`${selected.id}.${format}`, blob);
+      setMessage(`${selected.name} ${format.toUpperCase()} downloaded.`);
+    } catch (problem) {
+      setMessage(problem instanceof Error ? problem.message : "Could not download this avatar. Please try again.");
+      flashToast();
+    } finally {
+      setDownloading(false);
+    }
   }
 
   function sharePicker() {
     if (!pick) return;
-    const params = mode === "seed"
+    const params = selectedSeed
       ? new URL(pick.requestUrl, window.location.origin).searchParams
       : new URLSearchParams({ collection: pick.collection, avatar: pick.id, style: pick.style });
-    void copy(new URL(`/?${params}#/api`, window.location.origin).href, "Picker link copied.");
+    void copy(new URL(`/?${params}`, SITE_URL).href, "Avatar link copied.");
   }
 
   function callApi() {
-    setCollection(""); setStyle("flat"); setMode("choose");
-    load(imageUrl());
+    setMode("choose");
+    load(imageUrl(collection, style));
   }
 
   function changeMode(next: string) {
-    if (next === mode) return;
+    if (next === mode || Date.now() < retryAt) return;
     setMode(next);
-    const nextCollection = style === "original" ? "bot-avatars" : collection;
-    setCollection(nextCollection);
-    load(imageUrl(nextCollection, style, "", next === "seed" ? seed || "user-42" : ""));
-    if (next === "seed" && !seed) setSeed("user-42");
   }
 
   const visible = catalog.filter(entry => !collection || entry.collection === collection);
-  const supportsPlush = (mode === "choose" ? pick?.collection ?? collection : collection) === "bot-avatars";
-  const showPng = previewMode === "png" || (previewMode === "auto" && pick?.style === "original");
+  const supportsPlush = style === "original" || (mode === "choose" ? pick?.collection ?? collection : collection) === "bot-avatars";
+  const showPng = previewMode === "png";
   return <main className="page docs api-page api-landing">
-    <section className="api-hero" aria-label="Live API demo">
+    <section id="api-preview" className="api-hero" aria-label="Live API demo">
       <div className="api-response" aria-busy={loading}>
-        <div className={`api-response-image${showPng ? " is-png" : ""}`}>{preview && pick && (showPng || !active
+        <div className={`api-response-image${showPng ? " is-png" : ""}${loading ? " is-loading" : ""}`}>{preview && pick ? (showPng || !active
           ? <div className="api-preview"><img src={preview} alt={`${pick.name}, transparent PNG response`} width="512" height="512" /></div>
-          : <ApiAvatar key={`${pick.collection}/${pick.id}/${pick.style}`} {...pick} src={preview} />)}</div>
+          : <Suspense fallback={<img src={preview} alt={pick.name} width="512" height="512" />}><ApiAvatar key={`${pick.collection}/${pick.id}/${pick.style}`} {...pick} src={preview} /></Suspense>) : <img src="/avatars/v3/open-bot-avatar/mug.png" alt="Example bot avatar; your requested image will appear here" width="512" height="512" fetchPriority="high" />}</div>
         <div className="api-response-caption">
           <strong>{pick?.name ?? "Your first response"}</strong>
           <span>{pick ? `${labels[pick.collection]} · ${pick.style === "original" ? "Original plush" : "Flat PNG"}` : "PNG image"}</span>
@@ -146,10 +189,11 @@ export function Api({ active = true }: { active?: boolean }) {
         <p>Call the API to get a bot avatar.</p>
         <div className="api-endpoint"><span>GET</span><a href={endpoint}><code>{endpoint}</code></a></div>
         <div className="api-buttons">
-          <button className="btn btn-primary" disabled={loading} onClick={callApi}><Icon name="rotate" />{loading ? "Calling API…" : "Call API"}</button>
+          <button className="btn btn-primary" disabled={loading || retryIn > 0} onClick={callApi}><Icon name="rotate" />{loading ? "Loading avatar…" : "Random avatar"}</button>
           <button className="btn" disabled={!canCopy} onClick={() => void copy(endpoint, "Endpoint copied.")}><Icon name="copy" />Copy endpoint</button>
+          {error && <button className="btn" disabled={retryIn > 0 || loading} onClick={() => load(requestUrl)}>{retryIn > 0 ? `Retry in ${retryIn}s` : "Retry this request"}</button>}
         </div>
-        <p className={`api-call-status${error ? " is-error" : ""}`} role={error ? "alert" : "status"}>{error || message || (loading ? "Fetching image…" : mode === "seed" ? `Seed “${submittedSeed}” selects ${pick?.name}. Same seed and filters, same avatar.` : "Image received. Copy its URL or choose another design.")}</p>
+        <p className={`api-call-status${error ? " is-error" : ""}`} role={error ? "alert" : "status"}>{error || (loading ? "Fetching image…" : selectedSeed ? `Seed “${selectedSeed}” selects ${pick?.name}. Same seed and filters, same avatar.` : "Image received. Copy its URL or choose another design.")}</p>
         <a className="api-explore-link" href="#avatar-options">Explore avatar options <Icon name="arrow" /></a>
       </div>
     </section>
@@ -162,10 +206,11 @@ export function Api({ active = true }: { active?: boolean }) {
         <div className="api-field" role="group" aria-labelledby="api-collection-label">
           <span id="api-collection-label">Collection</span>
           <MenuButton icon="eye" label={collection ? labels[collection] : "Both collections"} placement="bottom" items={[
-            { value: "", label: "Both collections", count: 41 }, { value: "open-bot-avatar", label: "Open Bot Avatar", count: 23 }, { value: "bot-avatars", label: "Libraries.dev Bot Avatars", count: 18 },
-          ].map(option => ({ label: option.label, hint: `${option.count} designs${collection === option.value ? " · Selected" : ""}`, onSelect: () => {
+            { value: "", label: "Both collections" }, ...Object.entries(labels).map(([value, label]) => ({ value, label })),
+          ].map(option => ({ label: option.label, hint: `${catalog.filter(entry => !option.value || entry.collection === option.value).length} designs${collection === option.value ? " · Selected" : ""}`, onSelect: () => {
+            if (Date.now() < retryAt) return;
             setCollection(option.value); setStyle("flat");
-            load(imageUrl(option.value, "flat", "", mode === "seed" ? submittedSeed : ""));
+            if (mode === "choose") load(imageUrl(option.value, "flat"));
           } }))} />
         </div>
         <div className="api-field" role="group" aria-labelledby="api-finish-label">
@@ -173,44 +218,51 @@ export function Api({ active = true }: { active?: boolean }) {
           <MenuButton icon="spark" label={style === "original" ? "Original plush" : "Flat"} placement="bottom" items={[
             { value: "flat", label: "Flat" }, ...(supportsPlush ? [{ value: "original", label: "Original plush" }] : []),
           ].map(option => ({ label: option.label, hint: style === option.value ? "Selected" : undefined, onSelect: () => {
+            if (Date.now() < retryAt) return;
             setStyle(option.value);
-            load(imageUrl(mode === "choose" ? pick?.collection ?? collection : collection, option.value, mode === "choose" ? pick?.id : "", mode === "seed" ? submittedSeed : ""));
+            if (mode === "choose") load(imageUrl(pick?.collection ?? collection, option.value, pick?.id));
           } }))} />
         </div>
       </div>
       <div className="api-options-body">{mode === "seed" ? <form className="api-seed" onSubmit={event => { event.preventDefault(); if (seed.trim()) load(imageUrl(collection, style, "", seed)); }}>
         <label htmlFor="api-seed">Public user ID or seed</label>
-        <div className="api-seed-controls"><input id="api-seed" value={seed} onChange={event => setSeed(event.target.value)} maxLength={128} required pattern=".*\S.*" placeholder="user-42" aria-describedby="api-seed-help" /><button className="btn" disabled={loading}>{loading ? "Finding…" : "Find avatar"}</button></div>
+        <div className="api-seed-controls"><input id="api-seed" value={seed} onChange={event => setSeed(event.target.value)} maxLength={128} required pattern=".*\S.*" placeholder="user-42" aria-describedby="api-seed-help" /><button className="btn" disabled={loading || retryIn > 0 || !seed.trim()}>{loading ? "Finding…" : "Find avatar"}</button></div>
         <p id="api-seed-help">Enter a public ID, such as user-42. The same seed and filters always return the same avatar. Try a different ID to select again; different IDs can share a design.</p>
         <div className="api-seed-result" aria-busy={loading}>
           {!loading && !error && pick && <img src={preview} alt={pick.name} width="88" height="88" />}
           <div role={error ? "alert" : "status"} className={error ? "api-seed-error" : undefined}>
-            {loading ? "Finding your avatar…" : error || (pick && <><strong>{pick.name}</strong><p>Result for “{submittedSeed}”. Your image URL and example below are ready.</p></>)}
+            {loading ? "Finding your avatar…" : error || (pick && <><strong>{pick.name}</strong><p>{submittedSeed ? `Result for “${submittedSeed}”. Your image URL and example below are ready.` : "Current avatar. Enter a seed and select Find avatar to generate a repeatable selection."}</p></>)}
           </div>
         </div>
       </form> : <div className="api-catalog" role="group" aria-label="Avatar designs">{visible.map(entry => {
         const finish = entry.styles.includes(style) ? style : "flat";
         return <button key={`${entry.collection}/${entry.id}`} aria-pressed={pick?.collection === entry.collection && pick?.id === entry.id} onClick={() => {
+          if (Date.now() < retryAt) return;
           setStyle(finish); load(imageUrl(entry.collection, finish, entry.id));
         }}><span className="api-catalog-image" data-collection={entry.collection}><img src={`/avatars/v3/${entry.collection}/${entry.id}${finish === "original" ? "-original" : ""}-thumb.webp`} alt="" width="112" height="112" loading="lazy" decoding="async" /></span><span className="api-catalog-name">{entry.name}{pick?.collection === entry.collection && pick?.id === entry.id && <Icon name="check" />}</span></button>;
       })}</div>}</div>
-      <div className="api-selection"><span>{pick ? `Selected: ${pick.name}` : "Choose an avatar"}</span><a href="#api-usage">Use this avatar <Icon name="arrow" /></a></div>
+      <div className="api-selection" aria-busy={loading}>
+        <div className="api-selection-preview">{preview && pick && <img src={preview} width="56" height="56" alt="" />}<div><strong>{pick ? `Selected: ${pick.name}` : "Choose an avatar"}</strong><span role="status">{loading ? "Loading your selection…" : error || "Your image is ready to use."}</span></div></div>
+        <div className="api-buttons">{error && <button className="btn" disabled={retryIn > 0} onClick={() => load(requestUrl)}>{retryIn > 0 ? `Retry in ${retryIn}s` : "Retry this request"}</button>}{canCopy && pick.collection === "open-bot-avatar" && <Link href={`/editor?avatar=${encodeURIComponent(pick.id)}`}>Edit this avatar</Link>}<a href="#api-usage">Use this avatar <Icon name="arrow" /></a></div>
+      </div>
     </section>
 
     <section id="api-usage" className="api-usage" aria-labelledby="api-usage-heading">
-      <div className="api-section-head"><div><h2 id="api-usage-heading">Use it in your app</h2><p>Profile pictures, chat interfaces, and team directories.</p></div><a href="#/docs">API docs <Icon name="arrow" /></a></div>
-      <label className="api-section-label" htmlFor="api-image-url">{mode === "seed" ? "REPEATABLE SEED URL" : "SELECTED IMAGE URL"}</label>
+      <div className="api-section-head"><div><h2 id="api-usage-heading">Use it in your app</h2><p>Profile pictures, chat interfaces, and team directories.</p></div><Link href="/docs">API docs <Icon name="arrow" /></Link></div>
+      <div className="api-download-selection">{preview && pick && <img src={preview} width="48" height="48" alt="" />}<span>{loading ? "Loading your selection…" : error ? "Resolve the request error before downloading." : pick ? `Downloads: ${pick.name} · ${pick.style === "original" ? "Original plush" : "Flat"}` : "Choose an avatar to download."}</span></div>
+      <label className="api-section-label" htmlFor="api-image-url">{selectedSeed ? "REPEATABLE SEED URL" : "SELECTED IMAGE URL"}</label>
       <input id="api-image-url" readOnly value={selectedUrl} placeholder="Your image URL appears here" onFocus={event => event.currentTarget.select()} />
       <div className="api-example-toolbar"><Segmented label="Integration example" value={example} onChange={setExample} options={["URL", "HTML", "React", "cURL"].map(value => ({ value, label: value }))} />
         <div className="api-buttons"><button className="btn btn-primary" disabled={!canCopy} onClick={() => void copy(selectedUrl, "Image URL copied.")}><Icon name="copy" />Copy URL</button><button className="btn" disabled={!canCopy} onClick={() => void copy(snippet, `${example} example copied.`)}>Copy example</button></div>
       </div>
       <pre className="code api-embed" tabIndex={0} aria-label={`${example} usage example`}><code>{snippet}</code></pre>
       <div className="api-usage-footer"><div className="api-buttons">
-        {canCopy && <a href={pick.url} download={`${pick.id}.png`}>Download PNG</a>}
-        {canCopy && pick.formats.includes("svg") && <a href={pick.url.replace("format=png", "format=svg")} download={`${pick.id}.svg`}>Download SVG</a>}
+        <button className="api-share" disabled={!canCopy || downloading} onClick={() => void download("png")}>Download PNG</button>
+        {pick?.formats.includes("svg") && <button className="api-share" disabled={!canCopy || downloading} onClick={() => void download("svg")}>Download SVG</button>}
         <button className="api-share" disabled={!canCopy} onClick={sharePicker}>Share avatar</button>
         <a href="/api/avatars">JSON catalog</a>
       </div><span className="api-status">{message}</span></div>
     </section>
+    {active && message && <div className={`copy-toast${toastVisible ? " is-visible" : ""}`} role="status" aria-hidden={!toastVisible}>{message}</div>}
   </main>;
 }

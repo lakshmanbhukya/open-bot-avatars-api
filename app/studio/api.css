@@ -5,10 +5,11 @@
     .api-response { display: grid; grid-template-rows: auto auto; min-width: 0; text-align: center; }
     .api-section-label { color: var(--muted); font: 11px/1.5 var(--mono); letter-spacing: .08em; }
     .api-response-image { display: grid; place-items: center; height: clamp(280px, 32vw, 440px); overflow: clip; }
+    .api-response-image.is-loading { opacity: .55; background: var(--card); border-radius: 16px; }
     .api-response-image img { width: min(100%, 400px); height: 100%; max-height: 400px; object-fit: contain; }
     .api-preview { width: min(100%, 400px); aspect-ratio: 1; }
     .is-png .api-preview { width: min(100%, clamp(280px, 32vw, 400px)); background-color: #e5e7eb; background-image: conic-gradient(#b8bec8 25%, transparent 0 50%, #b8bec8 0 75%, transparent 0); background-size: 20px 20px; border-radius: 12px; }
-    .api-response-caption { display: grid; align-content: center; justify-items: center; gap: 4px; min-height: 52px; padding-top: 8px; }
+    .api-response-caption { display: grid; align-content: center; justify-items: center; gap: 4px; min-height: 112px; padding-top: 8px; }
     .api-response-caption strong { font-size: 15px; font-weight: 500; }
     .api-response-caption > span { color: var(--muted); font-size: 12px; }
     .api-preview-toggle { padding: 8px; color: var(--muted); font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
@@ -54,6 +55,12 @@
     .api-catalog-image { display: block; width: 100%; aspect-ratio: 1; overflow: hidden; }
     .api-catalog-image[data-collection="bot-avatars"] img { transform: scale(1.3); }
     .api-selection { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; margin-top: 16px; font-size: 13px; color: var(--muted); }
+    .api-selection-preview { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .api-selection-preview img { object-fit: contain; flex: none; }
+    .api-selection-preview strong, .api-selection-preview span { display: block; }
+    .api-selection-preview strong { color: var(--text); }
+    .api-selection-preview span { max-width: 48ch; overflow-wrap: anywhere; }
+    .api-selection .api-buttons a { min-height: 44px; display: inline-flex; align-items: center; }
     .api-seed { max-width: 520px; margin: 24px auto; }
     .api-seed-result { display: flex; align-items: center; gap: 16px; min-height: 100px; margin-top: 16px; }
     .api-seed-result img { flex: none; width: 88px; height: 88px; object-fit: contain; }
@@ -66,6 +73,8 @@
     .api-seed input, .api-usage > input { display: block; width: 100%; min-width: 0; padding: 12px; color: var(--text); background: var(--bg); border: 1px solid var(--line-strong); border-radius: 12px; font: 12px/1.5 var(--mono); }
     .api-seed p { font-size: 12px; }
     .api-usage > input { margin: 8px 0 20px; }
+    .api-download-selection { display: flex; align-items: center; gap: 12px; min-height: 48px; margin-bottom: 16px; color: var(--muted); font-size: 13px; }
+    .api-download-selection img { flex: none; object-fit: contain; }
     .api-example-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
     .api-landing pre.api-embed { min-height: 180px; margin: 0; padding: 20px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13px; }
     .api-usage-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; min-height: 48px; margin-top: 12px; font-size: 12px; color: var(--muted); }
@@ -84,7 +93,8 @@
       .is-png .api-preview { max-width: 250px; }
       .api-request h1 { font-size: 34px; br { display: none; } }
       .api-endpoint { min-height: 88px; }
-      .api-options-body { height: 330px; }
+      .api-options-body { height: auto; overflow: visible; }
+      .api-selection { position: sticky; bottom: 12px; z-index: 2; padding: 12px; background: var(--card); border: 1px solid var(--line-strong); border-radius: 14px; box-shadow: 0 8px 24px #0005; }
       .api-catalog { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
       .api-filters { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
       .api-options, .api-usage { padding-block: 28px; }

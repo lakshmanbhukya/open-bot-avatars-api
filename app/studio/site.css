@@ -14,6 +14,10 @@
     .skip-link:focus { opacity: 1; pointer-events: auto; transform: translateY(0); }
     .docs-code-block { margin-bottom: 20px; }
     .docs-code-block > button { display: flex; margin: 0 0 8px auto; min-height: 44px; }
+    .copy-toast { position: fixed; bottom: 24px; right: 24px; z-index: 30; max-width: min(400px, calc(100vw - 32px)); padding: 14px 20px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--text); color: var(--bg); box-shadow: 0 8px 32px #0006; font-size: 14px; opacity: 0; transform: translateY(12px); visibility: hidden; pointer-events: none; transition: opacity 200ms ease, transform 200ms ease, visibility 0s 200ms; }
+    .copy-toast.is-visible { opacity: 1; transform: translateY(0); visibility: visible; transition-delay: 0s; }
+    @starting-style { .copy-toast.is-visible { opacity: 0; transform: translateY(12px); } }
+    @media (prefers-reduced-motion: reduce) { .copy-toast { transform: none; transition: none; } }
 
     /*
      * Watermark: the name in Geist Mono, small and repeating in staggered rows, turned diagonally,
