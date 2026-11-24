@@ -1,42 +1,53 @@
-# Open Bot Avatars API
+﻿<p><img src="docs/open-bot-avatars-api.png" width="100%" alt="OpenBot Avatars API preview"></p>
 
-Give each profile a bot of its own. A single request returns a 512 × 512 SVG from 25 base designs. Pick one at random, assign one from a public user ID, or shuffle and download favorites on the homepage.
+# OpenBot Avatars API
 
-![Six profile avatars from the API, including a controller, droid, mug, cat, mech, and star](docs/avatar-preview.png)
+Bot avatars for profile pictures, chat interfaces, and apps. Open source, MIT licensed. No API key required.
 
-## Put a bot on a profile
+- **41 designs** from Open Bot Avatar and Libraries.dev.
+- **Transparent PNGs**, repeatable seeds, and reusable image URLs.
+- **Live editor** with animation, colors, moods, and PNG/SVG downloads.
 
-On the homepage, shuffle to a bot you like and select **Copy profile URL** to keep it. Use **Download PNG** for a transparent 512 × 512 upload or **Download SVG** for the scalable image.
-
-With the app running locally, this image displays the same avatar each time the profile opens. Replace `localhost:3000` with your deployment host when you publish.
+## Use an avatar
 
 ```html
-<img src="http://localhost:3000/api/avatar?seed=user-42&amp;v=2"
-     width="64" height="64" alt="Bot profile picture"
-     style="border-radius: 50%">
+<img src="http://localhost:3000/api/avatar" width="64" height="64" alt="Bot avatar">
 ```
 
-| Request | Result |
+The API returns a transparent 512 × 512 PNG. Replace the local host with your deployed domain.
+
+| Endpoint | Result |
 | --- | --- |
-| `GET /api/avatar` | A fresh random SVG on each request. |
-| `GET /api/avatar?seed=user-42&v=2` | A repeatable avatar from the full collection. |
-| `GET /api/avatar?seed=user-42` | A repeatable avatar from the original seven designs. |
+| `/api/avatar` | Random avatar. |
+| `/api/avatar?v=3&seed=user-42` | Repeatable avatar for a public seed. |
+| `/api/avatar?collection=open-bot-avatar&avatar=mug` | A specific design. |
+| `/api/avatars` | Full catalog and image URLs. |
 
-To keep a random pick, save the relative URL in its `Content-Location` response header. Resolve it against the API host if your profile page lives on another domain. Seeds appear in URLs, so use a public identifier. The endpoint accepts one seed between 1 and 128 characters.
+Save the response's `Content-Location` URL to keep the same avatar. Open Bot designs also support `format=svg`; Libraries.dev supports `style=original` for plush PNGs. Hosted images use fixed poses and original colors; editor changes apply to the live preview.
 
-## Run locally
+## Development
 
-Using Node.js 24 and npm, run these commands from the project directory.
+Requires Node.js 24 and npm.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the [local avatar picker](http://localhost:3000). Run `npm test` for the API checks, or `npm run build` followed by `npm start` to serve the production build.
+Open [localhost:3000](http://localhost:3000) to browse avatars, try the editor, and read the API docs.
 
-## Artwork and license
+```sh
+npm test
+npm run build
+npm start
+```
 
-The API uses Dominik Scholz’s renderer and seven starter designs from [Open Bot Avatar](https://github.com/DominikScholz/open-bot-avatar). The other 18 designs adapt Jakub Antalik’s shape outlines and face presets into static SVG profile pictures. [Libraries.dev Bot Avatars](https://github.com/Jakubantalik/Libraries.dev/tree/main/packages/bot-avatars)
+For deployment, set `SITE_URL` to your public origin before building. Vercel detects its production domain automatically. Include the `public` directory with your deployment.
 
-You can use, modify, and redistribute this project under the MIT License. Include the applicable copyright and permission notices when sharing copies or substantial portions. [Project license](LICENSE) · [Third-party notices](THIRD_PARTY_NOTICES.md)
+Both API endpoints share a limit of **180 requests per minute per client IP**. Excess requests return `429` with `Retry-After`. On Vercel, configure `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` for a shared limiter; missing credentials or a store outage return `503`. Local development uses a bounded in-memory limiter. See [.env.example](.env.example). Only trust IP headers overwritten by your hosting platform. Cached images and static assets do not consume the function quota; use Vercel Firewall for traffic protection before requests reach the app.
+
+## Credits
+
+Built by Lakshman Bhukya, using artwork and renderers from [Open Bot Avatar](https://github.com/DominikScholz/open-bot-avatar) and [Libraries.dev](https://github.com/Jakubantalik/Libraries.dev/tree/main/packages/bot-avatars).
+
+[MIT license](LICENSE) · [Third-party notices](THIRD_PARTY_NOTICES.md)
