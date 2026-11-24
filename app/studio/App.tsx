@@ -9,7 +9,7 @@ import { Studio } from "./Studio";
 import { LOGO, LOGO_COLOR } from "./logo";
 import { Api } from "./Api";
 
-const GITHUB_URL = "https://github.com/lakshmanbhukya/open-bot-avatar-api";
+const GITHUB_URL = "https://github.com/lakshmanbhukya/open-bot-avatars-api";
 
 const NAV: { route: Route; label: string }[] = [
   { route: "api", label: "API" },
