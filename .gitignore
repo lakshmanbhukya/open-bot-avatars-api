@@ -3,3 +3,15 @@ node_modules/
 .vercel/
 .kombai/
 .env*
+!.env.example
+/open-bot-avatar/
+/bot-avatars/
+*.tsbuildinfo
+/next-env.d.ts
+/out/
+/dist/
+/coverage/
+*.log
+.DS_Store
+Thumbs.db
+test/**
