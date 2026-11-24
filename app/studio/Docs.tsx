@@ -3,10 +3,17 @@ import * as typescript from "sugar-high/lang/typescript";
 import * as shell from "sugar-high/lang/shell";
 import * as json from "sugar-high/lang/json";
 import { SITE_URL } from "../lib/site-url";
+import Link from "next/link";
+import catalog from "../lib/catalog.json";
+import { CodeBlock } from "./CodeBlock";
+
+function highlight(text: string, language: Parameters<typeof parse>[1]) {
+  return { text, html: render(parse(text, language)) };
+}
 
 const snippets = {
-  curl: render(parse(`curl "${SITE_URL}/api/avatar?v=3&seed=user-42" --output avatar.png`, shell)),
-  react: render(parse(`export function UserAvatar({ userId }: { userId: string }) {
+  curl: highlight(`curl "${SITE_URL}/api/avatar?v=3&seed=user-42" --output avatar.png`, shell),
+  react: highlight(`export function UserAvatar({ userId }: { userId: string }) {
   const params = new URLSearchParams({ v: "3", seed: userId });
   return (
     <img
@@ -16,8 +23,8 @@ const snippets = {
       alt="User avatar"
     />
   );
-}`, typescript)),
-  save: render(parse(`const response = await fetch('${SITE_URL}/api/avatar?v=3');
+}`, typescript),
+  save: highlight(`const response = await fetch('${SITE_URL}/api/avatar?v=3');
 if (!response.ok) {
   const { error } = await response.json();
   throw new Error(error);
@@ -26,23 +33,21 @@ if (!response.ok) {
 const location = response.headers.get('Content-Location');
 if (!location) throw new Error('Missing avatar URL');
 const avatarUrl = new URL(location, response.url).href;
-// Store avatarUrl on the user's profile to keep this exact image.`, typescript)),
-  catalog: render(parse(`const response = await fetch('${SITE_URL}/api/avatars');
+// Store avatarUrl on the user's profile to keep this exact image.`, typescript),
+  catalog: highlight(`const response = await fetch('${SITE_URL}/api/avatars');
 if (!response.ok) throw new Error('Could not load the catalog');
 const { total, avatars } = await response.json();
 
 // Each entry includes id, name, collection, formats, styles,
 // url, and originalUrl (null when original plush is unavailable).
-const avatarUrl = new URL(avatars[0].url, response.url).href;`, typescript)),
-  error: render(parse(`{
+const avatarUrl = new URL(avatars[0].url, response.url).href;`, typescript),
+  error: highlight(`{
   "error": "Choose an avatar or a seed, not both."
-}`, json)),
+}`, json),
 };
 
 function Code({ snippet, language }: { snippet: keyof typeof snippets; language: string }) {
-  return <pre className="code" tabIndex={0} aria-label={`${language} example`}>
-    <code dangerouslySetInnerHTML={{ __html: snippets[snippet] }} />
-  </pre>;
+  return <CodeBlock {...snippets[snippet]} language={language} />;
 }
 
 const PARAMETERS = [
@@ -60,16 +65,16 @@ export function Docs() {
       <h1>OpenBot Avatars API docs</h1>
       <p className="lead">Add a bot avatar to your app with one image URL. No account, API key, or package installation required.</p>
       <ul className="what">
-        <li>41 designs across two collections.</li>
+        <li>{catalog.length} designs across two collections.</li>
         <li>Random images, repeatable seeds, and exact avatar URLs.</li>
         <li>Transparent 512 × 512 PNGs, plus native SVGs for Open Bot Avatar.</li>
       </ul>
-      <p>Try requests in the <a href="#/api">API playground</a>. Artwork credits and MIT license details are on the <a href="/license">license page</a>.</p>
+      <p>Try requests in the <Link href="/">API playground</Link>. Artwork credits and MIT license details are on the <a href="/license">license page</a>.</p>
     </section>
 
     <h2>Quick start</h2>
     <p>Use the image endpoint directly in an image tag. Each request without a seed or avatar picks a random design; repeats are possible.</p>
-    <pre className="code" tabIndex={0} aria-label="HTML example"><code>{`<img src="${SITE_URL}/api/avatar?v=3" width="64" height="64" alt="Bot avatar">`}</code></pre>
+    <CodeBlock language="HTML" text={`<img src="${SITE_URL}/api/avatar?v=3" width="64" height="64" alt="Bot avatar">`} />
     <p>These examples use the hosted API at <a href={SITE_URL}>{SITE_URL}</a> and work from your app’s domain. If you host your own copy, replace this origin with your deployment’s public URL.</p>
     <Code snippet="curl" language="Shell" />
 
@@ -127,6 +132,7 @@ export function Docs() {
 
     <h2>Hosted images and the editor</h2>
     <p>The hosted API serves the catalog’s original colors and fixed poses. Editor controls such as custom colors, mood, rotation, animation, and fluffy material do not become API parameters. Libraries.dev’s original plush images are available through <code>style=original</code>.</p>
-    <p>Use the <a href="#/api">API playground</a> to choose a hosted image, copy its URL or HTML embed, and download supported formats.</p>
+    <p>Use the <Link href="/">API playground</Link> to choose a hosted image, copy its URL or HTML embed, and download supported formats.</p>
+    <p>In the <Link href="/editor">editor</Link>, choose Export → Download current preview for a transparent PNG with the visible material, color, pose, and angle. Download flat SVG keeps the selected color, mood, state, and angle in a still vector image. The original-color API URL always points to the hosted catalog image.</p>
   </main>;
 }

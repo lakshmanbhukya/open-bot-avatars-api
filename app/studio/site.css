@@ -12,6 +12,8 @@
     .site-content:focus { outline: none; }
     .skip-link { position: fixed; top: 8px; left: 8px; z-index: 20; padding: 12px; background: var(--text); color: var(--bg); opacity: 0; pointer-events: none; transform: translateY(-160%); }
     .skip-link:focus { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .docs-code-block { margin-bottom: 20px; }
+    .docs-code-block > button { display: flex; margin: 0 0 8px auto; min-height: 44px; }
 
     /*
      * Watermark: the name in Geist Mono, small and repeating in staggered rows, turned diagonally,
