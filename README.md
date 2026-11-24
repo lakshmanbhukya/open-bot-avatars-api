@@ -11,10 +11,10 @@ Bot avatars for profile pictures, chat interfaces, and apps. Open source, MIT li
 ## Use an avatar
 
 ```html
-<img src="http://localhost:3000/api/avatar" width="64" height="64" alt="Bot avatar">
+<img src="https://open-bot-avatars-api.vercel.app/api/avatar?v=3" width="64" height="64" alt="Bot avatar">
 ```
 
-The API returns a transparent 512 × 512 PNG. Replace the local host with your deployed domain.
+The [hosted API](https://open-bot-avatars-api.vercel.app/) returns a transparent 512 × 512 PNG, ready to use in your app.
 
 | Endpoint | Result |
 | --- | --- |

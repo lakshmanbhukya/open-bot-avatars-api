@@ -2,21 +2,22 @@ import { parse, render } from "sugar-high/core";
 import * as typescript from "sugar-high/lang/typescript";
 import * as shell from "sugar-high/lang/shell";
 import * as json from "sugar-high/lang/json";
+import { SITE_URL } from "../lib/site-url";
 
 const snippets = {
-  curl: render(parse(`curl "https://your-domain.example/api/avatar?v=3&seed=user-42" --output avatar.png`, shell)),
+  curl: render(parse(`curl "${SITE_URL}/api/avatar?v=3&seed=user-42" --output avatar.png`, shell)),
   react: render(parse(`export function UserAvatar({ userId }: { userId: string }) {
   const params = new URLSearchParams({ v: "3", seed: userId });
   return (
     <img
-      src={"/api/avatar?" + params}
+      src={"${SITE_URL}/api/avatar?" + params}
       width={64}
       height={64}
       alt="User avatar"
     />
   );
 }`, typescript)),
-  save: render(parse(`const response = await fetch('/api/avatar?v=3');
+  save: render(parse(`const response = await fetch('${SITE_URL}/api/avatar?v=3');
 if (!response.ok) {
   const { error } = await response.json();
   throw new Error(error);
@@ -26,7 +27,7 @@ const location = response.headers.get('Content-Location');
 if (!location) throw new Error('Missing avatar URL');
 const avatarUrl = new URL(location, response.url).href;
 // Store avatarUrl on the user's profile to keep this exact image.`, typescript)),
-  catalog: render(parse(`const response = await fetch('/api/avatars');
+  catalog: render(parse(`const response = await fetch('${SITE_URL}/api/avatars');
 if (!response.ok) throw new Error('Could not load the catalog');
 const { total, avatars } = await response.json();
 
@@ -68,8 +69,8 @@ export function Docs() {
 
     <h2>Quick start</h2>
     <p>Use the image endpoint directly in an image tag. Each request without a seed or avatar picks a random design; repeats are possible.</p>
-    <pre className="code" tabIndex={0} aria-label="HTML example"><code>{`<img src="/api/avatar?v=3" width="64" height="64" alt="Bot avatar">`}</code></pre>
-    <p>Paths in these examples are relative to this site. If your app runs on another domain, prefix them with the domain hosting this API. Replace <code>https://your-domain.example</code> in the cURL example with that domain. The playground’s copied image URLs and HTML embeds already include it.</p>
+    <pre className="code" tabIndex={0} aria-label="HTML example"><code>{`<img src="${SITE_URL}/api/avatar?v=3" width="64" height="64" alt="Bot avatar">`}</code></pre>
+    <p>These examples use the hosted API at <a href={SITE_URL}>{SITE_URL}</a> and work from your app’s domain. If you host your own copy, replace this origin with your deployment’s public URL.</p>
     <Code snippet="curl" language="Shell" />
 
     <h2>Endpoints</h2>

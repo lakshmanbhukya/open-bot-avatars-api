@@ -4,13 +4,14 @@ import "@fontsource/geist-mono/400.css";
 import "./studio/studio.css";
 import "./studio/site.css";
 import "./studio/api.css";
+import { SITE_URL } from "./lib/site-url";
 
 export const metadata = {
   metadataBase: new URL(
     process.env.SITE_URL ||
       (process.env.VERCEL_PROJECT_PRODUCTION_URL
         ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-        : "http://localhost:3000"),
+        : SITE_URL),
   ),
   title: "OpenBot Avatars API",
   description:
