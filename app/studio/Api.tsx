@@ -79,7 +79,7 @@ export function Api() {
 
   const selectedUrl = pick ? `${origin}${mode === "seed" ? pick.requestUrl : pick.url}` : "";
   const submittedSeed = new URLSearchParams(request.url.split("?")[1]).get("seed") ?? "user-42";
-  const endpoint = `${origin}${!loading && !error && pick ? pick.url : request.url}`;
+  const endpoint = `${origin}${mode === "seed" ? request.url : !loading && !error && pick ? pick.url : request.url}`;
   const snippet = usageExample(example, selectedUrl || `${origin}${imageUrl()}`);
   const canCopy = !!pick && !loading && !error;
 
@@ -102,7 +102,9 @@ export function Api() {
 
   function changeMode(next: string) {
     setMode(next);
-    load(imageUrl(collection, style, "", next === "seed" ? seed || "user-42" : ""));
+    const nextCollection = style === "original" ? "bot-avatars" : collection;
+    setCollection(nextCollection);
+    load(imageUrl(nextCollection, style, "", next === "seed" ? seed || "user-42" : ""));
     if (next === "seed" && !seed) setSeed("user-42");
   }
 
@@ -160,8 +162,14 @@ export function Api() {
       </div>
       <div className="api-options-body">{mode === "seed" ? <form className="api-seed" onSubmit={event => { event.preventDefault(); if (seed.trim()) load(imageUrl(collection, style, "", seed)); }}>
         <label htmlFor="api-seed">Public user ID or seed</label>
-        <div><input id="api-seed" value={seed} onChange={event => setSeed(event.target.value)} maxLength={128} required placeholder="user-42" aria-describedby="api-seed-help" /><button className="btn" disabled={loading}>Find avatar</button></div>
-        <p id="api-seed-help">Same seed and filters, same avatar. Use a public ID.</p>
+        <div><input id="api-seed" value={seed} onChange={event => setSeed(event.target.value)} maxLength={128} required pattern=".*\S.*" placeholder="user-42" aria-describedby="api-seed-help" /><button className="btn" disabled={loading}>{loading ? "Finding…" : "Find avatar"}</button></div>
+        <p id="api-seed-help">Enter a public ID, such as user-42. The same seed and filters always return the same avatar. Try a different ID to select again; different IDs can share a design.</p>
+        <div className="api-seed-result" aria-busy={loading}>
+          {!loading && !error && pick && <img src={preview} alt={pick.name} width="88" height="88" />}
+          <div role={error ? "alert" : "status"} className={error ? "api-seed-error" : undefined}>
+            {loading ? "Finding your avatar…" : error || (pick && <><strong>{pick.name}</strong><p>Result for “{submittedSeed}”. Your image URL and example below are ready.</p></>)}
+          </div>
+        </div>
       </form> : <div className="api-catalog" role="group" aria-label="Avatar designs">{visible.map(entry => {
         const finish = entry.styles.includes(style) ? style : "flat";
         return <button key={`${entry.collection}/${entry.id}`} aria-pressed={pick?.collection === entry.collection && pick?.id === entry.id} onClick={() => {
