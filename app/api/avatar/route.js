@@ -1,53 +1,75 @@
 import { createHash, randomUUID } from 'node:crypto'
-import { examples, renderAvatarSvg } from 'open-bot-avatar'
-import library from './libraries.json' with { type: 'json' }
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
+import catalog from '../../lib/catalog.json' with { type: 'json' }
+import { GET as legacyAvatar } from '../../lib/legacy-avatar.js'
+import { rateLimit } from '../../lib/rate-limit.js'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
-const colors = ['#ff7848', '#8d80ff', '#5acaa6', '#ffb930', '#e985b3', '#65aefa']
-
-function librarySvg({ name, color, path, x, y, scale }, bytes) {
-  const tilt = (bytes[3] / 255 - 0.5) * 12
-  const eyes = bytes[2] % 2
-    ? '<path d="M-12 1q3-6 6 0m12 0q3-6 6 0" fill="none" stroke="#242434" stroke-width="3" stroke-linecap="round"/>'
-    : '<g fill="#242434"><ellipse cx="-8" rx="2.8" ry="5.5"/><ellipse cx="8" rx="2.8" ry="5.5"/></g>'
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512" role="img" aria-label="${name}">
-    <title>${name}</title><metadata>${library.source}\n${library.license}</metadata>
-    <defs><radialGradient id="body" cx="35%" cy="26%" r="86%">
-      <stop stop-color="#fff"/><stop offset=".42" stop-color="${color}"/><stop offset=".76" stop-color="${color}"/><stop offset="1" stop-color="#59536d"/>
-    </radialGradient></defs>
-    <g transform="rotate(${tilt} 50 50)"><path fill="url(#body)" d="${path}"/>
-    <g transform="translate(${x} ${y}) scale(${scale})">${eyes}</g></g></svg>`
+const cors = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Expose-Headers': 'Content-Location, X-Avatar-Collection, X-Avatar-Id, ETag'
 }
+const allowed = new Set(['v', 'seed', 'collection', 'avatar', 'format', 'style'])
+const collections = ['open-bot-avatar', 'bot-avatars']
 
-export function GET(request) {
+export async function GET(request) {
+  const limited = await rateLimit(request)
+  if (limited) return limited
   const params = new URL(request.url).searchParams
-  const seeds = params.getAll('seed')
-  if (seeds.length > 1 || (seeds.length && (!seeds[0] || seeds[0].length > 128))) {
-    return new Response('Provide one seed of 1 to 128 characters.', { status: 400 })
+  function error(message) {
+    return Response.json({ error: message }, { status: 400, headers: { ...cors, 'Cache-Control': 'no-store' } })
   }
-  const seed = seeds[0] ?? randomUUID()
-  const bytes = createHash('sha256').update(seed).digest()
-  // Older saved profile URLs use the original seven-shape mapping.
-  const expanded = !seeds.length || params.get('v') === '2'
-  const index = expanded
-    ? bytes.readUInt32BE() % (examples.length + library.shapes.length)
-    : bytes[0] % examples.length
-  const location = new URLSearchParams({ seed })
-  if (expanded) location.set('v', '2')
-  const svg = index >= examples.length
-    ? librarySvg(library.shapes[index - examples.length], bytes)
-    : renderAvatarSvg(examples[index], {
-    size: 512,
-    color: colors[bytes[1] % colors.length],
-    mood: bytes[2] % 2 ? 'happy' : 'neutral',
-    view: { yaw: (bytes[3] / 255 - 0.5) * 0.65, pitch: (bytes[4] / 255 - 0.5) * 0.35 }
-  })
-  return new Response(svg, { headers: {
-    'Content-Type': 'image/svg+xml; charset=utf-8',
-    'Cache-Control': seeds.length ? 'public, max-age=86400' : 'no-store',
-    'Content-Location': '/api/avatar?' + location,
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Expose-Headers': 'Content-Location'
-  } })
+  for (const key of params.keys()) {
+    if (!allowed.has(key)) return error('Unknown parameter: ' + key)
+    if (params.getAll(key).length !== 1) return error('Provide only one ' + key + '.')
+  }
+  const seed = params.get('seed')
+  if (seed !== null && (!seed || seed.length > 128)) return error('Provide one seed of 1 to 128 characters.')
+  const version = params.get('v')
+  if (version !== null && !['1', '2', '3'].includes(version)) return error('Version must be 1, 2, or 3.')
+  const modernOptions = ['collection', 'avatar', 'format', 'style'].some(key => params.has(key))
+  if (version === '1' || version === '2' || (!version && seed !== null && !modernOptions)) {
+    if (modernOptions) return error('Collection, avatar, format, and style require v=3.')
+    const response = legacyAvatar(request)
+    for (const [key, value] of Object.entries(cors)) response.headers.set(key, value)
+    return response
+  }
+  const collection = params.get('collection')
+  if (collection !== null && !collections.includes(collection)) return error('Collection must be open-bot-avatar or bot-avatars.')
+  const format = params.get('format') ?? 'png'
+  if (!['png', 'svg'].includes(format)) return error('Format must be png or svg.')
+  const style = params.get('style') ?? 'flat'
+  if (!['flat', 'original'].includes(style)) return error('Style must be flat or original.')
+  const id = params.get('avatar')
+  if (id !== null && !collection) return error('Provide a collection when selecting an avatar.')
+  if (id !== null && seed !== null) return error('Choose an avatar or a seed, not both.')
+  let candidates = catalog.filter(entry => !collection || entry.collection === collection)
+  if (id !== null) candidates = candidates.filter(entry => entry.id === id)
+  if (!candidates.length) return error('Unknown avatar in this collection. See /api/avatars.')
+  candidates = candidates.filter(entry => entry.formats.includes(format) && entry.styles.includes(style))
+  if (!candidates.length) return error('This collection or avatar does not support that format/style. See /api/avatars.')
+  const random = seed === null && id === null
+  const bytes = createHash('sha256').update(seed ?? randomUUID()).digest()
+  const entry = candidates[id !== null ? 0 : bytes.readUInt32BE() % candidates.length]
+  const query = new URLSearchParams({ v: '3', collection: entry.collection, avatar: entry.id, format, style })
+  const file = entry.id + (style === 'original' ? '-original' : '') + '.' + format
+  const data = await readFile(path.join(process.cwd(), 'public', 'avatars', 'v3', entry.collection, file))
+  const etag = '"' + createHash('sha256').update(data).digest('hex') + '"'
+  const headers = {
+    ...cors,
+    'Content-Type': format === 'svg' ? 'image/svg+xml; charset=utf-8' : 'image/png',
+    'X-Content-Type-Options': 'nosniff',
+    'Cache-Control': random ? 'no-store' : 'public, max-age=86400',
+    'Content-Location': '/api/avatar?' + query,
+    'X-Avatar-Collection': entry.collection,
+    'X-Avatar-Id': entry.id,
+    ETag: etag
+  }
+  if (!random && request.headers.get('if-none-match')?.split(',').some(value => value.trim().replace(/^W\//, '') === etag || value.trim() === '*')) {
+    return new Response(null, { status: 304, headers })
+  }
+  return new Response(data, { headers })
 }
