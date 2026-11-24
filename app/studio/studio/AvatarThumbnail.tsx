@@ -1,8 +1,9 @@
 import type { AvatarDefinition, AvatarMaterial } from "open-bot-avatar";
+import { useState } from "react";
 import { BotAvatar } from "../BotAvatar";
 import { thumbnailKey, THUMB_LOOK, THUMB_VIEW } from "./outline";
 import keys from "./fluffy-thumbnails.json";
-const atlas = "/studio/fluffy-thumbnails.webp";
+import atlas from "../../../public/studio/fluffy-thumbnails.webp";
 
 // The atlas is a square grid of cells, one per key, in the order of the list.
 const cells = new Map(keys.map((key, index) => [key, index]));
@@ -15,21 +16,31 @@ const side = Math.ceil(Math.sqrt(keys.length));
  * Bake it again after a change to how fluffy looks: pnpm --filter site thumbnails.
  */
 export function AvatarThumbnail({ definition, color, material }: { definition: AvatarDefinition; color: string; material: AvatarMaterial }) {
+  const [atlasFailed, setAtlasFailed] = useState(false);
   const cell = material === "fluffy" ? cells.get(thumbnailKey(definition, color)) : undefined;
-  if (cell === undefined) {
+  if (cell === undefined || atlasFailed) {
     return <BotAvatar className="avatar-view" definition={definition} color={color} material={material} still view={THUMB_VIEW} lookAt={THUMB_LOOK} label="" />;
   }
-  // Background positions in percent run from the first cell (0%) to the last (100%).
-  const step = 100 / Math.max(1, side - 1);
   return (
     <span
       className="avatar-view"
       aria-hidden="true"
-      style={{
-        backgroundImage: `url("${atlas}")`,
-        backgroundSize: `${side * 100}% ${side * 100}%`,
-        backgroundPosition: `${(cell % side) * step}% ${Math.floor(cell / side) * step}%`,
-      }}
-    />
+      style={{ position: "relative", overflow: "hidden" }}
+    >
+      <img
+        src={atlas.src}
+        alt=""
+        decoding="async"
+        onError={() => setAtlasFailed(true)}
+        style={{
+          position: "absolute",
+          width: `${side * 100}%`,
+          height: `${side * 100}%`,
+          maxWidth: "none",
+          left: `${-(cell % side) * 100}%`,
+          top: `${-Math.floor(cell / side) * 100}%`,
+        }}
+      />
+    </span>
   );
 }
