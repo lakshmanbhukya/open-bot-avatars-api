@@ -16,7 +16,7 @@ export function Api() {
   const [request, setRequest] = useState({ url: imageUrl(), serial: 0 });
   const [pick, setPick] = useState<Pick | null>(null);
   const [preview, setPreview] = useState("");
-  const [showPng, setShowPng] = useState(false);
+  const [previewMode, setPreviewMode] = useState("auto");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -27,6 +27,7 @@ export function Api() {
     setLoading(true);
     setError("");
     setMessage("");
+    setPreviewMode("auto");
     setRequest(previous => ({ url, serial: previous.serial + 1 }));
   }
 
@@ -110,6 +111,7 @@ export function Api() {
 
   const visible = catalog.filter(entry => !collection || entry.collection === collection);
   const supportsPlush = (mode === "choose" ? pick?.collection ?? collection : collection) === "bot-avatars";
+  const showPng = previewMode === "png" || (previewMode === "auto" && pick?.style === "original");
   return <main className="page docs api-page api-landing">
     <section className="api-hero" aria-label="Live API demo">
       <div className="api-response" aria-busy={loading}>
@@ -119,7 +121,7 @@ export function Api() {
         <div className="api-response-caption">
           <strong>{pick?.name ?? "Your first response"}</strong>
           <span>{pick ? `${labels[pick.collection]} · ${pick.style === "original" ? "Original plush" : "Flat PNG"}` : "PNG image"}</span>
-          <button className="api-preview-toggle" disabled={!preview} aria-pressed={showPng} onClick={() => setShowPng(previous => !previous)}>{showPng ? "Show animation" : "Preview PNG"}</button>
+          <button className="api-preview-toggle" disabled={!preview || loading} aria-pressed={!showPng} onClick={() => setPreviewMode(showPng ? "animated" : "png")}>{showPng ? "Show animation" : "Preview PNG"}</button>
           {showPng && <span>512 × 512 · Transparent background. Checkerboard is preview only.</span>}
         </div>
       </div>
