@@ -1,13 +1,16 @@
 "use client";
 
 import { BotAvatar } from "./BotAvatar";
-import { Docs } from "./Docs";
+import dynamic from "next/dynamic";
 import { href, useRoute, type Route } from "./navigation";
 import { useStoredState } from "./studio/hooks";
 import { DEFAULT_LOOK, reviveLook } from "./studio/look";
-import { Studio } from "./Studio";
 import { LOGO, LOGO_COLOR } from "./logo";
 import { Api } from "./Api";
+
+const loading = () => <main className="page" role="status">Loading?</main>;
+const Studio = dynamic(() => import("./Studio").then(module => module.Studio), { loading });
+const Docs = dynamic(() => import("./Docs").then(module => module.Docs), { loading });
 
 const GITHUB_URL = "https://github.com/lakshmanbhukya/open-bot-avatars-api";
 

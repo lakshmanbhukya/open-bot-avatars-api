@@ -166,7 +166,7 @@ export function Api() {
         const finish = entry.styles.includes(style) ? style : "flat";
         return <button key={`${entry.collection}/${entry.id}`} aria-pressed={pick?.collection === entry.collection && pick?.id === entry.id} onClick={() => {
           setStyle(finish); load(imageUrl(entry.collection, finish, entry.id));
-        }}><span className="api-catalog-image" data-collection={entry.collection}><img src={imageUrl(entry.collection, finish, entry.id)} alt="" width="112" height="112" loading="lazy" /></span><span className="api-catalog-name">{entry.name}{pick?.collection === entry.collection && pick?.id === entry.id && <Icon name="check" />}</span></button>;
+        }}><span className="api-catalog-image" data-collection={entry.collection}><img src={`/avatars/v3/${entry.collection}/${entry.id}${finish === "original" ? "-original" : ""}.png`} alt="" width="112" height="112" loading="lazy" decoding="async" /></span><span className="api-catalog-name">{entry.name}{pick?.collection === entry.collection && pick?.id === entry.id && <Icon name="check" />}</span></button>;
       })}</div>}</div>
       <div className="api-selection"><span>{pick ? `Selected: ${pick.name}` : "Choose an avatar"}</span><a href="#api-usage">Use this avatar <Icon name="arrow" /></a></div>
     </section>
