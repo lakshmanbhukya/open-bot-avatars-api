@@ -13,7 +13,7 @@ export function Api() {
   const [style, setStyle] = useState("flat");
   const [mode, setMode] = useState("choose");
   const [seed, setSeed] = useState("");
-  const [request, setRequest] = useState({ url: imageUrl(), serial: 0 });
+  const [request, setRequest] = useState<{ url: string; serial: number } | null>(null);
   const [pick, setPick] = useState<Pick | null>(null);
   const [preview, setPreview] = useState("");
   const [previewMode, setPreviewMode] = useState("auto");
@@ -28,7 +28,7 @@ export function Api() {
     setError("");
     setMessage("");
     setPreviewMode("auto");
-    setRequest(previous => ({ url, serial: previous.serial + 1 }));
+    setRequest(previous => ({ url, serial: (previous?.serial ?? 0) + 1 }));
   }
 
   useEffect(() => {
@@ -45,6 +45,8 @@ export function Api() {
     } else if (entry) {
       setCollection(entry.collection); setStyle(finish);
       load(imageUrl(entry.collection, finish, entry.id));
+    } else {
+      load(imageUrl());
     }
   }, []);
 
@@ -52,11 +54,21 @@ export function Api() {
   useEffect(() => () => { if (preview) URL.revokeObjectURL(preview); }, [preview]);
 
   useEffect(() => {
+    if (!request) return;
+    const requestedUrl = request.url;
     const controller = new AbortController();
+    const timeout = window.setTimeout(() => {
+      setLoading(false);
+      setError("This request took too long. Please try again.");
+      controller.abort();
+    }, 20_000);
     async function fetchAvatar() {
       try {
-        const response = await fetch(request.url, { signal: controller.signal });
-        if (!response.ok) throw Error((await response.json()).error || "Could not load this avatar.");
+        const response = await fetch(requestedUrl, { signal: controller.signal });
+        if (!response.ok) {
+          const problem = await response.json().catch(() => null);
+          throw Error(typeof problem?.error === "string" ? problem.error : `Could not load this avatar (HTTP ${response.status}). Please try again.`);
+        }
         const url = response.headers.get("Content-Location");
         if (!url) throw Error("The API did not return an image URL.");
         const params = new URL(url, window.location.origin).searchParams;
@@ -65,24 +77,27 @@ export function Api() {
         const blob = await response.blob();
         if (controller.signal.aborted) return;
         setPreview(URL.createObjectURL(blob));
-        setPick({ ...entry, url, requestUrl: request.url, style: params.get("style") ?? "flat" });
+        setPick({ ...entry, url, requestUrl: requestedUrl, style: params.get("style") ?? "flat" });
         setLoading(false);
       } catch (problem) {
         if (!controller.signal.aborted) {
           setLoading(false);
           setError(problem instanceof Error ? problem.message : "Could not load an avatar.");
         }
+      } finally {
+        window.clearTimeout(timeout);
       }
     }
     void fetchAvatar();
-    return () => controller.abort();
+    return () => { window.clearTimeout(timeout); controller.abort(); };
   }, [request]);
 
-  const selectedUrl = pick ? `${origin}${mode === "seed" ? pick.requestUrl : pick.url}` : "";
-  const submittedSeed = new URLSearchParams(request.url.split("?")[1]).get("seed") ?? "user-42";
-  const endpoint = `${origin}${mode === "seed" ? request.url : !loading && !error && pick ? pick.url : request.url}`;
-  const snippet = usageExample(example, selectedUrl || `${origin}${imageUrl()}`);
   const canCopy = !!pick && !loading && !error;
+  const requestUrl = request?.url ?? imageUrl();
+  const selectedUrl = canCopy ? `${origin}${mode === "seed" ? pick.requestUrl : pick.url}` : "";
+  const submittedSeed = new URLSearchParams(requestUrl.split("?")[1]).get("seed") ?? "user-42";
+  const endpoint = `${origin}${mode === "seed" ? requestUrl : canCopy ? pick.url : requestUrl}`;
+  const snippet = usageExample(example, selectedUrl || `${origin}${imageUrl()}`);
 
   async function copy(text: string, success: string) {
     setMessage(await copyText(text) ? success : "Select and copy the URL or example below.");
@@ -102,6 +117,7 @@ export function Api() {
   }
 
   function changeMode(next: string) {
+    if (next === mode) return;
     setMode(next);
     const nextCollection = style === "original" ? "bot-avatars" : collection;
     setCollection(nextCollection);
@@ -133,7 +149,7 @@ export function Api() {
           <button className="btn btn-primary" disabled={loading} onClick={callApi}><Icon name="rotate" />{loading ? "Calling API…" : "Call API"}</button>
           <button className="btn" disabled={!canCopy} onClick={() => void copy(endpoint, "Endpoint copied.")}><Icon name="copy" />Copy endpoint</button>
         </div>
-        <p className={`api-call-status${error ? " is-error" : ""}`} role={error ? "alert" : "status"}>{error || message || (loading ? "Fetching image…" : "Image received. Call again for a random avatar.")}</p>
+        <p className={`api-call-status${error ? " is-error" : ""}`} role={error ? "alert" : "status"}>{error || message || (loading ? "Fetching image…" : mode === "seed" ? `Seed “${submittedSeed}” selects ${pick?.name}. Same seed and filters, same avatar.` : "Image received. Copy its URL or choose another design.")}</p>
         <a className="api-explore-link" href="#avatar-options">Explore avatar options <Icon name="arrow" /></a>
       </div>
     </section>
@@ -164,7 +180,7 @@ export function Api() {
       </div>
       <div className="api-options-body">{mode === "seed" ? <form className="api-seed" onSubmit={event => { event.preventDefault(); if (seed.trim()) load(imageUrl(collection, style, "", seed)); }}>
         <label htmlFor="api-seed">Public user ID or seed</label>
-        <div><input id="api-seed" value={seed} onChange={event => setSeed(event.target.value)} maxLength={128} required pattern=".*\S.*" placeholder="user-42" aria-describedby="api-seed-help" /><button className="btn" disabled={loading}>{loading ? "Finding…" : "Find avatar"}</button></div>
+        <div className="api-seed-controls"><input id="api-seed" value={seed} onChange={event => setSeed(event.target.value)} maxLength={128} required pattern=".*\S.*" placeholder="user-42" aria-describedby="api-seed-help" /><button className="btn" disabled={loading}>{loading ? "Finding…" : "Find avatar"}</button></div>
         <p id="api-seed-help">Enter a public ID, such as user-42. The same seed and filters always return the same avatar. Try a different ID to select again; different IDs can share a design.</p>
         <div className="api-seed-result" aria-busy={loading}>
           {!loading && !error && pick && <img src={preview} alt={pick.name} width="88" height="88" />}
@@ -190,8 +206,8 @@ export function Api() {
       </div>
       <pre className="code api-embed" tabIndex={0} aria-label={`${example} usage example`}><code>{snippet}</code></pre>
       <div className="api-usage-footer"><div className="api-buttons">
-        {pick && <a href={pick.url} download={`${pick.id}.png`}>Download PNG</a>}
-        {pick?.formats.includes("svg") && <a href={pick.url.replace("format=png", "format=svg")} download={`${pick.id}.svg`}>Download SVG</a>}
+        {canCopy && <a href={pick.url} download={`${pick.id}.png`}>Download PNG</a>}
+        {canCopy && pick.formats.includes("svg") && <a href={pick.url.replace("format=png", "format=svg")} download={`${pick.id}.svg`}>Download SVG</a>}
         <button className="api-share" disabled={!canCopy} onClick={sharePicker}>Share avatar</button>
         <a href="/api/avatars">JSON catalog</a>
       </div><span className="api-status">{message}</span></div>

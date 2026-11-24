@@ -24,7 +24,7 @@
     .api-buttons a { text-underline-offset: 4px; }
     .api-landing .btn { min-height: 44px; height: auto; padding: 10px 16px; justify-content: center; text-decoration: none; white-space: nowrap; }
     .api-request .btn-primary { min-width: 150px; }
-    .api-request .api-call-status { min-height: 44px; margin: 12px 0; font-size: 12px; }
+    .api-request .api-call-status { min-height: 44px; margin: 12px 0; font-size: 12px; overflow-wrap: anywhere; }
     .api-request .api-call-status.is-error { color: var(--err); }
     .api-explore-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; text-underline-offset: 4px; }
     .api-options, .api-usage { padding: 36px 0; border-top: 1px solid var(--line); scroll-margin-top: 24px; }
@@ -56,12 +56,13 @@
     .api-selection { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; margin-top: 16px; font-size: 13px; color: var(--muted); }
     .api-seed { max-width: 520px; margin: 24px auto; }
     .api-seed-result { display: flex; align-items: center; gap: 16px; min-height: 100px; margin-top: 16px; }
-    .api-seed-result img { width: 88px; height: 88px; object-fit: contain; }
+    .api-seed-result img { flex: none; width: 88px; height: 88px; object-fit: contain; }
+    .api-seed-result > div { min-width: 0; overflow-wrap: anywhere; }
     .api-seed-result strong { display: block; }
     .api-seed-result p { margin: 4px 0; }
     .api-seed-error { color: var(--err); }
     .api-seed label { color: var(--muted); font-size: 13px; }
-    .api-seed > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; margin-top: 10px; }
+    .api-seed-controls { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; margin-top: 10px; }
     .api-seed input, .api-usage > input { display: block; width: 100%; min-width: 0; padding: 12px; color: var(--text); background: var(--bg); border: 1px solid var(--line-strong); border-radius: 12px; font: 12px/1.5 var(--mono); }
     .api-seed p { font-size: 12px; }
     .api-usage > input { margin: 8px 0 20px; }
@@ -90,7 +91,7 @@
     }
     @media (max-width: 380px) {
       .api-filters { grid-template-columns: minmax(0, 1fr); }
-      .api-seed > div { grid-template-columns: minmax(0, 1fr); }
+      .api-seed-controls { grid-template-columns: minmax(0, 1fr); }
       .api-landing .studio-segmented button { padding-inline: 9px; font-size: 12px; }
     }
   }
