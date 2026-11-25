@@ -1,0 +1,20 @@
+{
+  "reviewedOn": "2026-11-25",
+  "status": "PASS",
+  "reviewer": "Codex visual inspection and local automated checks",
+  "designsReviewed": 23,
+  "sizesPx": [512, 64],
+  "observations": [
+    "Visible coat texture on every GPU-rendered design; disabled-WebGL controls are flat.",
+    "Eyes remain readable at 64 px; mug/watering-can handles and palette hole remain open.",
+    "Automated alpha checks show transparent backgrounds and no coat pixels on any 512 px export boundary.",
+    "The baked v4 mug is byte-identical to the approved first-experiment reference.",
+    "Desktop and mobile-emulated static response screenshots show the selected v4 fluffy mug and matching URL.",
+    "WebGL-disabled browser checks preserve the fluffy image URL and byte-exact PNG download."
+  ],
+  "limits": [
+    "Bake verified on one AMD Radeon/ANGLE Direct3D11 generation machine.",
+    "Mobile browser screenshots and checks use emulation, not physical phone hardware.",
+    "External deployment and future v5-default compatibility checks remain pending."
+  ]
+}

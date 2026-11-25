@@ -1,0 +1,4264 @@
+{
+  "measuredAt": "2026-11-25T06:07:06.109Z",
+  "commit": "fd6ed9089cd018496f5f8ece825f0c812f45cd0d",
+  "buildId": "wro6LsynfnTuSK9k5J8t4",
+  "node": "v24.17.0",
+  "playwright": "1.58.2",
+  "renderer": "0.4.0",
+  "host": {
+    "platform": "win32",
+    "release": "10.0.26300",
+    "cpu": "AMD Ryzen 5 5600H with Radeon Graphics         ",
+    "logicalCpus": 12,
+    "memoryBytes": 7883456512
+  },
+  "scenarios": [
+    "api-flat",
+    "api-fluffy"
+  ],
+  "methodology": "Three fresh browser contexts per scenario with HTTP cache disabled, warm browser process and local production server; 3 s idle frame window, then 12 design switches (300 ms dwell), then post-GC heap/DOM measurement. First avatar is the first nonblank preview canvas or decoded returned PNG observed by rAF, including initial editor state before share options settle. For api-fluffy-live it is measured from the Show animation click; other scenarios use navigation start. Transfer sizes include document and loaded resources before switches. No performance pass/fail thresholds.",
+  "limitations": [
+    "Mobile is Pixel 7 viewport/touch emulation on the desktop GPU, not a physical phone.",
+    "Loopback delivery is not deployment latency. Mobile uses 4x CPU slowdown, 1.6 Mbps down / 750 Kbps up, 150 ms configured latency.",
+    "CDP JS heap excludes GPU memory; three samples do not establish a leak or population performance.",
+    "rAF intervals measure browser scheduling, not individual avatar paint duration. GPU/shader caches can remain warm between contexts."
+  ],
+  "samples": [
+    {
+      "profile": "desktop",
+      "scenario": "api-flat",
+      "run": 1,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 415.4,
+      "fcpMs": 320,
+      "transferredBytes": 395961,
+      "encodedBodyBytes": 381561,
+      "requests": 48,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5615,
+          "encodedBytes": 5315
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/2zf59jjs4tp7d.js",
+          "transferBytes": 6877,
+          "encodedBytes": 6577
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/458hh04knqo05.js",
+          "transferBytes": 10565,
+          "encodedBytes": 10265
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/controller-thumb.webp",
+          "transferBytes": 4064,
+          "encodedBytes": 3764
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/barbell-thumb.webp",
+          "transferBytes": 4490,
+          "encodedBytes": 4190
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug-thumb.webp",
+          "transferBytes": 2914,
+          "encodedBytes": 2614
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/lightbulb-thumb.webp",
+          "transferBytes": 3812,
+          "encodedBytes": 3512
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/chat-thumb.webp",
+          "transferBytes": 3534,
+          "encodedBytes": 3234
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/sprout-thumb.webp",
+          "transferBytes": 4506,
+          "encodedBytes": 4206
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/watering-can-thumb.webp",
+          "transferBytes": 4376,
+          "encodedBytes": 4076
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/book-thumb.webp",
+          "transferBytes": 3050,
+          "encodedBytes": 2750
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/brain-thumb.webp",
+          "transferBytes": 3866,
+          "encodedBytes": 3566
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bull-thumb.webp",
+          "transferBytes": 4796,
+          "encodedBytes": 4496
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bunny-thumb.webp",
+          "transferBytes": 4232,
+          "encodedBytes": 3932
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/camera-thumb.webp",
+          "transferBytes": 2696,
+          "encodedBytes": 2396
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cat-thumb.webp",
+          "transferBytes": 4626,
+          "encodedBytes": 4326
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cloud-thumb.webp",
+          "transferBytes": 3498,
+          "encodedBytes": 3198
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/egg-thumb.webp",
+          "transferBytes": 2846,
+          "encodedBytes": 2546
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/ghost-thumb.webp",
+          "transferBytes": 2916,
+          "encodedBytes": 2616
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/magnifier-thumb.webp",
+          "transferBytes": 4258,
+          "encodedBytes": 3958
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/paint-brush-thumb.webp",
+          "transferBytes": 3938,
+          "encodedBytes": 3638
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/palette-thumb.webp",
+          "transferBytes": 4010,
+          "encodedBytes": 3710
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/rocket-thumb.webp",
+          "transferBytes": 3568,
+          "encodedBytes": 3268
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/shield-thumb.webp",
+          "transferBytes": 3546,
+          "encodedBytes": 3246
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/star-thumb.webp",
+          "transferBytes": 4220,
+          "encodedBytes": 3920
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/witch-hat-thumb.webp",
+          "transferBytes": 4090,
+          "encodedBytes": 3790
+        },
+        {
+          "url": "/",
+          "transferBytes": 471,
+          "encodedBytes": 171
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 488,
+          "encodedBytes": 188
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 486,
+          "encodedBytes": 186
+        },
+        {
+          "url": "/_next/static/chunks/0c0_w8fsvzuq-.js",
+          "transferBytes": 1030,
+          "encodedBytes": 730
+        },
+        {
+          "url": "/",
+          "transferBytes": 2053,
+          "encodedBytes": 1753
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2103,
+          "encodedBytes": 1803
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 7273,
+          "encodedBytes": 6973
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 434,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 51.69999999552965,
+          "duration": 98,
+          "phase": "load"
+        },
+        {
+          "start": 164.39999999850988,
+          "duration": 61,
+          "phase": "load"
+        },
+        {
+          "start": 315.1000000014901,
+          "duration": 73,
+          "phase": "load"
+        },
+        {
+          "start": 4578.69999999553,
+          "duration": 83,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6258388,
+        "documents": 2,
+        "nodes": 437,
+        "jsEventListeners": 433
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 7871476,
+        "documents": 2,
+        "nodes": 441,
+        "jsEventListeners": 433
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "desktop",
+      "scenario": "api-flat",
+      "run": 2,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 424.4,
+      "fcpMs": 156,
+      "transferredBytes": 395961,
+      "encodedBodyBytes": 381561,
+      "requests": 48,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5615,
+          "encodedBytes": 5315
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/2zf59jjs4tp7d.js",
+          "transferBytes": 6877,
+          "encodedBytes": 6577
+        },
+        {
+          "url": "/_next/static/chunks/458hh04knqo05.js",
+          "transferBytes": 10565,
+          "encodedBytes": 10265
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/controller-thumb.webp",
+          "transferBytes": 4064,
+          "encodedBytes": 3764
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/barbell-thumb.webp",
+          "transferBytes": 4490,
+          "encodedBytes": 4190
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug-thumb.webp",
+          "transferBytes": 2914,
+          "encodedBytes": 2614
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/lightbulb-thumb.webp",
+          "transferBytes": 3812,
+          "encodedBytes": 3512
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/chat-thumb.webp",
+          "transferBytes": 3534,
+          "encodedBytes": 3234
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/sprout-thumb.webp",
+          "transferBytes": 4506,
+          "encodedBytes": 4206
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/watering-can-thumb.webp",
+          "transferBytes": 4376,
+          "encodedBytes": 4076
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/book-thumb.webp",
+          "transferBytes": 3050,
+          "encodedBytes": 2750
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/brain-thumb.webp",
+          "transferBytes": 3866,
+          "encodedBytes": 3566
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bull-thumb.webp",
+          "transferBytes": 4796,
+          "encodedBytes": 4496
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bunny-thumb.webp",
+          "transferBytes": 4232,
+          "encodedBytes": 3932
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/camera-thumb.webp",
+          "transferBytes": 2696,
+          "encodedBytes": 2396
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cat-thumb.webp",
+          "transferBytes": 4626,
+          "encodedBytes": 4326
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cloud-thumb.webp",
+          "transferBytes": 3498,
+          "encodedBytes": 3198
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/egg-thumb.webp",
+          "transferBytes": 2846,
+          "encodedBytes": 2546
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/ghost-thumb.webp",
+          "transferBytes": 2916,
+          "encodedBytes": 2616
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/magnifier-thumb.webp",
+          "transferBytes": 4258,
+          "encodedBytes": 3958
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/paint-brush-thumb.webp",
+          "transferBytes": 3938,
+          "encodedBytes": 3638
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/palette-thumb.webp",
+          "transferBytes": 4010,
+          "encodedBytes": 3710
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/rocket-thumb.webp",
+          "transferBytes": 3568,
+          "encodedBytes": 3268
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/shield-thumb.webp",
+          "transferBytes": 3546,
+          "encodedBytes": 3246
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/star-thumb.webp",
+          "transferBytes": 4220,
+          "encodedBytes": 3920
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/witch-hat-thumb.webp",
+          "transferBytes": 4090,
+          "encodedBytes": 3790
+        },
+        {
+          "url": "/",
+          "transferBytes": 471,
+          "encodedBytes": 171
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 488,
+          "encodedBytes": 188
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 486,
+          "encodedBytes": 186
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/0c0_w8fsvzuq-.js",
+          "transferBytes": 1030,
+          "encodedBytes": 730
+        },
+        {
+          "url": "/",
+          "transferBytes": 2053,
+          "encodedBytes": 1753
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2103,
+          "encodedBytes": 1803
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 7273,
+          "encodedBytes": 6973
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 435,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7.099999999999909,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 29.900000005960464,
+          "duration": 101,
+          "phase": "load"
+        },
+        {
+          "start": 146.80000000447035,
+          "duration": 58,
+          "phase": "load"
+        },
+        {
+          "start": 303.5,
+          "duration": 82,
+          "phase": "load"
+        },
+        {
+          "start": 4871.60000000149,
+          "duration": 86,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6215784,
+        "documents": 2,
+        "nodes": 437,
+        "jsEventListeners": 433
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 7883500,
+        "documents": 2,
+        "nodes": 441,
+        "jsEventListeners": 433
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "desktop",
+      "scenario": "api-flat",
+      "run": 3,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 515,
+      "fcpMs": 196,
+      "transferredBytes": 395961,
+      "encodedBodyBytes": 381561,
+      "requests": 48,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5615,
+          "encodedBytes": 5315
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/2zf59jjs4tp7d.js",
+          "transferBytes": 6877,
+          "encodedBytes": 6577
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/458hh04knqo05.js",
+          "transferBytes": 10565,
+          "encodedBytes": 10265
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 471,
+          "encodedBytes": 171
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 488,
+          "encodedBytes": 188
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 486,
+          "encodedBytes": 186
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/controller-thumb.webp",
+          "transferBytes": 4064,
+          "encodedBytes": 3764
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/barbell-thumb.webp",
+          "transferBytes": 4490,
+          "encodedBytes": 4190
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug-thumb.webp",
+          "transferBytes": 2914,
+          "encodedBytes": 2614
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/lightbulb-thumb.webp",
+          "transferBytes": 3812,
+          "encodedBytes": 3512
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/chat-thumb.webp",
+          "transferBytes": 3534,
+          "encodedBytes": 3234
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/sprout-thumb.webp",
+          "transferBytes": 4506,
+          "encodedBytes": 4206
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/watering-can-thumb.webp",
+          "transferBytes": 4376,
+          "encodedBytes": 4076
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/book-thumb.webp",
+          "transferBytes": 3050,
+          "encodedBytes": 2750
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/brain-thumb.webp",
+          "transferBytes": 3866,
+          "encodedBytes": 3566
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bull-thumb.webp",
+          "transferBytes": 4796,
+          "encodedBytes": 4496
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bunny-thumb.webp",
+          "transferBytes": 4232,
+          "encodedBytes": 3932
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/camera-thumb.webp",
+          "transferBytes": 2696,
+          "encodedBytes": 2396
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cat-thumb.webp",
+          "transferBytes": 4626,
+          "encodedBytes": 4326
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cloud-thumb.webp",
+          "transferBytes": 3498,
+          "encodedBytes": 3198
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/egg-thumb.webp",
+          "transferBytes": 2846,
+          "encodedBytes": 2546
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/ghost-thumb.webp",
+          "transferBytes": 2916,
+          "encodedBytes": 2616
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/magnifier-thumb.webp",
+          "transferBytes": 4258,
+          "encodedBytes": 3958
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/paint-brush-thumb.webp",
+          "transferBytes": 3938,
+          "encodedBytes": 3638
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/palette-thumb.webp",
+          "transferBytes": 4010,
+          "encodedBytes": 3710
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/rocket-thumb.webp",
+          "transferBytes": 3568,
+          "encodedBytes": 3268
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/shield-thumb.webp",
+          "transferBytes": 3546,
+          "encodedBytes": 3246
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/star-thumb.webp",
+          "transferBytes": 4220,
+          "encodedBytes": 3920
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/witch-hat-thumb.webp",
+          "transferBytes": 4090,
+          "encodedBytes": 3790
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/",
+          "transferBytes": 2053,
+          "encodedBytes": 1753
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2103,
+          "encodedBytes": 1803
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 7273,
+          "encodedBytes": 6973
+        },
+        {
+          "url": "/_next/static/chunks/0c0_w8fsvzuq-.js",
+          "transferBytes": 1030,
+          "encodedBytes": 730
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 435,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7.099999999999909,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 36.79999999701977,
+          "duration": 127,
+          "phase": "load"
+        },
+        {
+          "start": 184.69999999552965,
+          "duration": 63,
+          "phase": "load"
+        },
+        {
+          "start": 357.79999999701977,
+          "duration": 101,
+          "phase": "load"
+        },
+        {
+          "start": 827.1999999955297,
+          "duration": 50,
+          "phase": "load"
+        },
+        {
+          "start": 5039.60000000149,
+          "duration": 88,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6566692,
+        "documents": 2,
+        "nodes": 437,
+        "jsEventListeners": 433
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 7885212,
+        "documents": 2,
+        "nodes": 441,
+        "jsEventListeners": 433
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "desktop",
+      "scenario": "api-fluffy",
+      "run": 1,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 568.2,
+      "fcpMs": 232,
+      "transferredBytes": 605378,
+      "encodedBodyBytes": 591278,
+      "requests": 47,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5615,
+          "encodedBytes": 5315
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/2zf59jjs4tp7d.js",
+          "transferBytes": 6877,
+          "encodedBytes": 6577
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/458hh04knqo05.js",
+          "transferBytes": 10565,
+          "encodedBytes": 10265
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/controller-fluffy-thumb.webp",
+          "transferBytes": 7168,
+          "encodedBytes": 6868
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/barbell-fluffy-thumb.webp",
+          "transferBytes": 7498,
+          "encodedBytes": 7198
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/mug-fluffy-thumb.webp",
+          "transferBytes": 5444,
+          "encodedBytes": 5144
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/lightbulb-fluffy-thumb.webp",
+          "transferBytes": 6202,
+          "encodedBytes": 5902
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/chat-fluffy-thumb.webp",
+          "transferBytes": 6668,
+          "encodedBytes": 6368
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/sprout-fluffy-thumb.webp",
+          "transferBytes": 7622,
+          "encodedBytes": 7322
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/watering-can-fluffy-thumb.webp",
+          "transferBytes": 6842,
+          "encodedBytes": 6542
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/book-fluffy-thumb.webp",
+          "transferBytes": 6686,
+          "encodedBytes": 6386
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/brain-fluffy-thumb.webp",
+          "transferBytes": 6188,
+          "encodedBytes": 5888
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/bull-fluffy-thumb.webp",
+          "transferBytes": 7780,
+          "encodedBytes": 7480
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/bunny-fluffy-thumb.webp",
+          "transferBytes": 6622,
+          "encodedBytes": 6322
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/camera-fluffy-thumb.webp",
+          "transferBytes": 6002,
+          "encodedBytes": 5702
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/cat-fluffy-thumb.webp",
+          "transferBytes": 7212,
+          "encodedBytes": 6912
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/cloud-fluffy-thumb.webp",
+          "transferBytes": 5642,
+          "encodedBytes": 5342
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/egg-fluffy-thumb.webp",
+          "transferBytes": 5044,
+          "encodedBytes": 4744
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/ghost-fluffy-thumb.webp",
+          "transferBytes": 5016,
+          "encodedBytes": 4716
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/magnifier-fluffy-thumb.webp",
+          "transferBytes": 6850,
+          "encodedBytes": 6550
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/paint-brush-fluffy-thumb.webp",
+          "transferBytes": 5834,
+          "encodedBytes": 5534
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/palette-fluffy-thumb.webp",
+          "transferBytes": 6426,
+          "encodedBytes": 6126
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/rocket-fluffy-thumb.webp",
+          "transferBytes": 5946,
+          "encodedBytes": 5646
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/shield-fluffy-thumb.webp",
+          "transferBytes": 6638,
+          "encodedBytes": 6338
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/star-fluffy-thumb.webp",
+          "transferBytes": 6690,
+          "encodedBytes": 6390
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/witch-hat-fluffy-thumb.webp",
+          "transferBytes": 6822,
+          "encodedBytes": 6522
+        },
+        {
+          "url": "/",
+          "transferBytes": 471,
+          "encodedBytes": 171
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 488,
+          "encodedBytes": 188
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 486,
+          "encodedBytes": 186
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 162223,
+          "encodedBytes": 161923
+        },
+        {
+          "url": "/",
+          "transferBytes": 2053,
+          "encodedBytes": 1753
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2103,
+          "encodedBytes": 1803
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 7273,
+          "encodedBytes": 6973
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 434,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7.099999999999909,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 35.899999998509884,
+          "duration": 159,
+          "phase": "load"
+        },
+        {
+          "start": 214.79999999701977,
+          "duration": 71,
+          "phase": "load"
+        },
+        {
+          "start": 401.29999999701977,
+          "duration": 114,
+          "phase": "load"
+        },
+        {
+          "start": 595.6999999955297,
+          "duration": 65,
+          "phase": "load"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 5655848,
+        "documents": 2,
+        "nodes": 432,
+        "jsEventListeners": 432
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 6151216,
+        "documents": 2,
+        "nodes": 436,
+        "jsEventListeners": 432
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "desktop",
+      "scenario": "api-fluffy",
+      "run": 2,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 510.7,
+      "fcpMs": 180,
+      "transferredBytes": 605378,
+      "encodedBodyBytes": 591278,
+      "requests": 47,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5615,
+          "encodedBytes": 5315
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/2zf59jjs4tp7d.js",
+          "transferBytes": 6877,
+          "encodedBytes": 6577
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/458hh04knqo05.js",
+          "transferBytes": 10565,
+          "encodedBytes": 10265
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 471,
+          "encodedBytes": 171
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 488,
+          "encodedBytes": 188
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 486,
+          "encodedBytes": 186
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/controller-fluffy-thumb.webp",
+          "transferBytes": 7168,
+          "encodedBytes": 6868
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/barbell-fluffy-thumb.webp",
+          "transferBytes": 7498,
+          "encodedBytes": 7198
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/mug-fluffy-thumb.webp",
+          "transferBytes": 5444,
+          "encodedBytes": 5144
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/lightbulb-fluffy-thumb.webp",
+          "transferBytes": 6202,
+          "encodedBytes": 5902
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/chat-fluffy-thumb.webp",
+          "transferBytes": 6668,
+          "encodedBytes": 6368
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/sprout-fluffy-thumb.webp",
+          "transferBytes": 7622,
+          "encodedBytes": 7322
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/watering-can-fluffy-thumb.webp",
+          "transferBytes": 6842,
+          "encodedBytes": 6542
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/book-fluffy-thumb.webp",
+          "transferBytes": 6686,
+          "encodedBytes": 6386
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/brain-fluffy-thumb.webp",
+          "transferBytes": 6188,
+          "encodedBytes": 5888
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/bull-fluffy-thumb.webp",
+          "transferBytes": 7780,
+          "encodedBytes": 7480
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/bunny-fluffy-thumb.webp",
+          "transferBytes": 6622,
+          "encodedBytes": 6322
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/camera-fluffy-thumb.webp",
+          "transferBytes": 6002,
+          "encodedBytes": 5702
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/cat-fluffy-thumb.webp",
+          "transferBytes": 7212,
+          "encodedBytes": 6912
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/cloud-fluffy-thumb.webp",
+          "transferBytes": 5642,
+          "encodedBytes": 5342
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/egg-fluffy-thumb.webp",
+          "transferBytes": 5044,
+          "encodedBytes": 4744
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/ghost-fluffy-thumb.webp",
+          "transferBytes": 5016,
+          "encodedBytes": 4716
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/magnifier-fluffy-thumb.webp",
+          "transferBytes": 6850,
+          "encodedBytes": 6550
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/paint-brush-fluffy-thumb.webp",
+          "transferBytes": 5834,
+          "encodedBytes": 5534
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/palette-fluffy-thumb.webp",
+          "transferBytes": 6426,
+          "encodedBytes": 6126
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/rocket-fluffy-thumb.webp",
+          "transferBytes": 5946,
+          "encodedBytes": 5646
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/shield-fluffy-thumb.webp",
+          "transferBytes": 6638,
+          "encodedBytes": 6338
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/star-fluffy-thumb.webp",
+          "transferBytes": 6690,
+          "encodedBytes": 6390
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/witch-hat-fluffy-thumb.webp",
+          "transferBytes": 6822,
+          "encodedBytes": 6522
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 162223,
+          "encodedBytes": 161923
+        },
+        {
+          "url": "/",
+          "transferBytes": 2053,
+          "encodedBytes": 1753
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2103,
+          "encodedBytes": 1803
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 7273,
+          "encodedBytes": 6973
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 434,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 33.29999999701977,
+          "duration": 118,
+          "phase": "load"
+        },
+        {
+          "start": 169.5,
+          "duration": 68,
+          "phase": "load"
+        },
+        {
+          "start": 338.79999999701977,
+          "duration": 99,
+          "phase": "load"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 5579880,
+        "documents": 2,
+        "nodes": 432,
+        "jsEventListeners": 432
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 6151200,
+        "documents": 2,
+        "nodes": 436,
+        "jsEventListeners": 432
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "desktop",
+      "scenario": "api-fluffy",
+      "run": 3,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 507.7,
+      "fcpMs": 176,
+      "transferredBytes": 605378,
+      "encodedBodyBytes": 591278,
+      "requests": 47,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5615,
+          "encodedBytes": 5315
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/2zf59jjs4tp7d.js",
+          "transferBytes": 6877,
+          "encodedBytes": 6577
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/458hh04knqo05.js",
+          "transferBytes": 10565,
+          "encodedBytes": 10265
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 471,
+          "encodedBytes": 171
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 488,
+          "encodedBytes": 188
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 486,
+          "encodedBytes": 186
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/controller-fluffy-thumb.webp",
+          "transferBytes": 7168,
+          "encodedBytes": 6868
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/barbell-fluffy-thumb.webp",
+          "transferBytes": 7498,
+          "encodedBytes": 7198
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/mug-fluffy-thumb.webp",
+          "transferBytes": 5444,
+          "encodedBytes": 5144
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/lightbulb-fluffy-thumb.webp",
+          "transferBytes": 6202,
+          "encodedBytes": 5902
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/chat-fluffy-thumb.webp",
+          "transferBytes": 6668,
+          "encodedBytes": 6368
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/sprout-fluffy-thumb.webp",
+          "transferBytes": 7622,
+          "encodedBytes": 7322
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/watering-can-fluffy-thumb.webp",
+          "transferBytes": 6842,
+          "encodedBytes": 6542
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/book-fluffy-thumb.webp",
+          "transferBytes": 6686,
+          "encodedBytes": 6386
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/brain-fluffy-thumb.webp",
+          "transferBytes": 6188,
+          "encodedBytes": 5888
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/bull-fluffy-thumb.webp",
+          "transferBytes": 7780,
+          "encodedBytes": 7480
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/bunny-fluffy-thumb.webp",
+          "transferBytes": 6622,
+          "encodedBytes": 6322
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/camera-fluffy-thumb.webp",
+          "transferBytes": 6002,
+          "encodedBytes": 5702
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/cat-fluffy-thumb.webp",
+          "transferBytes": 7212,
+          "encodedBytes": 6912
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/cloud-fluffy-thumb.webp",
+          "transferBytes": 5642,
+          "encodedBytes": 5342
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/egg-fluffy-thumb.webp",
+          "transferBytes": 5044,
+          "encodedBytes": 4744
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/ghost-fluffy-thumb.webp",
+          "transferBytes": 5016,
+          "encodedBytes": 4716
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/magnifier-fluffy-thumb.webp",
+          "transferBytes": 6850,
+          "encodedBytes": 6550
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/paint-brush-fluffy-thumb.webp",
+          "transferBytes": 5834,
+          "encodedBytes": 5534
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/palette-fluffy-thumb.webp",
+          "transferBytes": 6426,
+          "encodedBytes": 6126
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/rocket-fluffy-thumb.webp",
+          "transferBytes": 5946,
+          "encodedBytes": 5646
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/shield-fluffy-thumb.webp",
+          "transferBytes": 6638,
+          "encodedBytes": 6338
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/star-fluffy-thumb.webp",
+          "transferBytes": 6690,
+          "encodedBytes": 6390
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/witch-hat-fluffy-thumb.webp",
+          "transferBytes": 6822,
+          "encodedBytes": 6522
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 162223,
+          "encodedBytes": 161923
+        },
+        {
+          "url": "/",
+          "transferBytes": 2053,
+          "encodedBytes": 1753
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2103,
+          "encodedBytes": 1803
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 7273,
+          "encodedBytes": 6973
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 437,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7.099999999999909,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 30.19999999552965,
+          "duration": 119,
+          "phase": "load"
+        },
+        {
+          "start": 165.69999999552965,
+          "duration": 58,
+          "phase": "load"
+        },
+        {
+          "start": 331,
+          "duration": 100,
+          "phase": "load"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 5600940,
+        "documents": 2,
+        "nodes": 432,
+        "jsEventListeners": 432
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 6150224,
+        "documents": 2,
+        "nodes": 436,
+        "jsEventListeners": 432
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "api-flat",
+      "run": 1,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 6457.8,
+      "fcpMs": 1840,
+      "transferredBytes": 387651,
+      "encodedBodyBytes": 373851,
+      "requests": 46,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5615,
+          "encodedBytes": 5315
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/2zf59jjs4tp7d.js",
+          "transferBytes": 6877,
+          "encodedBytes": 6577
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/458hh04knqo05.js",
+          "transferBytes": 10565,
+          "encodedBytes": 10265
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 471,
+          "encodedBytes": 171
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 488,
+          "encodedBytes": 188
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 486,
+          "encodedBytes": 186
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/controller-thumb.webp",
+          "transferBytes": 4064,
+          "encodedBytes": 3764
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/barbell-thumb.webp",
+          "transferBytes": 4490,
+          "encodedBytes": 4190
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug-thumb.webp",
+          "transferBytes": 2914,
+          "encodedBytes": 2614
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/lightbulb-thumb.webp",
+          "transferBytes": 3812,
+          "encodedBytes": 3512
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/chat-thumb.webp",
+          "transferBytes": 3534,
+          "encodedBytes": 3234
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/sprout-thumb.webp",
+          "transferBytes": 4506,
+          "encodedBytes": 4206
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/watering-can-thumb.webp",
+          "transferBytes": 4376,
+          "encodedBytes": 4076
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/book-thumb.webp",
+          "transferBytes": 3050,
+          "encodedBytes": 2750
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/brain-thumb.webp",
+          "transferBytes": 3866,
+          "encodedBytes": 3566
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bull-thumb.webp",
+          "transferBytes": 4796,
+          "encodedBytes": 4496
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bunny-thumb.webp",
+          "transferBytes": 4232,
+          "encodedBytes": 3932
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/camera-thumb.webp",
+          "transferBytes": 2696,
+          "encodedBytes": 2396
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cat-thumb.webp",
+          "transferBytes": 4626,
+          "encodedBytes": 4326
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cloud-thumb.webp",
+          "transferBytes": 3498,
+          "encodedBytes": 3198
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/egg-thumb.webp",
+          "transferBytes": 2846,
+          "encodedBytes": 2546
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/ghost-thumb.webp",
+          "transferBytes": 2916,
+          "encodedBytes": 2616
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/magnifier-thumb.webp",
+          "transferBytes": 4258,
+          "encodedBytes": 3958
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/paint-brush-thumb.webp",
+          "transferBytes": 3938,
+          "encodedBytes": 3638
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/palette-thumb.webp",
+          "transferBytes": 4010,
+          "encodedBytes": 3710
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/rocket-thumb.webp",
+          "transferBytes": 3568,
+          "encodedBytes": 3268
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/shield-thumb.webp",
+          "transferBytes": 3546,
+          "encodedBytes": 3246
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2103,
+          "encodedBytes": 1803
+        },
+        {
+          "url": "/",
+          "transferBytes": 2053,
+          "encodedBytes": 1753
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 7273,
+          "encodedBytes": 6973
+        },
+        {
+          "url": "/_next/static/chunks/0c0_w8fsvzuq-.js",
+          "transferBytes": 1030,
+          "encodedBytes": 730
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 350,
+        "medianMs": 7,
+        "p95Ms": 20.799999999999272,
+        "over33ms": 2
+      },
+      "longTasks": [
+        {
+          "start": 694,
+          "duration": 1013,
+          "phase": "load"
+        },
+        {
+          "start": 1772.2999999970198,
+          "duration": 185,
+          "phase": "load"
+        },
+        {
+          "start": 2062,
+          "duration": 556,
+          "phase": "load"
+        },
+        {
+          "start": 2658.39999999851,
+          "duration": 927,
+          "phase": "load"
+        },
+        {
+          "start": 4115.19999999553,
+          "duration": 253,
+          "phase": "load"
+        },
+        {
+          "start": 4453,
+          "duration": 64,
+          "phase": "load"
+        },
+        {
+          "start": 4618.39999999851,
+          "duration": 66,
+          "phase": "load"
+        },
+        {
+          "start": 4718.29999999702,
+          "duration": 772,
+          "phase": "load"
+        },
+        {
+          "start": 5544.79999999702,
+          "duration": 121,
+          "phase": "load"
+        },
+        {
+          "start": 5666.19999999553,
+          "duration": 147,
+          "phase": "load"
+        },
+        {
+          "start": 5953.39999999851,
+          "duration": 56,
+          "phase": "load"
+        },
+        {
+          "start": 6461.89999999851,
+          "duration": 114,
+          "phase": "load"
+        },
+        {
+          "start": 6630.39999999851,
+          "duration": 234,
+          "phase": "load"
+        },
+        {
+          "start": 7125,
+          "duration": 65,
+          "phase": "load"
+        },
+        {
+          "start": 7205.89999999851,
+          "duration": 363,
+          "phase": "load"
+        },
+        {
+          "start": 8038.89999999851,
+          "duration": 431,
+          "phase": "load"
+        },
+        {
+          "start": 12244.19999999553,
+          "duration": 154,
+          "phase": "switches"
+        },
+        {
+          "start": 12691.59999999404,
+          "duration": 69,
+          "phase": "switches"
+        },
+        {
+          "start": 12777.19999999553,
+          "duration": 51,
+          "phase": "switches"
+        },
+        {
+          "start": 13285.39999999851,
+          "duration": 107,
+          "phase": "switches"
+        },
+        {
+          "start": 13797.69999999553,
+          "duration": 807,
+          "phase": "switches"
+        },
+        {
+          "start": 14814.29999999702,
+          "duration": 95,
+          "phase": "switches"
+        },
+        {
+          "start": 15189,
+          "duration": 74,
+          "phase": "switches"
+        },
+        {
+          "start": 15276.09999999404,
+          "duration": 305,
+          "phase": "switches"
+        },
+        {
+          "start": 15804.09999999404,
+          "duration": 63,
+          "phase": "switches"
+        },
+        {
+          "start": 16586.89999999851,
+          "duration": 63,
+          "phase": "switches"
+        },
+        {
+          "start": 16992.19999999553,
+          "duration": 56,
+          "phase": "switches"
+        },
+        {
+          "start": 17836.69999999553,
+          "duration": 63,
+          "phase": "switches"
+        },
+        {
+          "start": 17912.19999999553,
+          "duration": 58,
+          "phase": "switches"
+        },
+        {
+          "start": 18357,
+          "duration": 126,
+          "phase": "switches"
+        },
+        {
+          "start": 19269.89999999851,
+          "duration": 134,
+          "phase": "switches"
+        },
+        {
+          "start": 19608.09999999404,
+          "duration": 52,
+          "phase": "switches"
+        },
+        {
+          "start": 19681.39999999851,
+          "duration": 52,
+          "phase": "switches"
+        },
+        {
+          "start": 19750.69999999553,
+          "duration": 52,
+          "phase": "switches"
+        },
+        {
+          "start": 20132.19999999553,
+          "duration": 93,
+          "phase": "switches"
+        },
+        {
+          "start": 21092.39999999851,
+          "duration": 65,
+          "phase": "switches"
+        },
+        {
+          "start": 21558.39999999851,
+          "duration": 64,
+          "phase": "switches"
+        },
+        {
+          "start": 21635.79999999702,
+          "duration": 74,
+          "phase": "switches"
+        },
+        {
+          "start": 22067,
+          "duration": 115,
+          "phase": "switches"
+        },
+        {
+          "start": 22955.69999999553,
+          "duration": 63,
+          "phase": "switches"
+        },
+        {
+          "start": 23235.5,
+          "duration": 76,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6152152,
+        "documents": 2,
+        "nodes": 437,
+        "jsEventListeners": 433
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 7887164,
+        "documents": 2,
+        "nodes": 441,
+        "jsEventListeners": 433
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "api-flat",
+      "run": 2,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 3271.6,
+      "fcpMs": 1588,
+      "transferredBytes": 387651,
+      "encodedBodyBytes": 373851,
+      "requests": 46,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5615,
+          "encodedBytes": 5315
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/2zf59jjs4tp7d.js",
+          "transferBytes": 6877,
+          "encodedBytes": 6577
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/458hh04knqo05.js",
+          "transferBytes": 10565,
+          "encodedBytes": 10265
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 471,
+          "encodedBytes": 171
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 488,
+          "encodedBytes": 188
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 486,
+          "encodedBytes": 186
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/controller-thumb.webp",
+          "transferBytes": 4064,
+          "encodedBytes": 3764
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/barbell-thumb.webp",
+          "transferBytes": 4490,
+          "encodedBytes": 4190
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug-thumb.webp",
+          "transferBytes": 2914,
+          "encodedBytes": 2614
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/lightbulb-thumb.webp",
+          "transferBytes": 3812,
+          "encodedBytes": 3512
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/chat-thumb.webp",
+          "transferBytes": 3534,
+          "encodedBytes": 3234
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/sprout-thumb.webp",
+          "transferBytes": 4506,
+          "encodedBytes": 4206
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/watering-can-thumb.webp",
+          "transferBytes": 4376,
+          "encodedBytes": 4076
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/book-thumb.webp",
+          "transferBytes": 3050,
+          "encodedBytes": 2750
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/brain-thumb.webp",
+          "transferBytes": 3866,
+          "encodedBytes": 3566
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bull-thumb.webp",
+          "transferBytes": 4796,
+          "encodedBytes": 4496
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bunny-thumb.webp",
+          "transferBytes": 4232,
+          "encodedBytes": 3932
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/camera-thumb.webp",
+          "transferBytes": 2696,
+          "encodedBytes": 2396
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cat-thumb.webp",
+          "transferBytes": 4626,
+          "encodedBytes": 4326
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cloud-thumb.webp",
+          "transferBytes": 3498,
+          "encodedBytes": 3198
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/egg-thumb.webp",
+          "transferBytes": 2846,
+          "encodedBytes": 2546
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/ghost-thumb.webp",
+          "transferBytes": 2916,
+          "encodedBytes": 2616
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/magnifier-thumb.webp",
+          "transferBytes": 4258,
+          "encodedBytes": 3958
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/paint-brush-thumb.webp",
+          "transferBytes": 3938,
+          "encodedBytes": 3638
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/palette-thumb.webp",
+          "transferBytes": 4010,
+          "encodedBytes": 3710
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/rocket-thumb.webp",
+          "transferBytes": 3568,
+          "encodedBytes": 3268
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/shield-thumb.webp",
+          "transferBytes": 3546,
+          "encodedBytes": 3246
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/",
+          "transferBytes": 2053,
+          "encodedBytes": 1753
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2103,
+          "encodedBytes": 1803
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 7273,
+          "encodedBytes": 6973
+        },
+        {
+          "url": "/_next/static/chunks/0c0_w8fsvzuq-.js",
+          "transferBytes": 1030,
+          "encodedBytes": 730
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 189,
+        "medianMs": 13.900000000001455,
+        "p95Ms": 27.800000000000182,
+        "over33ms": 4
+      },
+      "longTasks": [
+        {
+          "start": 682.8000000044703,
+          "duration": 874,
+          "phase": "load"
+        },
+        {
+          "start": 1569.5,
+          "duration": 65,
+          "phase": "load"
+        },
+        {
+          "start": 1686.2000000029802,
+          "duration": 128,
+          "phase": "load"
+        },
+        {
+          "start": 1928.8000000044703,
+          "duration": 277,
+          "phase": "load"
+        },
+        {
+          "start": 2270,
+          "duration": 64,
+          "phase": "load"
+        },
+        {
+          "start": 2483.10000000149,
+          "duration": 281,
+          "phase": "load"
+        },
+        {
+          "start": 2787.60000000149,
+          "duration": 51,
+          "phase": "load"
+        },
+        {
+          "start": 2839,
+          "duration": 62,
+          "phase": "load"
+        },
+        {
+          "start": 3271.10000000149,
+          "duration": 109,
+          "phase": "load"
+        },
+        {
+          "start": 3439.7000000029802,
+          "duration": 195,
+          "phase": "load"
+        },
+        {
+          "start": 3879.5,
+          "duration": 87,
+          "phase": "load"
+        },
+        {
+          "start": 4055.8000000044703,
+          "duration": 338,
+          "phase": "load"
+        },
+        {
+          "start": 4535,
+          "duration": 402,
+          "phase": "load"
+        },
+        {
+          "start": 9570.10000000149,
+          "duration": 60,
+          "phase": "switches"
+        },
+        {
+          "start": 9643.70000000298,
+          "duration": 76,
+          "phase": "switches"
+        },
+        {
+          "start": 9757.90000000596,
+          "duration": 115,
+          "phase": "switches"
+        },
+        {
+          "start": 10182.60000000149,
+          "duration": 82,
+          "phase": "switches"
+        },
+        {
+          "start": 10283.40000000596,
+          "duration": 65,
+          "phase": "switches"
+        },
+        {
+          "start": 10670.90000000596,
+          "duration": 74,
+          "phase": "switches"
+        },
+        {
+          "start": 10747.20000000298,
+          "duration": 50,
+          "phase": "switches"
+        },
+        {
+          "start": 11162.70000000298,
+          "duration": 688,
+          "phase": "switches"
+        },
+        {
+          "start": 12137.80000000447,
+          "duration": 150,
+          "phase": "switches"
+        },
+        {
+          "start": 12581.60000000149,
+          "duration": 54,
+          "phase": "switches"
+        },
+        {
+          "start": 12642,
+          "duration": 719,
+          "phase": "switches"
+        },
+        {
+          "start": 13548.10000000149,
+          "duration": 63,
+          "phase": "switches"
+        },
+        {
+          "start": 13900.90000000596,
+          "duration": 54,
+          "phase": "switches"
+        },
+        {
+          "start": 14692.70000000298,
+          "duration": 59,
+          "phase": "switches"
+        },
+        {
+          "start": 15234.70000000298,
+          "duration": 54,
+          "phase": "switches"
+        },
+        {
+          "start": 15707.5,
+          "duration": 72,
+          "phase": "switches"
+        },
+        {
+          "start": 15786,
+          "duration": 50,
+          "phase": "switches"
+        },
+        {
+          "start": 16972,
+          "duration": 62,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6283576,
+        "documents": 2,
+        "nodes": 437,
+        "jsEventListeners": 433
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 7873188,
+        "documents": 2,
+        "nodes": 441,
+        "jsEventListeners": 433
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "api-flat",
+      "run": 3,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 3698.6,
+      "fcpMs": 1104,
+      "transferredBytes": 387651,
+      "encodedBodyBytes": 373851,
+      "requests": 46,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5615,
+          "encodedBytes": 5315
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/2zf59jjs4tp7d.js",
+          "transferBytes": 6877,
+          "encodedBytes": 6577
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/458hh04knqo05.js",
+          "transferBytes": 10565,
+          "encodedBytes": 10265
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 471,
+          "encodedBytes": 171
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 488,
+          "encodedBytes": 188
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 486,
+          "encodedBytes": 186
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/controller-thumb.webp",
+          "transferBytes": 4064,
+          "encodedBytes": 3764
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/barbell-thumb.webp",
+          "transferBytes": 4490,
+          "encodedBytes": 4190
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug-thumb.webp",
+          "transferBytes": 2914,
+          "encodedBytes": 2614
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/lightbulb-thumb.webp",
+          "transferBytes": 3812,
+          "encodedBytes": 3512
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/chat-thumb.webp",
+          "transferBytes": 3534,
+          "encodedBytes": 3234
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/sprout-thumb.webp",
+          "transferBytes": 4506,
+          "encodedBytes": 4206
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/watering-can-thumb.webp",
+          "transferBytes": 4376,
+          "encodedBytes": 4076
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/book-thumb.webp",
+          "transferBytes": 3050,
+          "encodedBytes": 2750
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/brain-thumb.webp",
+          "transferBytes": 3866,
+          "encodedBytes": 3566
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bull-thumb.webp",
+          "transferBytes": 4796,
+          "encodedBytes": 4496
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bunny-thumb.webp",
+          "transferBytes": 4232,
+          "encodedBytes": 3932
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/camera-thumb.webp",
+          "transferBytes": 2696,
+          "encodedBytes": 2396
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cat-thumb.webp",
+          "transferBytes": 4626,
+          "encodedBytes": 4326
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cloud-thumb.webp",
+          "transferBytes": 3498,
+          "encodedBytes": 3198
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/egg-thumb.webp",
+          "transferBytes": 2846,
+          "encodedBytes": 2546
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/ghost-thumb.webp",
+          "transferBytes": 2916,
+          "encodedBytes": 2616
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/magnifier-thumb.webp",
+          "transferBytes": 4258,
+          "encodedBytes": 3958
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/paint-brush-thumb.webp",
+          "transferBytes": 3938,
+          "encodedBytes": 3638
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/palette-thumb.webp",
+          "transferBytes": 4010,
+          "encodedBytes": 3710
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/rocket-thumb.webp",
+          "transferBytes": 3568,
+          "encodedBytes": 3268
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/shield-thumb.webp",
+          "transferBytes": 3546,
+          "encodedBytes": 3246
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/",
+          "transferBytes": 2053,
+          "encodedBytes": 1753
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2103,
+          "encodedBytes": 1803
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 7273,
+          "encodedBytes": 6973
+        },
+        {
+          "url": "/_next/static/chunks/0c0_w8fsvzuq-.js",
+          "transferBytes": 1030,
+          "encodedBytes": 730
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 194,
+        "medianMs": 13.900000000000546,
+        "p95Ms": 27.800000000000182,
+        "over33ms": 4
+      },
+      "longTasks": [
+        {
+          "start": 657.7999999970198,
+          "duration": 427,
+          "phase": "load"
+        },
+        {
+          "start": 1416.3999999985099,
+          "duration": 62,
+          "phase": "load"
+        },
+        {
+          "start": 1655.1000000014901,
+          "duration": 118,
+          "phase": "load"
+        },
+        {
+          "start": 1806.8999999985099,
+          "duration": 290,
+          "phase": "load"
+        },
+        {
+          "start": 2135.10000000149,
+          "duration": 70,
+          "phase": "load"
+        },
+        {
+          "start": 2330.2000000029802,
+          "duration": 407,
+          "phase": "load"
+        },
+        {
+          "start": 2739.2000000029802,
+          "duration": 103,
+          "phase": "load"
+        },
+        {
+          "start": 2842.2999999970198,
+          "duration": 152,
+          "phase": "load"
+        },
+        {
+          "start": 3207.10000000149,
+          "duration": 55,
+          "phase": "load"
+        },
+        {
+          "start": 3297.89999999851,
+          "duration": 56,
+          "phase": "load"
+        },
+        {
+          "start": 3721.5,
+          "duration": 112,
+          "phase": "load"
+        },
+        {
+          "start": 3870.89999999851,
+          "duration": 175,
+          "phase": "load"
+        },
+        {
+          "start": 4123,
+          "duration": 54,
+          "phase": "load"
+        },
+        {
+          "start": 4247.10000000149,
+          "duration": 51,
+          "phase": "load"
+        },
+        {
+          "start": 4306.89999999851,
+          "duration": 429,
+          "phase": "load"
+        },
+        {
+          "start": 4839.20000000298,
+          "duration": 355,
+          "phase": "load"
+        },
+        {
+          "start": 9946.20000000298,
+          "duration": 61,
+          "phase": "switches"
+        },
+        {
+          "start": 10076.60000000149,
+          "duration": 206,
+          "phase": "switches"
+        },
+        {
+          "start": 11096,
+          "duration": 60,
+          "phase": "switches"
+        },
+        {
+          "start": 11600.79999999702,
+          "duration": 730,
+          "phase": "switches"
+        },
+        {
+          "start": 12626,
+          "duration": 128,
+          "phase": "switches"
+        },
+        {
+          "start": 13079,
+          "duration": 665,
+          "phase": "switches"
+        },
+        {
+          "start": 13945.79999999702,
+          "duration": 96,
+          "phase": "switches"
+        },
+        {
+          "start": 14320.79999999702,
+          "duration": 126,
+          "phase": "switches"
+        },
+        {
+          "start": 14467.29999999702,
+          "duration": 70,
+          "phase": "switches"
+        },
+        {
+          "start": 14730.79999999702,
+          "duration": 167,
+          "phase": "switches"
+        },
+        {
+          "start": 14900.89999999851,
+          "duration": 80,
+          "phase": "switches"
+        },
+        {
+          "start": 15726.79999999702,
+          "duration": 150,
+          "phase": "switches"
+        },
+        {
+          "start": 16289.20000000298,
+          "duration": 69,
+          "phase": "switches"
+        },
+        {
+          "start": 16711,
+          "duration": 73,
+          "phase": "switches"
+        },
+        {
+          "start": 17125.20000000298,
+          "duration": 58,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6105068,
+        "documents": 2,
+        "nodes": 437,
+        "jsEventListeners": 433
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 7872916,
+        "documents": 2,
+        "nodes": 441,
+        "jsEventListeners": 433
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "api-fluffy",
+      "run": 1,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 5024.6,
+      "fcpMs": 1024,
+      "transferredBytes": 591866,
+      "encodedBodyBytes": 578366,
+      "requests": 45,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5615,
+          "encodedBytes": 5315
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/2zf59jjs4tp7d.js",
+          "transferBytes": 6877,
+          "encodedBytes": 6577
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/458hh04knqo05.js",
+          "transferBytes": 10565,
+          "encodedBytes": 10265
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 471,
+          "encodedBytes": 171
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 488,
+          "encodedBytes": 188
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 486,
+          "encodedBytes": 186
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/controller-fluffy-thumb.webp",
+          "transferBytes": 7168,
+          "encodedBytes": 6868
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/barbell-fluffy-thumb.webp",
+          "transferBytes": 7498,
+          "encodedBytes": 7198
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/mug-fluffy-thumb.webp",
+          "transferBytes": 5444,
+          "encodedBytes": 5144
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/lightbulb-fluffy-thumb.webp",
+          "transferBytes": 6202,
+          "encodedBytes": 5902
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/chat-fluffy-thumb.webp",
+          "transferBytes": 6668,
+          "encodedBytes": 6368
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/sprout-fluffy-thumb.webp",
+          "transferBytes": 7622,
+          "encodedBytes": 7322
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/watering-can-fluffy-thumb.webp",
+          "transferBytes": 6842,
+          "encodedBytes": 6542
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/book-fluffy-thumb.webp",
+          "transferBytes": 6686,
+          "encodedBytes": 6386
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/brain-fluffy-thumb.webp",
+          "transferBytes": 6188,
+          "encodedBytes": 5888
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/bull-fluffy-thumb.webp",
+          "transferBytes": 7780,
+          "encodedBytes": 7480
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/bunny-fluffy-thumb.webp",
+          "transferBytes": 6622,
+          "encodedBytes": 6322
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/camera-fluffy-thumb.webp",
+          "transferBytes": 6002,
+          "encodedBytes": 5702
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/cat-fluffy-thumb.webp",
+          "transferBytes": 7212,
+          "encodedBytes": 6912
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/cloud-fluffy-thumb.webp",
+          "transferBytes": 5642,
+          "encodedBytes": 5342
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/egg-fluffy-thumb.webp",
+          "transferBytes": 5044,
+          "encodedBytes": 4744
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/ghost-fluffy-thumb.webp",
+          "transferBytes": 5016,
+          "encodedBytes": 4716
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/magnifier-fluffy-thumb.webp",
+          "transferBytes": 6850,
+          "encodedBytes": 6550
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/paint-brush-fluffy-thumb.webp",
+          "transferBytes": 5834,
+          "encodedBytes": 5534
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/palette-fluffy-thumb.webp",
+          "transferBytes": 6426,
+          "encodedBytes": 6126
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/rocket-fluffy-thumb.webp",
+          "transferBytes": 5946,
+          "encodedBytes": 5646
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/shield-fluffy-thumb.webp",
+          "transferBytes": 6638,
+          "encodedBytes": 6338
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 162223,
+          "encodedBytes": 161923
+        },
+        {
+          "url": "/",
+          "transferBytes": 2053,
+          "encodedBytes": 1753
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2103,
+          "encodedBytes": 1803
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 7273,
+          "encodedBytes": 6973
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 436,
+        "medianMs": 6.900000000000546,
+        "p95Ms": 7.100000000000364,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 636,
+          "duration": 362,
+          "phase": "load"
+        },
+        {
+          "start": 1181.3000000044703,
+          "duration": 58,
+          "phase": "load"
+        },
+        {
+          "start": 1639,
+          "duration": 91,
+          "phase": "load"
+        },
+        {
+          "start": 1820.8000000044703,
+          "duration": 294,
+          "phase": "load"
+        },
+        {
+          "start": 2182.89999999851,
+          "duration": 67,
+          "phase": "load"
+        },
+        {
+          "start": 2409.2000000029802,
+          "duration": 481,
+          "phase": "load"
+        },
+        {
+          "start": 2942.39999999851,
+          "duration": 90,
+          "phase": "load"
+        },
+        {
+          "start": 3032.5,
+          "duration": 80,
+          "phase": "load"
+        },
+        {
+          "start": 5065.39999999851,
+          "duration": 71,
+          "phase": "load"
+        },
+        {
+          "start": 8899,
+          "duration": 77,
+          "phase": "switches"
+        },
+        {
+          "start": 11101.80000000447,
+          "duration": 54,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 5694768,
+        "documents": 2,
+        "nodes": 432,
+        "jsEventListeners": 432
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 6183652,
+        "documents": 2,
+        "nodes": 436,
+        "jsEventListeners": 432
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "api-fluffy",
+      "run": 2,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 4933.3,
+      "fcpMs": 1028,
+      "transferredBytes": 591866,
+      "encodedBodyBytes": 578366,
+      "requests": 45,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5615,
+          "encodedBytes": 5315
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/2zf59jjs4tp7d.js",
+          "transferBytes": 6877,
+          "encodedBytes": 6577
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/458hh04knqo05.js",
+          "transferBytes": 10565,
+          "encodedBytes": 10265
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 471,
+          "encodedBytes": 171
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 488,
+          "encodedBytes": 188
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 486,
+          "encodedBytes": 186
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/controller-fluffy-thumb.webp",
+          "transferBytes": 7168,
+          "encodedBytes": 6868
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/barbell-fluffy-thumb.webp",
+          "transferBytes": 7498,
+          "encodedBytes": 7198
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/mug-fluffy-thumb.webp",
+          "transferBytes": 5444,
+          "encodedBytes": 5144
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/lightbulb-fluffy-thumb.webp",
+          "transferBytes": 6202,
+          "encodedBytes": 5902
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/chat-fluffy-thumb.webp",
+          "transferBytes": 6668,
+          "encodedBytes": 6368
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/sprout-fluffy-thumb.webp",
+          "transferBytes": 7622,
+          "encodedBytes": 7322
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/watering-can-fluffy-thumb.webp",
+          "transferBytes": 6842,
+          "encodedBytes": 6542
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/book-fluffy-thumb.webp",
+          "transferBytes": 6686,
+          "encodedBytes": 6386
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/brain-fluffy-thumb.webp",
+          "transferBytes": 6188,
+          "encodedBytes": 5888
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/bull-fluffy-thumb.webp",
+          "transferBytes": 7780,
+          "encodedBytes": 7480
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/bunny-fluffy-thumb.webp",
+          "transferBytes": 6622,
+          "encodedBytes": 6322
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/camera-fluffy-thumb.webp",
+          "transferBytes": 6002,
+          "encodedBytes": 5702
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/cat-fluffy-thumb.webp",
+          "transferBytes": 7212,
+          "encodedBytes": 6912
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/cloud-fluffy-thumb.webp",
+          "transferBytes": 5642,
+          "encodedBytes": 5342
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/egg-fluffy-thumb.webp",
+          "transferBytes": 5044,
+          "encodedBytes": 4744
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/ghost-fluffy-thumb.webp",
+          "transferBytes": 5016,
+          "encodedBytes": 4716
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/magnifier-fluffy-thumb.webp",
+          "transferBytes": 6850,
+          "encodedBytes": 6550
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/paint-brush-fluffy-thumb.webp",
+          "transferBytes": 5834,
+          "encodedBytes": 5534
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/palette-fluffy-thumb.webp",
+          "transferBytes": 6426,
+          "encodedBytes": 6126
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/rocket-fluffy-thumb.webp",
+          "transferBytes": 5946,
+          "encodedBytes": 5646
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/shield-fluffy-thumb.webp",
+          "transferBytes": 6638,
+          "encodedBytes": 6338
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 162223,
+          "encodedBytes": 161923
+        },
+        {
+          "url": "/",
+          "transferBytes": 2053,
+          "encodedBytes": 1753
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2103,
+          "encodedBytes": 1803
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 7273,
+          "encodedBytes": 6973
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 436,
+        "medianMs": 6.900000000000546,
+        "p95Ms": 7.100000000000364,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 623.1000000014901,
+          "duration": 378,
+          "phase": "load"
+        },
+        {
+          "start": 1152.3999999985099,
+          "duration": 52,
+          "phase": "load"
+        },
+        {
+          "start": 1625.7999999970198,
+          "duration": 134,
+          "phase": "load"
+        },
+        {
+          "start": 1824.1999999955297,
+          "duration": 297,
+          "phase": "load"
+        },
+        {
+          "start": 2190.10000000149,
+          "duration": 64,
+          "phase": "load"
+        },
+        {
+          "start": 2363.6999999955297,
+          "duration": 429,
+          "phase": "load"
+        },
+        {
+          "start": 2861.6999999955297,
+          "duration": 74,
+          "phase": "load"
+        },
+        {
+          "start": 2936.60000000149,
+          "duration": 76,
+          "phase": "load"
+        },
+        {
+          "start": 4968.19999999553,
+          "duration": 97,
+          "phase": "load"
+        },
+        {
+          "start": 9421.5,
+          "duration": 88,
+          "phase": "switches"
+        },
+        {
+          "start": 15507.29999999702,
+          "duration": 81,
+          "phase": "switches"
+        },
+        {
+          "start": 16964.5,
+          "duration": 54,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 5750220,
+        "documents": 2,
+        "nodes": 432,
+        "jsEventListeners": 432
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 6195616,
+        "documents": 2,
+        "nodes": 436,
+        "jsEventListeners": 432
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "api-fluffy",
+      "run": 3,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 5404,
+      "fcpMs": 1048,
+      "transferredBytes": 591866,
+      "encodedBodyBytes": 578366,
+      "requests": 45,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5615,
+          "encodedBytes": 5315
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/2zf59jjs4tp7d.js",
+          "transferBytes": 6877,
+          "encodedBytes": 6577
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/458hh04knqo05.js",
+          "transferBytes": 10565,
+          "encodedBytes": 10265
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 471,
+          "encodedBytes": 171
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 488,
+          "encodedBytes": 188
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 486,
+          "encodedBytes": 186
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/controller-fluffy-thumb.webp",
+          "transferBytes": 7168,
+          "encodedBytes": 6868
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/barbell-fluffy-thumb.webp",
+          "transferBytes": 7498,
+          "encodedBytes": 7198
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/mug-fluffy-thumb.webp",
+          "transferBytes": 5444,
+          "encodedBytes": 5144
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/lightbulb-fluffy-thumb.webp",
+          "transferBytes": 6202,
+          "encodedBytes": 5902
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/chat-fluffy-thumb.webp",
+          "transferBytes": 6668,
+          "encodedBytes": 6368
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/sprout-fluffy-thumb.webp",
+          "transferBytes": 7622,
+          "encodedBytes": 7322
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/watering-can-fluffy-thumb.webp",
+          "transferBytes": 6842,
+          "encodedBytes": 6542
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/book-fluffy-thumb.webp",
+          "transferBytes": 6686,
+          "encodedBytes": 6386
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/brain-fluffy-thumb.webp",
+          "transferBytes": 6188,
+          "encodedBytes": 5888
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/bull-fluffy-thumb.webp",
+          "transferBytes": 7780,
+          "encodedBytes": 7480
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/bunny-fluffy-thumb.webp",
+          "transferBytes": 6622,
+          "encodedBytes": 6322
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/camera-fluffy-thumb.webp",
+          "transferBytes": 6002,
+          "encodedBytes": 5702
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/cat-fluffy-thumb.webp",
+          "transferBytes": 7212,
+          "encodedBytes": 6912
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/cloud-fluffy-thumb.webp",
+          "transferBytes": 5642,
+          "encodedBytes": 5342
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/egg-fluffy-thumb.webp",
+          "transferBytes": 5044,
+          "encodedBytes": 4744
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/ghost-fluffy-thumb.webp",
+          "transferBytes": 5016,
+          "encodedBytes": 4716
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/magnifier-fluffy-thumb.webp",
+          "transferBytes": 6850,
+          "encodedBytes": 6550
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/paint-brush-fluffy-thumb.webp",
+          "transferBytes": 5834,
+          "encodedBytes": 5534
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/palette-fluffy-thumb.webp",
+          "transferBytes": 6426,
+          "encodedBytes": 6126
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/rocket-fluffy-thumb.webp",
+          "transferBytes": 5946,
+          "encodedBytes": 5646
+        },
+        {
+          "url": "/avatars/v4/open-bot-avatar/shield-fluffy-thumb.webp",
+          "transferBytes": 6638,
+          "encodedBytes": 6338
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 162223,
+          "encodedBytes": 161923
+        },
+        {
+          "url": "/",
+          "transferBytes": 2053,
+          "encodedBytes": 1753
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2103,
+          "encodedBytes": 1803
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 7273,
+          "encodedBytes": 6973
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 436,
+        "medianMs": 6.900000000000546,
+        "p95Ms": 7.100000000000364,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 669.1000000014901,
+          "duration": 360,
+          "phase": "load"
+        },
+        {
+          "start": 1179.2999999970198,
+          "duration": 60,
+          "phase": "load"
+        },
+        {
+          "start": 1636.8999999985099,
+          "duration": 98,
+          "phase": "load"
+        },
+        {
+          "start": 1820.3999999985099,
+          "duration": 355,
+          "phase": "load"
+        },
+        {
+          "start": 2242.1999999955297,
+          "duration": 63,
+          "phase": "load"
+        },
+        {
+          "start": 2420.10000000149,
+          "duration": 555,
+          "phase": "load"
+        },
+        {
+          "start": 2977,
+          "duration": 102,
+          "phase": "load"
+        },
+        {
+          "start": 3155.89999999851,
+          "duration": 200,
+          "phase": "load"
+        },
+        {
+          "start": 3360.1999999955297,
+          "duration": 155,
+          "phase": "load"
+        },
+        {
+          "start": 3592.7999999970198,
+          "duration": 53,
+          "phase": "load"
+        },
+        {
+          "start": 4857.5,
+          "duration": 50,
+          "phase": "load"
+        },
+        {
+          "start": 5442.89999999851,
+          "duration": 184,
+          "phase": "load"
+        },
+        {
+          "start": 10449.60000000149,
+          "duration": 165,
+          "phase": "switches"
+        },
+        {
+          "start": 12643.89999999851,
+          "duration": 121,
+          "phase": "switches"
+        },
+        {
+          "start": 14161.5,
+          "duration": 54,
+          "phase": "switches"
+        },
+        {
+          "start": 14621.29999999702,
+          "duration": 136,
+          "phase": "switches"
+        },
+        {
+          "start": 16521.19999999553,
+          "duration": 66,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 5696992,
+        "documents": 2,
+        "nodes": 432,
+        "jsEventListeners": 432
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 6187040,
+        "documents": 2,
+        "nodes": 436,
+        "jsEventListeners": 432
+      },
+      "strandDraws": 0
+    }
+  ],
+  "api": [
+    {
+      "query": "/api/avatars",
+      "run": 1,
+      "durationMs": 26.891600000002654,
+      "bytes": 11323,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatars",
+      "run": 2,
+      "durationMs": 5.635999999998603,
+      "bytes": 11323,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatars",
+      "run": 3,
+      "durationMs": 7.253299999982119,
+      "bytes": 11323,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug",
+      "run": 1,
+      "durationMs": 3.6634999999951106,
+      "bytes": 12466,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug",
+      "run": 2,
+      "durationMs": 2.7655000000086147,
+      "bytes": 12466,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug",
+      "run": 3,
+      "durationMs": 2.6419999999925494,
+      "bytes": 12466,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&seed=baseline",
+      "run": 1,
+      "durationMs": 4.5609999999869615,
+      "bytes": 23531,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&seed=baseline",
+      "run": 2,
+      "durationMs": 3.6931000000040513,
+      "bytes": 23531,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&seed=baseline",
+      "run": 3,
+      "durationMs": 3.8594000000157394,
+      "bytes": 23531,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug&format=svg",
+      "run": 1,
+      "durationMs": 5.782000000006519,
+      "bytes": 16396,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug&format=svg",
+      "run": 2,
+      "durationMs": 4.547900000005029,
+      "bytes": 16396,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug&format=svg",
+      "run": 3,
+      "durationMs": 4.229599999991478,
+      "bytes": 16396,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3",
+      "run": 1,
+      "durationMs": 3.8132000000041444,
+      "bytes": 16409,
+      "cacheControl": "no-store"
+    },
+    {
+      "query": "/api/avatar?v=3",
+      "run": 2,
+      "durationMs": 3.6915999999910127,
+      "bytes": 15253,
+      "cacheControl": "no-store"
+    },
+    {
+      "query": "/api/avatar?v=3",
+      "run": 3,
+      "durationMs": 3.218299999978626,
+      "bytes": 23720,
+      "cacheControl": "no-store"
+    },
+    {
+      "query": "/api/avatars?v=4",
+      "run": 1,
+      "durationMs": 4.877500000002328,
+      "bytes": 17784,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatars?v=4",
+      "run": 2,
+      "durationMs": 4.112800000002608,
+      "bytes": 17784,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatars?v=4",
+      "run": 3,
+      "durationMs": 5.008399999991525,
+      "bytes": 17784,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=4&collection=open-bot-avatar&avatar=mug&style=fluffy",
+      "run": 1,
+      "durationMs": 3.1037999999825843,
+      "bytes": 161923,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=4&collection=open-bot-avatar&avatar=mug&style=fluffy",
+      "run": 2,
+      "durationMs": 3.336799999990035,
+      "bytes": 161923,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=4&collection=open-bot-avatar&avatar=mug&style=fluffy",
+      "run": 3,
+      "durationMs": 3.480999999999767,
+      "bytes": 161923,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=4&style=fluffy&seed=baseline",
+      "run": 1,
+      "durationMs": 4.036900000006426,
+      "bytes": 246319,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=4&style=fluffy&seed=baseline",
+      "run": 2,
+      "durationMs": 3.691900000005262,
+      "bytes": 246319,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=4&style=fluffy&seed=baseline",
+      "run": 3,
+      "durationMs": 6.691400000010617,
+      "bytes": 246319,
+      "cacheControl": "public, max-age=86400"
+    }
+  ],
+  "chromium": "145.0.7632.6",
+  "result": "Completed desktop and mobile-emulated measurements for the selected production scenarios; physical mobile measurements pending."
+}

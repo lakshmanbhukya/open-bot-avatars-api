@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-25",
+  "finalBuildId": "wro6LsynfnTuSK9k5J8t4",
+  "groups": [
+    {
+      "profile": "desktop/api-flat",
+      "firstAvatarMs": 424.4,
+      "fcpMs": 196,
+      "transferBytes": 395961,
+      "idleRafP95Ms": 7.099999999999909,
+      "longTasks": 4,
+      "heapBeforeMiB": 5.968463897705078,
+      "heapAfterMiB": 7.518291473388672
+    },
+    {
+      "profile": "desktop/api-fluffy",
+      "firstAvatarMs": 510.7,
+      "fcpMs": 180,
+      "transferBytes": 605378,
+      "idleRafP95Ms": 7.099999999999909,
+      "longTasks": 3,
+      "heapBeforeMiB": 5.341472625732422,
+      "heapAfterMiB": 5.866241455078125
+    },
+    {
+      "profile": "mobile-emulated/api-flat",
+      "firstAvatarMs": 3698.6,
+      "fcpMs": 1588,
+      "transferBytes": 387651,
+      "idleRafP95Ms": 27.800000000000182,
+      "longTasks": 31,
+      "heapBeforeMiB": 5.867149353027344,
+      "heapAfterMiB": 7.508457183837891
+    },
+    {
+      "profile": "mobile-emulated/api-fluffy",
+      "firstAvatarMs": 5024.6,
+      "fcpMs": 1028,
+      "transferBytes": 591866,
+      "idleRafP95Ms": 7.100000000000364,
+      "longTasks": 12,
+      "heapBeforeMiB": 5.433074951171875,
+      "heapAfterMiB": 5.900421142578125
+    }
+  ],
+  "verified": {
+    "v3WrongVersionThumbnailRequests": 0,
+    "defaultFluffyGpuStrandDraws": 0
+  },
+  "stages": {
+    "initial": "../performance-v4/result.json",
+    "pngFirst": "../performance-v4-png-first/result.json",
+    "final": "result.json"
+  },
+  "limits": [
+    "Emulated mobile uses desktop GPU, not phone hardware.",
+    "Initial first-avatar timing required a live canvas; follow-ups permit the returned PNG.",
+    "Opt-in live timing uses the Show animation click as origin.",
+    "Unchanged-editor timing variability remains a separate profiling task.",
+    "No external deployment or hosted latency measurement."
+  ]
+}
