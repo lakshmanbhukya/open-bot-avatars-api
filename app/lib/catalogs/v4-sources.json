@@ -1,0 +1,12 @@
+{
+  "openBot": {
+    "repository": "DominikScholz/open-bot-avatar",
+    "commit": "323ce6ab8bc6b0bc9603a418ee3d91442e4996fc",
+    "version": "0.4.0"
+  },
+  "botAvatars": {
+    "repository": "Jakubantalik/Libraries.dev",
+    "commit": "14ae9d2dad18fcee251f4b06333b492a2a41d2ed",
+    "version": "0.2.2"
+  }
+}

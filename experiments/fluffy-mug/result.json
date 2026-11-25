@@ -1,0 +1,37 @@
+{
+  "runtime": {
+    "node": "v24.17.0",
+    "playwright": "1.58.2",
+    "chromium": "145.0.7632.6",
+    "renderer": "0.4.0"
+  },
+  "platform": "win32 10.0.26300 x64",
+  "color": "#f4f4f4",
+  "captures": {
+    "fluffy": {
+      "args": [],
+      "webgl2": true,
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "strandDraws": 1,
+      "painted": 123822,
+      "transparent": 138322,
+      "edge": 0,
+      "bytes": 161923,
+      "sha256": "a3d76664b681924d6fbb2186e014b1885a73c31d8bdf56457a634d3a198b5e57"
+    },
+    "fallback": {
+      "args": [
+        "--disable-webgl"
+      ],
+      "webgl2": false,
+      "renderer": null,
+      "strandDraws": 0,
+      "painted": 108352,
+      "transparent": 153792,
+      "edge": 0,
+      "bytes": 17149,
+      "sha256": "d1e231aec510046665e0ab21284cb14c1f7c988287c01fd8f50a40d35eee76df"
+    }
+  },
+  "result": "PASS: painted transparent output, stable pixels, GPU strand draws, distinct disabled-WebGL control; visual review required."
+}
