@@ -6,6 +6,69 @@ const mug = '/?collection=open-bot-avatar&avatar=mug'
 const nav = page => page.getByRole('navigation', { name: 'Site' })
 const ready = page => expect(page.getByRole('button', { name: 'Copy endpoint', exact: true })).toBeEnabled()
 
+test('Open Bot API previews jump and turn on click and keyboard, respecting reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=teapot')
+  await ready(page)
+  const preview = page.getByRole('button', { name: 'Teapot: jump and turn', exact: true })
+  await expect(preview.locator('canvas')).toBeVisible()
+  await expect.poll(() => preview.evaluate(element => element.getAnimations().length)).toBe(0)
+  const url = await page.locator('#api-image-url').inputValue()
+  const inkPixels = () => preview.locator('canvas').evaluate(canvas => {
+    const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data
+    let ink = 0
+    for (let i = 0; i < pixels.length; i += 4) if (pixels[i + 3] > 200 && Math.max(pixels[i], pixels[i + 1], pixels[i + 2]) < 80) ink++
+    return ink
+  })
+  const frontInk = await inkPixels()
+  expect(frontInk).toBeGreaterThan(100)
+  for (const activate of [() => preview.click(), () => preview.press('Enter'), () => preview.press('Space')]) {
+    await activate()
+    expect(await preview.evaluate(element => getComputedStyle(element).transform)).not.toBe('none')
+    // Halfway through the real 3D turn, the eyes face away from the viewer.
+    await expect.poll(inkPixels).toBeLessThan(frontInk / 2)
+    await expect.poll(() => preview.evaluate(element => element.getAnimations().length)).toBe(0)
+    await expect.poll(inkPixels).toBeGreaterThan(100)
+    await expect(page.locator('#api-image-url')).toHaveValue(url)
+  }
+  await preview.click()
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await expect(page.getByRole('button', { name: 'Teapot: jump and turn', exact: true })).toHaveCount(0)
+  expect(await page.locator('.api-response-image .api-preview').evaluate(element => element.getAnimations().length)).toBe(0)
+})
+
+for (const [collection, avatar] of [['open-bot-avatar', 'teapot'], ['bot-avatars', 'clover']]) {
+test(`${collection} API previews automatically repeat every ten seconds and stop for reduced motion`, async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await page.addInitScript(() => {
+    window.previewJumps = []
+    const animate = Element.prototype.animate
+    Element.prototype.animate = function (...args) {
+      if (this.matches('.api-preview')) window.previewJumps.push(performance.now())
+      return animate.apply(this, args)
+    }
+    const click = HTMLCanvasElement.prototype.click
+    HTMLCanvasElement.prototype.click = function () {
+      if (this.matches('[data-bot-avatar]')) window.previewJumps.push(performance.now())
+      return click.call(this)
+    }
+  })
+  await page.goto(`/?v=5&collection=${collection}&avatar=${avatar}`)
+  await ready(page)
+  await expect.poll(() => page.evaluate(() => window.previewJumps.length)).toBeGreaterThan(0)
+  await expect.poll(() => page.evaluate(() => window.previewJumps.length), { timeout: 12000 }).toBeGreaterThan(1)
+  const times = await page.evaluate(() => window.previewJumps)
+  expect(times[1] - times[0]).toBeGreaterThan(9700)
+  expect(times[1] - times[0]).toBeLessThan(10600)
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await expect(page.getByRole('button', { name: 'Teapot: jump and turn', exact: true })).toHaveCount(0)
+  const stopped = await page.evaluate(() => window.previewJumps.length)
+  await page.clock.install()
+  await page.clock.runFor(20000)
+  expect(await page.evaluate(() => window.previewJumps.length)).toBe(stopped)
+})
+}
+
 test('v5 originals work in the picker, live editor, shares, and exports', async ({ page, context }, testInfo) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await page.goto('/?v=5&collection=open-bot-avatar&avatar=teapot&style=fluffy')
