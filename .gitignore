@@ -1,20 +1,38 @@
+# Dependencies (including the React Native packages)
 node_modules/
+
+# Build output and caches
 .next/
-.vercel/
-.kombai/
-.env*
-!.env.example
-/open-bot-avatar/
-/bot-avatars/
+out/
+dist/
+coverage/
 *.tsbuildinfo
 /next-env.d.ts
-/out/
-/dist/
-/coverage/
+
+# Playwright output; keep test sources, fixtures, and curated experiment evidence
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Local environment and deployment state
+.env*
+!.env.example
+.vercel/
+.kombai/
+
+# Optional local upstream checkouts
+/open-bot-avatar/
+/bot-avatars/
+
+# Logs and operating-system files
 *.log
+*.log.*
 .DS_Store
 Thumbs.db
-test/**
-!test/improvements.test.js
-/test-results/
-/playwright-report/
+Desktop.ini
+
+e2e/
+experiments/
+scripts/
+test/
