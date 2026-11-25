@@ -11,13 +11,13 @@ export function ApiAvatar({ collection, id, color, style, src, name }: {
   collection: string; id: string; color: string; style: string; src: string; name: string;
 }) {
   const reduced = usePrefersReducedMotion();
-  const label = `${name}, returned by the API`;
+  const label = `${name}, ${style} animated preview`;
   const definition = collection === "open-bot-avatar"
     ? [...examples, ...GALLERY].find(entry => entry.id === id) : undefined;
-  const fallback = <img src={src} alt={label} width="512" height="512" />;
+  const fallback = <img src={src} alt={`${name}, actual ${style} PNG response`} width="512" height="512" />;
 
   return <div className="api-preview">
-    {definition ? <BotAvatar definition={definition} color={color} material="flat"
+    {definition ? <BotAvatar definition={definition} color={color} material={style === "fluffy" ? "fluffy" : "flat"}
       state="idle" followPointer={!reduced} reducedMotion={reduced} label={label} />
       : collection === "bot-avatars" ? <Suspense fallback={fallback}><LibrariesAvatar id={id} style={style} reduced={reduced} src={src} label={label} /></Suspense>
       : fallback}
