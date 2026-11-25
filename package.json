@@ -10,6 +10,8 @@
     "start": "next start",
     "test": "node --test test/*.test.js",
     "test:e2e": "playwright test",
+    "validate:catalog": "node scripts/validate-catalog.mjs",
+    "generate:v4": "node scripts/generate-v4.mjs",
     "generate:avatars": "node scripts/generate-avatars.mjs && node scripts/generate-thumbnails.mjs",
     "generate:thumbnails": "node scripts/generate-thumbnails.mjs",
     "generate:watermark": "node scripts/generate-watermark.mjs"

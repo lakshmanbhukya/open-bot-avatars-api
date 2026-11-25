@@ -120,7 +120,7 @@ test('v3 seeds and collection filters choose repeatable original bots', async ()
 })
 
 test('invalid, duplicate, incompatible, and unknown parameters return readable CORS errors', async () => {
-  for (const query of ['seed=', 'seed=a&seed=b', 'seed=' + 'x'.repeat(129), 'v=4', 'v=3&v=2',
+  for (const query of ['seed=', 'seed=a&seed=b', 'seed=' + 'x'.repeat(129), 'v=5', 'v=3&v=2',
     'collection=missing', 'avatar=mug', 'collection=open-bot-avatar&avatar=missing',
     'collection=bot-avatars&format=svg', 'collection=open-bot-avatar&style=original',
     'format=jpeg', 'style=missing', 'v=2&collection=bot-avatars', 'width=50',

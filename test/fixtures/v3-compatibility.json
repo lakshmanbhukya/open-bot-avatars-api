@@ -1,0 +1,979 @@
+{
+  "catalogResponse": {
+    "version": 3,
+    "total": 41,
+    "sources": {
+      "openBot": {
+        "repository": "DominikScholz/open-bot-avatar",
+        "commit": "323ce6ab8bc6b0bc9603a418ee3d91442e4996fc",
+        "version": "0.4.0"
+      },
+      "botAvatars": {
+        "repository": "Jakubantalik/Libraries.dev",
+        "commit": "14ae9d2dad18fcee251f4b06333b492a2a41d2ed",
+        "version": "0.2.2"
+      }
+    },
+    "avatars": [
+      {
+        "collection": "open-bot-avatar",
+        "id": "controller",
+        "name": "Controller",
+        "color": "#ff6a1a",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=controller",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "barbell",
+        "name": "Barbell",
+        "color": "#f2384b",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=barbell",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "mug",
+        "name": "Mug",
+        "color": "#f4f4f4",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "lightbulb",
+        "name": "Lightbulb",
+        "color": "#f8a01c",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=lightbulb",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "chat",
+        "name": "Chat",
+        "color": "#8b5cf6",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=chat",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "sprout",
+        "name": "Sprout",
+        "color": "#1fbf68",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=sprout",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "watering-can",
+        "name": "Watering Can",
+        "color": "#14b3a5",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=watering-can",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "book",
+        "name": "Book",
+        "color": "#a8693f",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=book",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "brain",
+        "name": "Brain",
+        "color": "#ec4899",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=brain",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "bull",
+        "name": "Bull",
+        "color": "#f2384b",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=bull",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "bunny",
+        "name": "Bunny",
+        "color": "#ec4899",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=bunny",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "camera",
+        "name": "Camera",
+        "color": "#7a7a7a",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=camera",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "cat",
+        "name": "Cat",
+        "color": "#f8a01c",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=cat",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "cloud",
+        "name": "Cloud",
+        "color": "#14b3a5",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=cloud",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "egg",
+        "name": "Egg",
+        "color": "#f4f4f4",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=egg",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "ghost",
+        "name": "Ghost",
+        "color": "#f4f4f4",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=ghost",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "magnifier",
+        "name": "Magnifier",
+        "color": "#1f7cf2",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=magnifier",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "paint-brush",
+        "name": "Paint Brush",
+        "color": "#1fbf68",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=paint-brush",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "palette",
+        "name": "Palette",
+        "color": "#a8693f",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=palette",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "rocket",
+        "name": "Rocket",
+        "color": "#7a7a7a",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=rocket",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "shield",
+        "name": "Shield",
+        "color": "#1f7cf2",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=shield",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "star",
+        "name": "Star",
+        "color": "#ff6a1a",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=star",
+        "originalUrl": null
+      },
+      {
+        "collection": "open-bot-avatar",
+        "id": "witch-hat",
+        "name": "Witch Hat",
+        "color": "#8b5cf6",
+        "formats": [
+          "png",
+          "svg"
+        ],
+        "styles": [
+          "flat"
+        ],
+        "version": "0.4.0",
+        "url": "/api/avatar?v=3&collection=open-bot-avatar&avatar=witch-hat",
+        "originalUrl": null
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "clover",
+        "name": "Clover",
+        "color": "#41C4FF",
+        "renderedColor": "rgb(100 207 255)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=clover",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=clover&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "flower",
+        "name": "Flower",
+        "color": "#2FCB7A",
+        "renderedColor": "hsl(148.8 87.4% 49.0%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=flower",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=flower&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "triangle",
+        "name": "Triangle",
+        "color": "#DC48FF",
+        "renderedColor": "hsl(288.5 100.0% 64.1%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=triangle",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=triangle&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "square",
+        "name": "Square",
+        "color": "#35B8FF",
+        "renderedColor": "hsl(201.1 100.0% 60.4%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=square",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=square&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "blob",
+        "name": "Blob",
+        "color": "#2FCB7A",
+        "renderedColor": "hsl(148.8 87.4% 49.0%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=blob",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=blob&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "ghost",
+        "name": "Ghost",
+        "color": "#F4F2FA",
+        "renderedColor": "hsl(255.0 69.4% 96.5%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=ghost",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=ghost&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "circle",
+        "name": "Circle",
+        "color": "#9A62FF",
+        "renderedColor": "hsl(261.4 100.0% 69.2%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=circle",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=circle&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "drop",
+        "name": "Drop",
+        "color": "#1ED3C6",
+        "renderedColor": "hsl(175.7 100.0% 47.3%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=drop",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=drop&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "star",
+        "name": "Star",
+        "color": "#EFDB8E",
+        "renderedColor": "rgb(255 229 129)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=star",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=star&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "droid",
+        "name": "Droid",
+        "color": "#D5DBEA",
+        "renderedColor": "hsl(222.9 58.3% 87.6%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=droid",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=droid&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "mech",
+        "name": "Mech",
+        "color": "#95A6C4",
+        "renderedColor": "hsl(218.3 53.5% 67.6%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=mech",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=mech&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "alien",
+        "name": "Alien",
+        "color": "#9CD66A",
+        "renderedColor": "hsl(92.2 81.8% 62.7%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=alien",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=alien&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "hexagon",
+        "name": "Hexagon",
+        "color": "#EB7575",
+        "renderedColor": "hsl(0.0 99.7% 69.0%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=hexagon",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=hexagon&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "cat",
+        "name": "Cat",
+        "color": "#EAA06F",
+        "renderedColor": "rgb(255 175 122)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=cat",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=cat&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "cloud",
+        "name": "Cloud",
+        "color": "#CFD5E4",
+        "renderedColor": "hsl(222.9 53.0% 85.3%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=cloud",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=cloud&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "pill",
+        "name": "Pill",
+        "color": "#ACAAF3",
+        "renderedColor": "hsl(241.6 100.0% 81.0%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=pill",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=pill&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "pebble",
+        "name": "Pebble",
+        "color": "#ABC793",
+        "renderedColor": "hsl(92.3 56.7% 67.8%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=pebble",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=pebble&style=original"
+      },
+      {
+        "collection": "bot-avatars",
+        "id": "puddle",
+        "name": "Puddle",
+        "color": "#EE8BDB",
+        "renderedColor": "hsl(311.5 99.4% 73.9%)",
+        "formats": [
+          "png"
+        ],
+        "styles": [
+          "flat",
+          "original"
+        ],
+        "version": "0.2.2",
+        "url": "/api/avatar?v=3&collection=bot-avatars&avatar=puddle",
+        "originalUrl": "/api/avatar?v=3&collection=bot-avatars&avatar=puddle&style=original"
+      }
+    ]
+  },
+  "requests": [
+    {
+      "query": "v=3&seed=user-42",
+      "location": "/api/avatar?v=3&collection=bot-avatars&avatar=circle&format=png&style=flat",
+      "collection": "bot-avatars",
+      "id": "circle",
+      "sha256": "e9edcf2f4afc17a545bed10d58f76dbbacd44281f9d0942aa8ce4d349dc2a4ef"
+    },
+    {
+      "query": "v=3&seed=compatibility-2026",
+      "location": "/api/avatar?v=3&collection=bot-avatars&avatar=alien&format=png&style=flat",
+      "collection": "bot-avatars",
+      "id": "alien",
+      "sha256": "248018edce161572811d6c2443d4b8c3ad575340271daf8b1786b1e163a0cd19"
+    },
+    {
+      "query": "v=3&seed=a%20%26%20b%20%2B%20%2F%20%3F%20%23%20%3D%20%F0%9F%A4%96",
+      "location": "/api/avatar?v=3&collection=bot-avatars&avatar=cloud&format=png&style=flat",
+      "collection": "bot-avatars",
+      "id": "cloud",
+      "sha256": "d0a23bd91b634028bfaa3df69761fb89a6b02746ec9119d076a30ba848b00a10"
+    },
+    {
+      "query": "v=3&seed=user-42&collection=open-bot-avatar",
+      "location": "/api/avatar?v=3&collection=open-bot-avatar&avatar=book&format=png&style=flat",
+      "collection": "open-bot-avatar",
+      "id": "book",
+      "sha256": "a24a24457ca27e8f17806bf608f12a4893a4cf7a936a094da9460afa3a29c13b"
+    },
+    {
+      "query": "v=3&seed=compatibility-2026&collection=open-bot-avatar",
+      "location": "/api/avatar?v=3&collection=open-bot-avatar&avatar=barbell&format=png&style=flat",
+      "collection": "open-bot-avatar",
+      "id": "barbell",
+      "sha256": "ef2f5cf0df8e38a0dfd7cb38b3c1c6f6d16995fc30247a71d13248e6e6b221b0"
+    },
+    {
+      "query": "v=3&seed=a%20%26%20b%20%2B%20%2F%20%3F%20%23%20%3D%20%F0%9F%A4%96&collection=open-bot-avatar",
+      "location": "/api/avatar?v=3&collection=open-bot-avatar&avatar=rocket&format=png&style=flat",
+      "collection": "open-bot-avatar",
+      "id": "rocket",
+      "sha256": "151a908a379c1b17b91fb0787e2adcadbfd43d81429a9425d0d6dd2cb7c32e01"
+    },
+    {
+      "query": "v=3&seed=user-42&collection=bot-avatars",
+      "location": "/api/avatar?v=3&collection=bot-avatars&avatar=pill&format=png&style=flat",
+      "collection": "bot-avatars",
+      "id": "pill",
+      "sha256": "84b5810fe044fb161441f9af02431c8cc68d25357bb70203f7c3a466e27d58b4"
+    },
+    {
+      "query": "v=3&seed=compatibility-2026&collection=bot-avatars",
+      "location": "/api/avatar?v=3&collection=bot-avatars&avatar=square&format=png&style=flat",
+      "collection": "bot-avatars",
+      "id": "square",
+      "sha256": "4718c626cc78cdc36d076cbf5f14217181097bb75171809e12e186bd95ba4285"
+    },
+    {
+      "query": "v=3&seed=a%20%26%20b%20%2B%20%2F%20%3F%20%23%20%3D%20%F0%9F%A4%96&collection=bot-avatars",
+      "location": "/api/avatar?v=3&collection=bot-avatars&avatar=drop&format=png&style=flat",
+      "collection": "bot-avatars",
+      "id": "drop",
+      "sha256": "f1ca79698e31d00ed703e50cec0660b0ab4fcc2c6fc9ec13e38aebbde67c55f8"
+    },
+    {
+      "query": "v=3&seed=user-42&format=svg",
+      "location": "/api/avatar?v=3&collection=open-bot-avatar&avatar=book&format=svg&style=flat",
+      "collection": "open-bot-avatar",
+      "id": "book",
+      "sha256": "fd01aa276a72a6239d71fd95f5b5e5a69315bd24ff5193f5541f7e4339d30528"
+    },
+    {
+      "query": "v=3&seed=compatibility-2026&format=svg",
+      "location": "/api/avatar?v=3&collection=open-bot-avatar&avatar=barbell&format=svg&style=flat",
+      "collection": "open-bot-avatar",
+      "id": "barbell",
+      "sha256": "00b352b587b0641bbf432805c4692e64269cc328a895c952d22d068c510677a8"
+    },
+    {
+      "query": "v=3&seed=a%20%26%20b%20%2B%20%2F%20%3F%20%23%20%3D%20%F0%9F%A4%96&format=svg",
+      "location": "/api/avatar?v=3&collection=open-bot-avatar&avatar=rocket&format=svg&style=flat",
+      "collection": "open-bot-avatar",
+      "id": "rocket",
+      "sha256": "c14c8ae66526713d103710493771801f35ad8c2bc1fe4f205c933ebcd96ce806"
+    },
+    {
+      "query": "v=3&seed=user-42&style=original",
+      "location": "/api/avatar?v=3&collection=bot-avatars&avatar=pill&format=png&style=original",
+      "collection": "bot-avatars",
+      "id": "pill",
+      "sha256": "f0ce8f7f95e8ef351622a9f8c47020cde9cc0f4faa2a50a8ef94ef93422cc885"
+    },
+    {
+      "query": "v=3&seed=compatibility-2026&style=original",
+      "location": "/api/avatar?v=3&collection=bot-avatars&avatar=square&format=png&style=original",
+      "collection": "bot-avatars",
+      "id": "square",
+      "sha256": "e2d6c9decfd37191c27ef34a0d19098f2cade962346e2e979b02150570eb2858"
+    },
+    {
+      "query": "v=3&seed=a%20%26%20b%20%2B%20%2F%20%3F%20%23%20%3D%20%F0%9F%A4%96&style=original",
+      "location": "/api/avatar?v=3&collection=bot-avatars&avatar=drop&format=png&style=original",
+      "collection": "bot-avatars",
+      "id": "drop",
+      "sha256": "f6384421918bcd1c5a30b7a0cfdb5b97f995875e5771060a43fd77b8fb0fdf6a"
+    },
+    {
+      "query": "seed=30",
+      "location": "/api/avatar?seed=30",
+      "collection": null,
+      "id": null,
+      "sha256": "e19bf226519b208dbdba9b25488f7aaf03890dff2c336b03fbcd01602dded1bf"
+    },
+    {
+      "query": "v=1&seed=user-42",
+      "location": "/api/avatar?seed=user-42",
+      "collection": null,
+      "id": null,
+      "sha256": "58cc6a2ec9252ee205b54ac49d7fa80c3a1ffe376a8daa5e213500a44bf76ccf"
+    },
+    {
+      "query": "v=2&seed=30",
+      "location": "/api/avatar?seed=30&v=2",
+      "collection": null,
+      "id": null,
+      "sha256": "b9f7d5cb5f236bfd2feec759a0b2b6acb52aaf0e74da2579e0e631aef4ffb945"
+    },
+    {
+      "query": "collection=open-bot-avatar&avatar=mug",
+      "location": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug&format=png&style=flat",
+      "collection": "open-bot-avatar",
+      "id": "mug",
+      "sha256": "258733bab69ebe4eb82b6a68673c1a0c127b70a7ed7aa43dbe6e25013d5c54fa"
+    },
+    {
+      "query": "v=3&collection=bot-avatars&avatar=clover&style=original",
+      "location": "/api/avatar?v=3&collection=bot-avatars&avatar=clover&format=png&style=original",
+      "collection": "bot-avatars",
+      "id": "clover",
+      "sha256": "273ba848d04b0628db5b2287d160a25301d3ffe40495c6a14e8b17df3d321001"
+    }
+  ],
+  "assets": {
+    "bot-avatars/alien-original-thumb.webp": "df2785eac798329f5d81dacd3c475b5a65661fb73d1538733ffa606ef0ee56b0",
+    "bot-avatars/alien-original.png": "bd9b71adb937fa96331aa43b457ce60094b68d67797bfee7d0d29e5d197a7c1b",
+    "bot-avatars/alien-thumb.webp": "7b69a2d34e01922a77c1f683936034074eeca8bfda4cbc4274d2f3cb8e8a2fdc",
+    "bot-avatars/alien.png": "248018edce161572811d6c2443d4b8c3ad575340271daf8b1786b1e163a0cd19",
+    "bot-avatars/blob-original-thumb.webp": "5e63fc8b79f187e2ae0756192b267c0153eb69c5181976c98a86fe3e0cddf1d9",
+    "bot-avatars/blob-original.png": "f6ec90e69d252bb01e177ad46fa25b85c737a214eb48b1049c94f852ef880d0d",
+    "bot-avatars/blob-thumb.webp": "4fe6d6c4663003a694f5a808600dd14b98205d56724d75c4f69e3f2026733735",
+    "bot-avatars/blob.png": "1bd60486357af9ca7b73b0b6de7533e5e691bbd8ecc7826bba0ab68f043a61c9",
+    "bot-avatars/cat-original-thumb.webp": "a1da8788608442b107dbc35aa69c77e086945046d235d84f9e048615f6844139",
+    "bot-avatars/cat-original.png": "a539c0d0f5c1a50c2c20db9b68a239adbe07463d18f1b8cac38b03d0765430ff",
+    "bot-avatars/cat-thumb.webp": "978237be84278609924be2ed16774f5771f81779c3c5690aa358cf63ed9b050f",
+    "bot-avatars/cat.png": "a7839c868b1f61d8468a8f1df6269f36f99ec16f60ba4ca19117ab6cc784f48e",
+    "bot-avatars/circle-original-thumb.webp": "2f012950d6ce06431502366f8102ae1e301718edeedd5737c691ace10c658755",
+    "bot-avatars/circle-original.png": "45a28302ee76024e115f718e546a721e65c3381710002ca1bc11eab9f585ff15",
+    "bot-avatars/circle-thumb.webp": "aefc07633895b7f7734a1ed7d86633606e31cafe841f4fa42ec918b846ca042a",
+    "bot-avatars/circle.png": "e9edcf2f4afc17a545bed10d58f76dbbacd44281f9d0942aa8ce4d349dc2a4ef",
+    "bot-avatars/cloud-original-thumb.webp": "5f239c996dcfd74f4d77cd4e875d10422dc63941456325ded975185f64cd4481",
+    "bot-avatars/cloud-original.png": "7b302a46eaf6f177be3185d72a87b42fab95c433009643ecc53191f99dd12190",
+    "bot-avatars/cloud-thumb.webp": "cc524685190498d861b0410d9bd5e68dc852e2562fa9eca316325f1d1dd024f4",
+    "bot-avatars/cloud.png": "d0a23bd91b634028bfaa3df69761fb89a6b02746ec9119d076a30ba848b00a10",
+    "bot-avatars/clover-original-thumb.webp": "572625a4349a55ff8f2a5f982c9a22d81e2cd4e33a5f40f174a61b95d1f500b2",
+    "bot-avatars/clover-original.png": "273ba848d04b0628db5b2287d160a25301d3ffe40495c6a14e8b17df3d321001",
+    "bot-avatars/clover-thumb.webp": "b88dc48a3a8b2465c3854a145cfd5965756a83a61e1f54661722e79075d0ef5b",
+    "bot-avatars/clover.png": "ee77cb87f2afca972d035767875ea32a2cd2724365848923a6cac0fbf2437d70",
+    "bot-avatars/droid-original-thumb.webp": "468034b79aa5f02cf892167caf0c6e70c00ab0d5ac970d024ccd85fe2c958248",
+    "bot-avatars/droid-original.png": "2b8bff5b80a56d66e93df0a4847906060944e504bf123330097f9d6b395b48b1",
+    "bot-avatars/droid-thumb.webp": "a0b40134f65328011be0afc5ca9012ab244039f5d4767835184108f479eba491",
+    "bot-avatars/droid.png": "04694f88836d4b45f40c2e6a66521caa79de1f96470adc96ddaee4be33749d24",
+    "bot-avatars/drop-original-thumb.webp": "5921967bd4647a913d8ea0c23140c77621903fcec315ca829f048c9290ee178a",
+    "bot-avatars/drop-original.png": "f6384421918bcd1c5a30b7a0cfdb5b97f995875e5771060a43fd77b8fb0fdf6a",
+    "bot-avatars/drop-thumb.webp": "a497e7ef39d14f258897e5034f2840340391a635d9f5f6e36de30ee65731da05",
+    "bot-avatars/drop.png": "f1ca79698e31d00ed703e50cec0660b0ab4fcc2c6fc9ec13e38aebbde67c55f8",
+    "bot-avatars/flower-original-thumb.webp": "20653aedaa9ca15d388eeab27593b28daf17d5a2e0d2e3d2dfc388c93c88ea35",
+    "bot-avatars/flower-original.png": "c0f9ebbe59081e354305277fbeb226b5f160f14576a182618bb7614ff3c16534",
+    "bot-avatars/flower-thumb.webp": "77a4d639a4997b397e287a084fc532af2b0c39e936dc45b84d1e88d85f0d6490",
+    "bot-avatars/flower.png": "f0cdeca8e56c5f6f1e979810300334503fa4c28b24b158f47bcb9dc55a6febdb",
+    "bot-avatars/ghost-original-thumb.webp": "65317fb6be1a8c080c648d703343d5fa8861284a7b3794caddbd30bc32db16ef",
+    "bot-avatars/ghost-original.png": "38669e7064eec137062a97e924d7250d32edb3941054f2e2306a9ce2bcec1e88",
+    "bot-avatars/ghost-thumb.webp": "9d29db72a9b561a47d6073ab63470e8dd3e23f49c97593c84bf68d5892ba6f80",
+    "bot-avatars/ghost.png": "75c89cb01a0707f3167f46871bee90a7c107e639b7d6b74384ca2af914aa2aa5",
+    "bot-avatars/hexagon-original-thumb.webp": "9bcf22371fad46d33c6b63d37fc3d04c0630a8484a8f9e76fb25732fdb86c939",
+    "bot-avatars/hexagon-original.png": "f7a1589b3e59fcc61756768a01a155601dcf19701c6e5c28f171ea63330efa3e",
+    "bot-avatars/hexagon-thumb.webp": "b38d417ac83aea7ea11b75221cb3da313ee9a710ca033b425b399e65c448c716",
+    "bot-avatars/hexagon.png": "c2d731b4dc59bcafb0b3226dd932f22c5cb5fef6730dd877fb3952d82c823a43",
+    "bot-avatars/mech-original-thumb.webp": "11bf1e4fa6e567302832952be3b0455302cf0d739db608b34755fb306afc2879",
+    "bot-avatars/mech-original.png": "b4a0e3f28dee26ca5e54a5e5c0e5d73703942f313dd6ed7190cf1491bf7388c3",
+    "bot-avatars/mech-thumb.webp": "440c1116930b7312a620c96b4055f5bbe578f58cf5d4efcbe45227d156a34f75",
+    "bot-avatars/mech.png": "dcef7b9c9d6c2fc3cf42140d13a09bbb315a5ba7179811b6f2dc6cc869d5f124",
+    "bot-avatars/pebble-original-thumb.webp": "780aa467ef21af420c3327b62b44997831886cf72fb335997609ac3caae9b155",
+    "bot-avatars/pebble-original.png": "e1c53e4081487ff7992ef81001a6ab57a638d70e9078dfdbead680cab5cbc347",
+    "bot-avatars/pebble-thumb.webp": "6653e462be8f9503a1824bb91c821d99fcba54d9f4319ed3b1ec50feb9149c55",
+    "bot-avatars/pebble.png": "acf21a4c0f5a5d26a5d68a973b1dd26cf3dedd35e56e44c95db32e8d179b8031",
+    "bot-avatars/pill-original-thumb.webp": "d312973f69b2b6da6e2a6ceb8a4d4614ef3868fff3d11fa84bd1699b54d586d5",
+    "bot-avatars/pill-original.png": "f0ce8f7f95e8ef351622a9f8c47020cde9cc0f4faa2a50a8ef94ef93422cc885",
+    "bot-avatars/pill-thumb.webp": "3cc975fd79b164000d013733c82c971e986ec083e7deb5fe7b3b469abaab9f0c",
+    "bot-avatars/pill.png": "84b5810fe044fb161441f9af02431c8cc68d25357bb70203f7c3a466e27d58b4",
+    "bot-avatars/puddle-original-thumb.webp": "73bf1cd67105ec4740e97a6a0e8a961c230df7dcde9c953a05c48f5ef37c7867",
+    "bot-avatars/puddle-original.png": "f05d660a8139c9f9aeb62d37255fbdc5eb30ded78b215d625401541b750f5dd2",
+    "bot-avatars/puddle-thumb.webp": "fc33712601516aa57fa590f9964cd38b3551f0f586f26b07790cd1e57f71f8ca",
+    "bot-avatars/puddle.png": "d7ec2adbd7477357b175947ad6a759571745756903dc07e8ecc27094090c0b38",
+    "bot-avatars/square-original-thumb.webp": "9d8a8ef87fcfb1f2b2955bd6e25cb2e40f5d5afcae1968b4bfb2b82274544f99",
+    "bot-avatars/square-original.png": "e2d6c9decfd37191c27ef34a0d19098f2cade962346e2e979b02150570eb2858",
+    "bot-avatars/square-thumb.webp": "6bf9fd9f005669c915aac60c39959937b251bdbe4080820ff8d7b759942462b7",
+    "bot-avatars/square.png": "4718c626cc78cdc36d076cbf5f14217181097bb75171809e12e186bd95ba4285",
+    "bot-avatars/star-original-thumb.webp": "26671051ff2d767aebd52ac80d51c100ce0455073c4004d7d5e8c152cf506577",
+    "bot-avatars/star-original.png": "0290f89334430a8c477f009839e8028aa386e598364e09b4c5625d34f61d59b7",
+    "bot-avatars/star-thumb.webp": "6cb4da81fabf8832dc725ca8c33e082f3e839a0c31d05526ad1b7dd55f99696a",
+    "bot-avatars/star.png": "695ab2f8e280606de205b58f7c4437fe47db0e748a93d16bd9b14f430cd2b0c3",
+    "bot-avatars/triangle-original-thumb.webp": "fe4e1039d707384853084372de009c60b7bf6c399ff3809274628010e4e58a71",
+    "bot-avatars/triangle-original.png": "bb7d3896e7cf62b81883ead9ad150c89557120db2d372d652d80aa2403704dc7",
+    "bot-avatars/triangle-thumb.webp": "6f010714dc98d9aa2ad4856fbb788274f4943ac5c366cb517b5826ed7b3d5cf9",
+    "bot-avatars/triangle.png": "e9ec43c30bce9b31f4f1c9b8ac0fc82d2076fbeab03ecee5a437d73657b7ed22",
+    "open-bot-avatar/barbell-thumb.webp": "eaa7c252c273e4f32626546a4231190fc9e9f9d5af87681991f2048cf45e19f4",
+    "open-bot-avatar/barbell.png": "ef2f5cf0df8e38a0dfd7cb38b3c1c6f6d16995fc30247a71d13248e6e6b221b0",
+    "open-bot-avatar/barbell.svg": "00b352b587b0641bbf432805c4692e64269cc328a895c952d22d068c510677a8",
+    "open-bot-avatar/book-thumb.webp": "2bd4ac70e454f0a7c01efe0600b5cf91fa692b95aa0b475653bc01a24a0327e0",
+    "open-bot-avatar/book.png": "a24a24457ca27e8f17806bf608f12a4893a4cf7a936a094da9460afa3a29c13b",
+    "open-bot-avatar/book.svg": "fd01aa276a72a6239d71fd95f5b5e5a69315bd24ff5193f5541f7e4339d30528",
+    "open-bot-avatar/brain-thumb.webp": "6b0e8918d7adc901ece78af99b58407c39b8b42d70b82dce81bbc8e1f3f30ad9",
+    "open-bot-avatar/brain.png": "1bea6a7da205830eb33f6fcd875dfad5b9b44bb7f76c06305c53ddd7e3c55c5e",
+    "open-bot-avatar/brain.svg": "553b359dac00516d8964e6ea8480041989e9cca78a1fcc58233ff143ff94e0b4",
+    "open-bot-avatar/bull-thumb.webp": "23e6ea8e30b39d6ca32555c8d60df8d1fc35c62deb2f737a7d95bd5007e6058d",
+    "open-bot-avatar/bull.png": "7067e07be05098e8170b546bbcbaf8fc686731b6dacbf2aee231ab7ce004e8ac",
+    "open-bot-avatar/bull.svg": "cf830ec1571cc722838d037012130d3a4b6e3ac2960d190a296e203a635ea32f",
+    "open-bot-avatar/bunny-thumb.webp": "3f7c7b2720e2b2b4110f9df5de8c11ae97e478fc78082104a2b0f32a0785143d",
+    "open-bot-avatar/bunny.png": "4f592cbaf57933621a2a1c1ef73987ba03ee18e771a0b121667364e72bbdc953",
+    "open-bot-avatar/bunny.svg": "8710415ea822ad0d62b20164c8910655e66843be84c4bdb6acbe0d66411c9b35",
+    "open-bot-avatar/camera-thumb.webp": "f9e5bca6e98935a77a2935ea3fec5d6c80d3ac67bca09fe43876f58f8b961112",
+    "open-bot-avatar/camera.png": "486c1cd1f5cfdd0a8cee033aced0ebf0dfc569e652a2483e04e6ada497b80ee9",
+    "open-bot-avatar/camera.svg": "b084c80e87debd5e4e7837858d4ebee12f09723c7b99040bbf843c9743b1eb5f",
+    "open-bot-avatar/cat-thumb.webp": "53bf59dc5eacffc56ab9beab8c7863162b9dceaa3baa51c16a54191d24cabf41",
+    "open-bot-avatar/cat.png": "b0a91a732ec57791046a41cbc1ab748e08cef6ff16559d8b67b4cc560bc4654c",
+    "open-bot-avatar/cat.svg": "f4ded41df14b536234949bfabdb29fb0718f6b55b32eca99180d2dea33c0cd3c",
+    "open-bot-avatar/chat-thumb.webp": "a98dd53987c97a13746dc9363c6d57a581333429c12641fde96d83e70d48f001",
+    "open-bot-avatar/chat.png": "759bb1c0d46f151e57d1960f6bb889c7b1246b6c4321712046fd5088bce1b725",
+    "open-bot-avatar/chat.svg": "11f9c067dffabf3154ee176980381f16cba085c29524b890612f4c615482b59d",
+    "open-bot-avatar/cloud-thumb.webp": "dda4a33a7308b3c6aade1c9ade438d739ef6924339a8b87e89a365ce94b354e8",
+    "open-bot-avatar/cloud.png": "362bb5f31bf2774fc045fad7add9dd56bbd6215f5945c9640316b8f0bcbc8396",
+    "open-bot-avatar/cloud.svg": "84f6a0783e6de76c8a3c11dfdda8ee5435697361eaa3f5ee6b6b570eda51e73e",
+    "open-bot-avatar/controller-thumb.webp": "7fe3b4978e4c5df969bc2ac584d76d4899e57d3c28e7aa2fe437c4eb323ca234",
+    "open-bot-avatar/controller.png": "f69c29ee13989f2ef1fbcdd9e61c39ffc1c1060225b4af724ad9d95beb5dad1e",
+    "open-bot-avatar/controller.svg": "6283b93572a7c5f0653c656e7e0f8d4758024c2e17ab725422f029f5c6c29c54",
+    "open-bot-avatar/egg-thumb.webp": "62e86ebe2ed6550c73753e5a5c7d564ceae1e6bcf7dce3bda0782055c0c51844",
+    "open-bot-avatar/egg.png": "005a2172aba80790dcae70351d5c69ba58a0860d53d81927a601cb8206fc7310",
+    "open-bot-avatar/egg.svg": "ece4235f3ce7e1be782646f89a027f01518434d087c0ed4ef32e9a6e9d799c10",
+    "open-bot-avatar/ghost-thumb.webp": "6843ec6e47dafdf8c38dd1f94124f8366d323093324fff069966dca66a839d5e",
+    "open-bot-avatar/ghost.png": "3d0d31d05d65684a1393bb9936daf9b4d294feca6f847e9ef0494aed713ff1cc",
+    "open-bot-avatar/ghost.svg": "50ae0d23cd874c445fdacaf6487b071ebadf43c6dc5c315fcb2c55ab8e030724",
+    "open-bot-avatar/lightbulb-thumb.webp": "370f0dbd7219ac9855bb1e8a111a5fb45f37c14ca3c0b7406e4f4244483d4e99",
+    "open-bot-avatar/lightbulb.png": "a9a10f851e4693a4bf440995d66e02f99f535cb1d08827d6a83f595b61947f54",
+    "open-bot-avatar/lightbulb.svg": "76a0a597fd7ba4774cd63631b9943bc56766ce7d43575dda5a26d67c135ddf78",
+    "open-bot-avatar/magnifier-thumb.webp": "3ec7ef4ca04e68300abef6174930e4573aa2deeffe5f8c59a0e5317979a4b46c",
+    "open-bot-avatar/magnifier.png": "354014ad05239830f6af7ffe2933d0be3b0ee84f065bda3df6254d6767b0b239",
+    "open-bot-avatar/magnifier.svg": "d95d8ed1320d5887ccc9920e8f1013f9321587e4dfdcfe35080d506f84487d6c",
+    "open-bot-avatar/mug-thumb.webp": "fffdfd29bf218e54fa844b15cb7518c2ee133f03d256aba3148fba8f75efd0df",
+    "open-bot-avatar/mug.png": "258733bab69ebe4eb82b6a68673c1a0c127b70a7ed7aa43dbe6e25013d5c54fa",
+    "open-bot-avatar/mug.svg": "dce6e67f75ba42c4c199ca45cdc6d82b0d8b9b7de0eba30f8b9fec9a99b0a2e7",
+    "open-bot-avatar/paint-brush-thumb.webp": "8b4472b243c3c6699b4348559c7cb2e849e3e3fc320ffe834b8117e892f03b79",
+    "open-bot-avatar/paint-brush.png": "b699999a6e86f937dcdc049abceed71403f456a73394c31f0cee378a8a84515f",
+    "open-bot-avatar/paint-brush.svg": "1628d229fde9f8d0bbb8caed356786d42a0f43399bb8716f85ac1080999272af",
+    "open-bot-avatar/palette-thumb.webp": "a24faa88785dbced4ae911569b1c8d0a552a3ba94ebefc6efd82912d12f8d3e0",
+    "open-bot-avatar/palette.png": "bd6991f222bc31a451ae84c69dc11885508252c01e364671e738bde08532f753",
+    "open-bot-avatar/palette.svg": "08bd2401a289b778722c8e555933c2d21aa68b808076863d69b317354b702102",
+    "open-bot-avatar/rocket-thumb.webp": "c8def6034c23e5544c590b648e951b9481bc2a2e29f3585403c3943097eece8d",
+    "open-bot-avatar/rocket.png": "151a908a379c1b17b91fb0787e2adcadbfd43d81429a9425d0d6dd2cb7c32e01",
+    "open-bot-avatar/rocket.svg": "c14c8ae66526713d103710493771801f35ad8c2bc1fe4f205c933ebcd96ce806",
+    "open-bot-avatar/shield-thumb.webp": "c2bd65669c04d7eb7f46aa59d72b4bbd60d804ab5157d12d757d4664487693e3",
+    "open-bot-avatar/shield.png": "95939118330d5e6d0c6f30d1eb20e053d09ba2e2efa4ec2d3084bb4558b44210",
+    "open-bot-avatar/shield.svg": "779f0199ab5c1b803ba413be7eb6ed3233158d257577636c6051382aa77d3436",
+    "open-bot-avatar/sprout-thumb.webp": "8b855d49f45933f6949e94a012a7b2e9df05726260ee126931d15ee991c0135a",
+    "open-bot-avatar/sprout.png": "fec6329cf9b382d85ff6e6605cd2ad5d49d9fb1e05b61fd5596bec4cca34c56a",
+    "open-bot-avatar/sprout.svg": "39acbce2a04f824eb690609f803bb33c613a6bad703e1d0197e7916f1d73f7f8",
+    "open-bot-avatar/star-thumb.webp": "ff2cdf466525b5a65920368f2306427ff6644aaa8fa3ba29c1981fefb3a7ed46",
+    "open-bot-avatar/star.png": "061e6774285340d4903eb807dab2f700ff6ed95d7bbad0ed61b512d8caf382ca",
+    "open-bot-avatar/star.svg": "3913414554dd30df14a83113fc558ccceb005d8615982bf50bb6bf6f72216074",
+    "open-bot-avatar/watering-can-thumb.webp": "1e859cff47548f5f8c856a5dad520235f44ba6306ab4911baa1331dee4b792db",
+    "open-bot-avatar/watering-can.png": "f616d567ee3ed8bf83cd1861d32be767434e3b2161e3272a57c352197c2d73f4",
+    "open-bot-avatar/watering-can.svg": "884c732533c6623a9e33c0e59cab6869e6834ae011e776ea789b3432c16dc207",
+    "open-bot-avatar/witch-hat-thumb.webp": "6d6ad24ab37199610116a425c4d34e90cb7402da4b818e8d2886e3dbb9c29377",
+    "open-bot-avatar/witch-hat.png": "3b3a8af5fdfc058212a1fd0ea36794ac1bff2dac5bdb3101c3e3178033d8c917",
+    "open-bot-avatar/witch-hat.svg": "d3357ed33de95d97b584385082ae15f728ce30fd7b1d78c88568ada114c84eb8"
+  }
+}
