@@ -16,6 +16,7 @@ export default async function License() {
       </header>
       <h1>License and credits</h1>
       <p>OpenBot Avatars API by Lakshman Bhukya.</p>
+      <p>The mushroom, jellybean, ringed planet, lighthouse, sailboat, and teapot are first-party OpenBot Avatars designs, available under this project's MIT license.</p>
       <p>
         Artwork comes from{" "}
         <a href="https://github.com/DominikScholz/open-bot-avatar">

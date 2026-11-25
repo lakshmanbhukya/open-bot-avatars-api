@@ -53,10 +53,10 @@ export function Api({ active = true }: { active?: boolean }) {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const sharedVersion = params.get("v") ?? (["collection", "avatar", "seed"].some(key => params.has(key)) ? "3" : PICKER_VERSION);
+    const sharedVersion = params.get("v") ?? PICKER_VERSION;
     if (params.getAll("v").length > 1 || !catalogForVersion(sharedVersion)) {
       setLoading(false);
-      setError("The requested catalog version is not available. This picker supports versions 3 and 4.");
+      setError("The requested catalog version is not available. This picker supports versions 4 and 5.");
       return;
     }
     if (params.has("format") && params.get("format") !== "png") {
@@ -165,7 +165,7 @@ export function Api({ active = true }: { active?: boolean }) {
         }
         blob = await response.blob();
       }
-      downloadBlob(selected.version === "3" ? `${selected.id}.${format}` : `${selected.id}-${selected.style}-v${selected.version}.${format}`, blob);
+      downloadBlob(`${selected.id}-${selected.style}-v${selected.version}.${format}`, blob);
       setMessage(`${selected.name} ${format.toUpperCase()} downloaded.`);
     } catch (problem) {
       setMessage(problem instanceof Error ? problem.message : "Could not download this avatar. Please try again.");
@@ -202,7 +202,7 @@ export function Api({ active = true }: { active?: boolean }) {
       <div className="api-response" aria-busy={loading}>
         <div className={`api-response-image${showPng ? " is-png" : ""}${loading ? " is-loading" : ""}`}>{preview && pick ? (showPng || !active
           ? <div className="api-preview"><img src={preview} alt={`${pick.name}, ${finishes[pick.style]} PNG response (v${pick.version})`} width="512" height="512" /></div>
-          : <Suspense fallback={<img src={preview} alt={pick.name} width="512" height="512" />}><ApiAvatar key={`${pick.version}/${pick.collection}/${pick.id}/${pick.style}`} {...pick} src={preview} /></Suspense>) : <img src="/avatars/v3/open-bot-avatar/mug.png" alt="Example bot avatar; your requested image will appear here" width="512" height="512" fetchPriority="high" />}</div>
+          : <Suspense fallback={<img src={preview} alt={pick.name} width="512" height="512" />}><ApiAvatar key={`${pick.version}/${pick.collection}/${pick.id}/${pick.style}`} {...pick} src={preview} /></Suspense>) : <img src="/avatars/v4/open-bot-avatar/mug.png" alt="Example bot avatar; your requested image will appear here" width="512" height="512" fetchPriority="high" />}</div>
         <div className="api-response-caption">
           <strong>{pick?.name ?? "Your first response"}</strong>
           <span>{pick ? `v${pick.version} · ${labels[pick.collection]} · ${finishes[pick.style]} PNG` : "PNG image"}</span>

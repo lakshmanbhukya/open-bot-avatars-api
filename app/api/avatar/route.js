@@ -1,7 +1,6 @@
 import { createHash, randomUUID } from 'node:crypto'
 import { avatarAsset } from '../../lib/avatar-assets.js'
-import { catalogForVersion, supportsVariant, avatarFilename } from '../../lib/avatar-catalog.js'
-import { GET as legacyAvatar } from '../../lib/legacy-avatar.js'
+import { catalogForVersion, PICKER_VERSION, supportsVariant, avatarFilename } from '../../lib/avatar-catalog.js'
 import { rateLimit } from '../../lib/rate-limit.js'
 
 export const dynamic = 'force-dynamic'
@@ -27,25 +26,16 @@ export async function GET(request) {
   }
   const seed = params.get('seed')
   if (seed !== null && (!seed || seed.length > 128)) return error('Provide one seed of 1 to 128 characters.')
-  const version = params.get('v')
-  if (version !== null && !['1', '2', '3', '4'].includes(version)) return error('Version must be 1, 2, 3, or 4.')
-  const modernOptions = ['collection', 'avatar', 'format', 'style'].some(key => params.has(key))
-  if (version === '1' || version === '2' || (!version && seed !== null && !modernOptions)) {
-    if (modernOptions) return error('Collection, avatar, format, and style require v=3 or v=4.')
-    const response = legacyAvatar(request)
-    for (const [key, value] of Object.entries(cors)) response.headers.set(key, value)
-    return response
-  }
-  // Unversioned image URLs retain v3 selection and eligibility forever.
-  const selectedVersion = version ?? '3'
+  const selectedVersion = params.get('v') ?? PICKER_VERSION
   const catalog = catalogForVersion(selectedVersion)
-  const catalogUrl = selectedVersion === '3' ? '/api/avatars' : `/api/avatars?v=${selectedVersion}`
+  if (!catalog) return error('Version must be 4 or 5.')
+  const catalogUrl = `/api/avatars?v=${selectedVersion}`
   const collection = params.get('collection')
   if (collection !== null && !collections.includes(collection)) return error('Collection must be open-bot-avatar or bot-avatars.')
   const format = params.get('format') ?? 'png'
   if (!['png', 'svg'].includes(format)) return error('Format must be png or svg.')
   const style = params.get('style') ?? 'flat'
-  if (!(selectedVersion === '4' ? ['flat', 'original', 'fluffy'] : ['flat', 'original']).includes(style)) return error(selectedVersion === '4' ? 'Style must be flat, original, or fluffy.' : 'Style must be flat or original.')
+  if (!['flat', 'original', 'fluffy'].includes(style)) return error('Style must be flat, original, or fluffy.')
   const id = params.get('avatar')
   if (id !== null && !collection) return error('Provide a collection when selecting an avatar.')
   if (id !== null && seed !== null) return error('Choose an avatar or a seed, not both.')

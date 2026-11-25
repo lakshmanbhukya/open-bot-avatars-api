@@ -4,6 +4,7 @@ import { BotAvatar } from "../BotAvatar";
 import { thumbnailKey, THUMB_LOOK, THUMB_VIEW } from "./outline";
 import keys from "./fluffy-thumbnails.json";
 import atlas from "../../../public/studio/fluffy-thumbnails.webp";
+import originals from "./original-thumbnails.json";
 
 // The atlas is a square grid of cells, one per key, in the order of the list.
 const cells = new Map(keys.map((key, index) => [key, index]));
@@ -17,7 +18,10 @@ const side = Math.ceil(Math.sqrt(keys.length));
  */
 export function AvatarThumbnail({ definition, color, material }: { definition: AvatarDefinition; color: string; material: AvatarMaterial }) {
   const [atlasFailed, setAtlasFailed] = useState(false);
-  const cell = material === "fluffy" ? cells.get(thumbnailKey(definition, color)) : undefined;
+  const key = thumbnailKey(definition, color);
+  const original = material === "fluffy" ? (originals as Record<string, string>)[key] : undefined;
+  if (original && !atlasFailed) return <img className="avatar-view" src={original} alt="" width="224" height="224" decoding="async" onError={() => setAtlasFailed(true)} />;
+  const cell = material === "fluffy" ? cells.get(key) : undefined;
   if (cell === undefined || atlasFailed) {
     return <BotAvatar className="avatar-view" definition={definition} color={color} material={material} still view={THUMB_VIEW} lookAt={THUMB_LOOK} label="" />;
   }

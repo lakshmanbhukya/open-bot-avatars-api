@@ -1,6 +1,7 @@
 import { resolveLook, type AvatarMaterial, type AvatarMood, type AvatarState } from "open-bot-avatar";
 import upstream from "../../lib/upstream/open-bot-avatar.json";
-const DEFAULT_COLORS = upstream.colors;
+import originals from "../../lib/originals.json";
+const DEFAULT_COLORS = { ...upstream.colors, ...Object.fromEntries(originals.designs.map(d => [d.definition.id, d.color])) };
 
 export type MotionPreference = "system" | "reduced" | "full";
 

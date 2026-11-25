@@ -156,7 +156,7 @@ try {
   }
   const context = await browser.newContext()
   try {
-    for (const query of ['/api/avatars', '/api/avatar?v=3&collection=open-bot-avatar&avatar=mug', '/api/avatar?v=3&seed=baseline', '/api/avatar?v=3&collection=open-bot-avatar&avatar=mug&format=svg', '/api/avatar?v=3', '/api/avatars?v=4', '/api/avatar?v=4&collection=open-bot-avatar&avatar=mug&style=fluffy', '/api/avatar?v=4&style=fluffy&seed=baseline']) {
+    for (const query of ['/api/avatars', '/api/avatar?v=4&collection=open-bot-avatar&avatar=mug', '/api/avatar?v=4&seed=baseline', '/api/avatar?v=4&collection=open-bot-avatar&avatar=mug&format=svg', '/api/avatar?v=4', '/api/avatars?v=4', '/api/avatar?v=4&collection=open-bot-avatar&avatar=mug&style=fluffy', '/api/avatar?v=4&style=fluffy&seed=baseline']) {
       for (let run = 1; run <= 3; run++) {
         const start = performance.now()
         const response = await context.request.get(origin + query)

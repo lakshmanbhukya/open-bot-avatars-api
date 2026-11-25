@@ -6,8 +6,6 @@ import { avatarAsset } from '../app/lib/avatar-assets.js'
 import { createHash } from 'node:crypto'
 import { GET as avatar } from '../app/api/avatar/route.js'
 import { GET as list } from '../app/api/avatars/route.js'
-import catalog from '../app/lib/catalogs/v3.json' with { type: 'json' }
-import frozen from './fixtures/v3-compatibility.json' with { type: 'json' }
 import { validateCatalog, validateFrozenAssets } from '../scripts/validate-catalog.mjs'
 import v4 from '../app/lib/catalogs/v4.json' with { type: 'json' }
 import frozenV4 from './fixtures/v4-compatibility.json' with { type: 'json' }
@@ -47,37 +45,34 @@ test('concurrent image requests reuse the loaded bytes and ETag', async () => {
   assert.match(first.etag, /^"[a-f0-9]{64}"$/)
 })
 
-test('frozen v3 catalog and legacy, exact, seeded, and unversioned responses retain their bytes', async () => {
-  const response = await list(new Request('http://localhost/api/avatars'))
-  assert.deepEqual(await response.json(), frozen.catalogResponse)
-  assert.deepEqual(await (await list(new Request('http://localhost/api/avatars?v=3'))).json(), frozen.catalogResponse)
-  for (const fixture of frozen.requests) {
-    const image = await avatar(new Request('http://localhost/api/avatar?' + fixture.query))
-    assert.equal(image.status, 200, fixture.query)
-    assert.equal(image.headers.get('content-location'), fixture.location)
-    assert.equal(image.headers.get('x-avatar-collection'), fixture.collection)
-    assert.equal(image.headers.get('x-avatar-id'), fixture.id)
-    assert.equal(createHash('sha256').update(Buffer.from(await image.arrayBuffer())).digest('hex'), fixture.sha256, fixture.query)
+test('unversioned catalog, seeded, exact, and fluffy requests default to v5', async () => {
+  const implicit = await list(new Request('http://localhost/api/avatars'))
+  const explicit = await list(new Request('http://localhost/api/avatars?v=5'))
+  assert.deepEqual(await implicit.json(), await explicit.json())
+  for (const query of ['seed=user-42', 'seed=user-42&style=fluffy', 'collection=open-bot-avatar&avatar=teapot&style=fluffy']) {
+    const image = await avatar(new Request('http://localhost/api/avatar?' + query))
+    const versioned = await avatar(new Request('http://localhost/api/avatar?v=5&' + query))
+    assert.equal(image.status, 200)
+    assert.equal(image.headers.get('content-location'), versioned.headers.get('content-location'))
+    assert.deepEqual(Buffer.from(await image.arrayBuffer()), Buffer.from(await versioned.arrayBuffer()))
   }
-  assert.deepEqual(catalog, frozen.catalogResponse.avatars.map(({ url, originalUrl, ...entry }) => entry))
-  assert.equal(await validateFrozenAssets(), 141)
 })
 
-test('unpublished versions and unsupported v3 finishes remain invalid', async () => {
-  for (const query of ['v=5', 'v=3&v=3']) {
-    const response = await list(new Request('http://localhost/api/avatars?' + query))
-    assert.equal(response.status, 400)
-    assert.equal(response.headers.get('cache-control'), 'no-store')
-    assert.equal(response.headers.get('access-control-allow-origin'), '*')
-  }
-  for (const query of ['v=3&collection=open-bot-avatar&style=fluffy', 'v=3&collection=open-bot-avatar&style=original', 'v=3&collection=bot-avatars&format=svg']) {
-    assert.equal((await avatar(new Request('http://localhost/api/avatar?' + query))).status, 400)
+test('retired, unpublished, empty, and duplicate versions return readable errors', async () => {
+  for (const query of ['v=1', 'v=2', 'v=3', 'v=6', 'v=', 'v=4&v=4']) {
+    for (const endpoint of [avatar, list]) {
+      const response = await endpoint(new Request('http://localhost/api/avatar?' + query))
+      assert.equal(response.status, 400, query)
+      assert.equal(response.headers.get('cache-control'), 'no-store')
+      assert.equal(response.headers.get('access-control-allow-origin'), '*')
+      assert.match((await response.json()).error, /[Vv]ersion|only one v/)
+    }
   }
 })
 
 test('catalog validation checks every image and rejects damaged metadata, definitions, and missing assets', async () => {
-  assert.deepEqual(await validateCatalog(catalog), { designs: 41, images: 82, thumbnails: 59 })
-  const mug = catalog.find(entry => entry.id === 'mug')
+  assert.deepEqual(await validateCatalog(v4), { designs: 41, images: 105, thumbnails: 82 })
+  const mug = v4.find(entry => entry.id === 'mug')
   await assert.rejects(validateCatalog([mug, mug]), /Duplicate catalog entry/)
   await assert.rejects(validateCatalog([{ ...mug, color: '' }]), /Missing or invalid color/)
   await assert.rejects(validateCatalog([mug], { definitions: [{ id: 'mug', body: { path: '' } }] }), /Invalid or missing definition/)
@@ -90,7 +85,6 @@ test('v4 advertises valid pairs and serves every variant from its own asset dire
   const response = await list(new Request('http://localhost/api/avatars?v=4'))
   assert.deepEqual(await response.json(), frozenV4.catalogResponse)
   assert.equal(v4.length, 41)
-  assert.deepEqual(v4.map(({ collection, id }) => [collection, id]), catalog.map(({ collection, id }) => [collection, id]))
   assert.deepEqual(await validateCatalog(v4, { version: '4' }), { designs: 41, images: 105, thumbnails: 82 })
   for (const entry of v4) {
     assert.equal(supportsVariant(entry, 'svg', 'fluffy'), false)
@@ -119,13 +113,11 @@ test('v4 seeds, catalog, and all published assets are frozen for future catalog 
   for (const [file, expected] of Object.entries(frozenV4.assets)) {
     assert.equal(createHash('sha256').update(await readFile('public/avatars/v4/' + file)).digest('hex'), expected, file)
   }
-  for (const [file, expected] of Object.entries(frozen.assets)) {
-    assert.equal(createHash('sha256').update(await readFile('public/avatars/v4/' + file)).digest('hex'), expected, `v4 reuses unchanged legacy variant: ${file}`)
-  }
+  assert.equal(await validateFrozenAssets(), 187)
 })
 
 test('v4 rejects incompatible fluffy requests and preserves versioned caching and random no-store', async () => {
-  for (const query of ['v=4&collection=open-bot-avatar&style=fluffy&format=svg', 'v=4&collection=bot-avatars&style=fluffy', 'v=4&style=fluffy&format=svg', 'style=fluffy&collection=open-bot-avatar']) {
+  for (const query of ['v=4&collection=open-bot-avatar&style=fluffy&format=svg', 'v=4&collection=bot-avatars&style=fluffy', 'v=4&style=fluffy&format=svg']) {
     const response = await avatar(new Request('http://localhost/api/avatar?' + query))
     assert.equal(response.status, 400, query)
     assert.equal(response.headers.get('cache-control'), 'no-store')
@@ -140,8 +132,5 @@ test('v4 rejects incompatible fluffy requests and preserves versioned caching an
   const random = await avatar(new Request('http://localhost/api/avatar?v=4&style=fluffy'))
   assert.equal(random.status, 200)
   assert.equal(random.headers.get('cache-control'), 'no-store')
-  const old = await avatarAsset('open-bot-avatar', 'mug.png', '3')
-  const current = await avatarAsset('open-bot-avatar', 'mug.png', '4')
-  assert.notStrictEqual(old, current, 'Asset cache separates versions even when bytes match')
-  assert.equal(old.etag, current.etag)
+  assert.strictEqual(await avatarAsset('open-bot-avatar', 'mug.png'), await avatarAsset('open-bot-avatar', 'mug.png', '4'))
 })

@@ -8,6 +8,7 @@ import { useFlash } from "./hooks";
 import type { LookState } from "./look";
 import { shareLink } from "./share";
 import { MenuButton } from "./ui";
+import { PICKER_VERSION } from "../../lib/avatar-catalog.js";
 
 /** Export the selected design or copy its hosted API URL and editor link. */
 export function Actions({ entry, color, material, state, mood, view, previewRef }: { entry: LibraryEntry; color: string; material: LookState["material"]; state: LookState["state"]; mood: LookState["mood"]; view: ViewAngle; previewRef: RefObject<HTMLDivElement | null> }) {
@@ -63,7 +64,7 @@ export function Actions({ entry, color, material, state, mood, view, previewRef 
               label: "Original-color API URL",
               hint: "Hosted image: original color, flat still",
               onSelect: () => {
-                const params = new URLSearchParams({ v: "3", collection: "open-bot-avatar", avatar: definition.id, format: "png", style: "flat" });
+                const params = new URLSearchParams({ v: PICKER_VERSION, collection: "open-bot-avatar", avatar: definition.id, format: "png", style: "flat" });
                 const url = new URL(`/api/avatar?${params}`, SITE_URL).href;
                 void copy(url, `Couldn’t reach the clipboard. The URL: ${url}`);
               },

@@ -5,7 +5,7 @@ import path from 'node:path'
 // Only validated versioned catalog filenames reach this bounded asset cache.
 const assets = new Map()
 
-export async function avatarAsset(collection, filename, version = '3') {
+export async function avatarAsset(collection, filename, version = '4') {
   const key = `${version}/${collection}/${filename}`
   let asset = assets.get(key)
   if (!asset) {
