@@ -6,15 +6,15 @@ import { createHash } from 'node:crypto'
 import { examples, validateAvatar } from 'open-bot-avatar'
 import { botAvatarTypes } from 'bot-avatars'
 import { createCanvas, loadImage } from '@napi-rs/canvas'
-import catalog from '../app/lib/catalogs/v3.json' with { type: 'json' }
 import v4 from '../app/lib/catalogs/v4.json' with { type: 'json' }
+import v5 from '../app/lib/catalogs/v5.json' with { type: 'json' }
+import originals from '../app/lib/originals.json' with { type: 'json' }
 import { variantsFor, avatarFilename } from '../app/lib/avatar-catalog.js'
 import upstream from '../app/lib/upstream/open-bot-avatar.json' with { type: 'json' }
-import frozen from '../test/fixtures/v3-compatibility.json' with { type: 'json' }
 import frozenV4 from '../test/fixtures/v4-compatibility.json' with { type: 'json' }
+import frozenV5 from '../test/fixtures/v5-compatibility.json' with { type: 'json' }
 
-// Validate explicit pairs when supplied; v3's existing summaries have a valid Cartesian product.
-export async function validateCatalog(entries, { version = '3', assetRoot = `public/avatars/v${version}`, definitions = [...examples, ...upstream.gallery] } = {}) {
+export async function validateCatalog(entries, { version = '4', assetRoot = `public/avatars/v${version}`, definitions = [...examples, ...upstream.gallery, ...originals.designs.map(d => d.definition)] } = {}) {
   assert(Array.isArray(entries) && entries.length > 0, 'Catalog must contain entries')
   const seen = new Set()
   let images = 0, thumbnails = 0
@@ -29,16 +29,17 @@ export async function validateCatalog(entries, { version = '3', assetRoot = `pub
     if (entry.collection === 'open-bot-avatar') {
       const definition = definitions.find(item => item.id === entry.id)
       assert(definition && validateAvatar(definition).ok, `Invalid or missing definition: ${key}`)
-      assert.equal(entry.color, upstream.colors[entry.id], `Catalog color differs from definition color: ${key}`)
+      assert.equal(entry.color, upstream.colors[entry.id] ?? originals.designs.find(d => d.definition.id === entry.id)?.color, `Catalog color differs from definition color: ${key}`)
     } else {
       assert(entry.collection === 'bot-avatars' && botAvatarTypes.includes(entry.id), `Unknown collection or definition: ${key}`)
     }
-    assert(version !== '4' || Array.isArray(entry.variants), `Version 4 requires explicit variants: ${key}`)
+    assert(Array.isArray(entry.variants), `Catalog requires explicit variants: ${key}`)
+    if (version === '5') assert(['object', 'nature', 'food', 'abstract', 'robot'].includes(entry.category), `Invalid category: ${key}`)
     const pairs = variantsFor(entry)
     assert(Array.isArray(pairs) && pairs.length, `Missing variants: ${key}`)
     const pairKeys = pairs.map(({ format, style }) => `${format}/${style}`)
     assert.equal(new Set(pairKeys).size, pairs.length, `Duplicate variants: ${key}`)
-    const allowed = entry.collection === 'open-bot-avatar' ? ['png/flat', 'svg/flat', ...(version === '4' ? ['png/fluffy'] : [])] : ['png/flat', 'png/original']
+    const allowed = entry.collection === 'open-bot-avatar' ? ['png/flat', 'svg/flat', 'png/fluffy'] : ['png/flat', 'png/original']
     assert(pairKeys.every(pair => allowed.includes(pair)), `Unsupported format/style: ${key}`)
     assert.deepEqual([...new Set(pairs.map(x => x.format))].sort(), [...entry.formats].sort(), `Format summaries disagree: ${key}`)
     assert.deepEqual([...new Set(pairs.map(x => x.style))].sort(), [...entry.styles].sort(), `Style summaries disagree: ${key}`)
@@ -76,8 +77,9 @@ export async function validateCatalog(entries, { version = '3', assetRoot = `pub
   return { designs: seen.size, images, thumbnails }
 }
 
-export async function validateFrozenAssets(version = '3') {
-  const fixture = version === '3' ? frozen : frozenV4
+export async function validateFrozenAssets(version = '4') {
+  assert(['4', '5'].includes(version), 'Unsupported frozen version')
+  const fixture = version === '4' ? frozenV4 : frozenV5
   for (const [file, expected] of Object.entries(fixture.assets)) {
     const data = await readFile(path.join(`public/avatars/v${version}`, file))
     assert.equal(createHash('sha256').update(data).digest('hex'), expected, `Published v${version} asset changed: ${file}`)
@@ -86,5 +88,5 @@ export async function validateFrozenAssets(version = '3') {
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  console.log({ v3: await validateCatalog(catalog), v4: await validateCatalog(v4, { version: '4' }), frozenV3AssetHashes: await validateFrozenAssets(), frozenV4AssetHashes: await validateFrozenAssets('4') })
+  console.log({ v4: await validateCatalog(v4), v5: await validateCatalog(v5, { version: '5' }), frozenV4AssetHashes: await validateFrozenAssets(), frozenV5AssetHashes: await validateFrozenAssets('5') })
 }

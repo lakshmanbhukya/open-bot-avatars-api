@@ -1,0 +1,180 @@
+{
+  "runtime": {
+    "node": "v24.17.0",
+    "playwright": "1.58.2",
+    "chromium": "145.0.7632.6",
+    "renderer": "0.4.0"
+  },
+  "platform": "win32 10.0.26300 x64",
+  "captures": [
+    {
+      "id": "teapot",
+      "color": "#14b3a5",
+      "captures": [
+        {
+          "mode": "fluffy",
+          "webgl2": true,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "strandDraws": 1,
+          "painted": 97275,
+          "transparent": 164869,
+          "edge": 0,
+          "bytes": 224027,
+          "sha256": "be7145cd0df4106d4698092ac89e60fc40fc7653fafd3fdc2ba1ba050dca1347"
+        },
+        {
+          "mode": "fallback",
+          "webgl2": false,
+          "renderer": null,
+          "strandDraws": 0,
+          "painted": 80243,
+          "transparent": 181901,
+          "edge": 0,
+          "bytes": 18747,
+          "sha256": "9e5372428571b835fbccea309a6d0dc09fe43388d10200f3557cc7036601f47a"
+        }
+      ]
+    },
+    {
+      "id": "mushroom",
+      "color": "#f2384b",
+      "captures": [
+        {
+          "mode": "fluffy",
+          "webgl2": true,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "strandDraws": 1,
+          "painted": 116929,
+          "transparent": 145215,
+          "edge": 0,
+          "bytes": 268158,
+          "sha256": "36221661ff02aa422baf5f77dca1ffc2593b79ca070cd713e5678fba8a50460b"
+        },
+        {
+          "mode": "fallback",
+          "webgl2": false,
+          "renderer": null,
+          "strandDraws": 0,
+          "painted": 102503,
+          "transparent": 159641,
+          "edge": 0,
+          "bytes": 19216,
+          "sha256": "c525bc282522096da68a76ac9d8ab621346e5b9d5a33e9ac375b774ac48d099f"
+        }
+      ]
+    },
+    {
+      "id": "jellybean",
+      "color": "#ec4899",
+      "captures": [
+        {
+          "mode": "fluffy",
+          "webgl2": true,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "strandDraws": 1,
+          "painted": 106761,
+          "transparent": 155383,
+          "edge": 0,
+          "bytes": 239675,
+          "sha256": "f1f114a4dd3e139122557856b161c6e919d175dfb74892f5a07e6be72e6ed4f5"
+        },
+        {
+          "mode": "fallback",
+          "webgl2": false,
+          "renderer": null,
+          "strandDraws": 0,
+          "painted": 93122,
+          "transparent": 169022,
+          "edge": 0,
+          "bytes": 18432,
+          "sha256": "9d06e4588691fea11dff6f02354959cda9e254c8e9fd946229d3740fd12b3eea"
+        }
+      ]
+    },
+    {
+      "id": "ringed-planet",
+      "color": "#8b5cf6",
+      "captures": [
+        {
+          "mode": "fluffy",
+          "webgl2": true,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "strandDraws": 1,
+          "painted": 107509,
+          "transparent": 154635,
+          "edge": 0,
+          "bytes": 255702,
+          "sha256": "c034f86d9a83a9c1b2c6b166407b36e6a83463743263a4a69473a15bf75775dd"
+        },
+        {
+          "mode": "fallback",
+          "webgl2": false,
+          "renderer": null,
+          "strandDraws": 0,
+          "painted": 91764,
+          "transparent": 170380,
+          "edge": 0,
+          "bytes": 21244,
+          "sha256": "896108acb380e03360a3842bf80874d0952990ffa3d7f7035a0773878af92a9e"
+        }
+      ]
+    },
+    {
+      "id": "lighthouse",
+      "color": "#f8a01c",
+      "captures": [
+        {
+          "mode": "fluffy",
+          "webgl2": true,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "strandDraws": 1,
+          "painted": 117793,
+          "transparent": 144351,
+          "edge": 0,
+          "bytes": 242128,
+          "sha256": "5104b4af26d2a54cdc1e4d8bdd8637c710c0b4a90a3c7e9e37bdbeea277ea4bc"
+        },
+        {
+          "mode": "fallback",
+          "webgl2": false,
+          "renderer": null,
+          "strandDraws": 0,
+          "painted": 101282,
+          "transparent": 160862,
+          "edge": 0,
+          "bytes": 19147,
+          "sha256": "495ad73320f12645c9663de1b602745f13838db15558f68cdf694057cbe23abf"
+        }
+      ]
+    },
+    {
+      "id": "sailboat",
+      "color": "#1f7cf2",
+      "captures": [
+        {
+          "mode": "fluffy",
+          "webgl2": true,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "strandDraws": 1,
+          "painted": 144716,
+          "transparent": 117428,
+          "edge": 0,
+          "bytes": 322288,
+          "sha256": "db2238d51d6b57cb28f384baa6e16e7d495675a417ac6716082089b2315c0646"
+        },
+        {
+          "mode": "fallback",
+          "webgl2": false,
+          "renderer": null,
+          "strandDraws": 0,
+          "painted": 124091,
+          "transparent": 138053,
+          "edge": 0,
+          "bytes": 19441,
+          "sha256": "e870f09559577ede28da38a4e0045e496c760fa2fa6aea11dccbd5b7ff76e640"
+        }
+      ]
+    }
+  ],
+  "result": "PASS: 6 GPU coats and disabled-WebGL controls verified; 512/64 px visual sheets saved for review."
+}

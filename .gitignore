@@ -36,3 +36,15 @@ e2e/
 experiments/
 scripts/
 test/
+!scripts/
+scripts/*
+!scripts/review-originals.mjs
+!experiments/
+experiments/*
+!experiments/v5-originals/
+!test/
+test/*
+!test/originals.test.js
+!test/fixtures/
+test/fixtures/*
+!test/fixtures/v5-compatibility.json
