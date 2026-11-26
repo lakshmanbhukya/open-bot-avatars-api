@@ -6,6 +6,74 @@ const mug = '/?collection=open-bot-avatar&avatar=mug'
 const nav = page => page.getByRole('navigation', { name: 'Site' })
 const ready = page => expect(page.getByRole('button', { name: 'Copy endpoint', exact: true })).toBeEnabled()
 
+test('favorites persist, combine with finishes, and preserve the selected image', async ({ page }, testInfo) => {
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=mug')
+  await ready(page)
+  const url = await page.locator('#api-image-url').inputValue()
+  const star = page.getByRole('button', { name: 'Add Teapot to favorites', exact: true })
+  await star.focus()
+  await star.press('Enter')
+  await page.getByRole('checkbox', { name: 'Favorites only' }).check()
+  await expect(page.locator('.api-catalog-card')).toHaveCount(1)
+  await expect(page.getByRole('button', { name: 'Teapot', exact: true })).toBeVisible()
+  await expect(page.locator('#api-image-url')).toHaveValue(url)
+  await page.reload()
+  await ready(page)
+  await expect(page.getByRole('button', { name: 'Remove Teapot from favorites' })).toBeEnabled()
+  await page.goto('/?v=5&style=fluffy&collection=open-bot-avatar&avatar=mug')
+  await ready(page)
+  await page.getByRole('checkbox', { name: 'Favorites only' }).check()
+  await expect(page.locator('.api-catalog-card')).toHaveCount(1)
+  await expect(page.locator('.api-catalog-image img')).toHaveAttribute('src', /teapot-fluffy-thumb/)
+  await page.screenshot({ path: `test-results/favorites-${testInfo.project.name}.png`, fullPage: true })
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=mug')
+  await ready(page)
+  await page.getByRole('checkbox', { name: 'Favorites only' }).check()
+  await page.getByRole('button', { name: 'Remove Teapot from favorites' }).click()
+  await expect(page.locator('.api-catalog-card')).toHaveCount(0)
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('open-bot-avatar:favorites')))).toEqual([])
+})
+
+test('favorites ignore malformed and missing entries and distinguish collections', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('open-bot-avatar:favorites', JSON.stringify([
+    null, 12, {}, { collection: 'invalid', id: 'mug' },
+    { collection: 'open-bot-avatar', id: 'removed-design' },
+    { collection: 'bot-avatars', id: 'clover' },
+    { collection: 'bot-avatars', id: 'clover' },
+    { collection: 'open-bot-avatar', id: 'mug' },
+  ])))
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=mug')
+  await ready(page)
+  await page.getByRole('checkbox', { name: 'Favorites only' }).check()
+  await expect(page.locator('.api-catalog-card')).toHaveCount(1)
+  await expect(page.getByRole('button', { name: 'Remove Mug from favorites' })).toBeVisible()
+  await page.goto('/?v=5&collection=bot-avatars&avatar=clover&style=original')
+  await ready(page)
+  await page.getByRole('checkbox', { name: 'Favorites only' }).check()
+  await expect(page.locator('.api-catalog-card')).toHaveCount(1)
+  await expect(page.getByRole('button', { name: 'Remove Clover from favorites' })).toBeVisible()
+})
+
+for (const storage of ['invalid JSON', 'unavailable']) {
+  test(`favorites still work when storage is ${storage}`, async ({ page }) => {
+    await page.addInitScript(mode => {
+      if (mode === 'invalid JSON') localStorage.setItem('open-bot-avatar:favorites', '{broken')
+      else {
+        Storage.prototype.getItem = () => { throw new Error('Storage unavailable') }
+        Storage.prototype.setItem = () => { throw new Error('Storage unavailable') }
+      }
+    }, storage)
+    await page.goto(mug)
+    await ready(page)
+    await page.getByRole('button', { name: 'Add Mug to favorites', exact: true }).click()
+    await page.getByRole('checkbox', { name: 'Favorites only' }).check()
+    await expect(page.locator('.api-catalog-card')).toHaveCount(1)
+    await page.getByRole('button', { name: 'Remove Mug from favorites', exact: true }).click()
+    await expect(page.locator('.api-catalog-card')).toHaveCount(0)
+    await expect(page.getByText('Favorites stay in this browser on this device.')).toBeVisible()
+  })
+}
+
 test('Open Bot API previews jump and turn on click and keyboard, respecting reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' })
   await page.goto('/?v=5&collection=open-bot-avatar&avatar=teapot')

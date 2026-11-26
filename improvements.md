@@ -26,7 +26,7 @@ Keep this table current after each work session: record the status, date, work p
 | Search and category filters | Low–Medium | Medium, increasing with catalog size | With expansion | Not started | Pending. |
 | Smaller PNG sizes | Medium | Medium: lighter embeds | After expansion | Not started | Pending. |
 | Curated API colors and backgrounds | High | Potentially high: broader customization | Later | Not started | Pending. |
-| Favorites | Low–Medium | Low–Medium: helps returning visitors | Later | Not started | Pending. |
+| Favorites | Low–Medium | Low–Medium: helps returning visitors | Later | Completed locally (26 November 2026) | Added accessible star buttons and a Favorites only filter to the [API picker](app/studio/Api.tsx), using the existing stored-state hook for local collection/ID pairs. Favorites span finishes, combine with collection/finish filtering, and preserve the selected image. Missing entries are hidden; invalid data and unavailable storage fall back safely. The UI explains local storage. Validation results below; deployment remains pending. |
 | Additional fur presets | Medium–High; renderer support unverified | Low–Medium: visual polish | Last | Not started | Pending; renderer customization support remains unverified. |
 
 ## Verified starting point
@@ -269,6 +269,10 @@ Done when combined filters work and clearing them restores the catalog without c
 - Treat this as a separate release with explicit parameter documentation and tests. Do not implement an unrestricted browser renderer inside the public API.
 
 ### Favorites
+
+**Implementation (26 November 2026):** The API picker now supports saving and removing favorites with labeled, keyboard-accessible star buttons, a Favorites only checkbox, a filtered design count, and an empty-state action to show all avatars. Collection/ID pairs use `open-bot-avatar:favorites` through the existing `useStoredState` hook. Unknown designs are ignored in the displayed catalog without removing saved pairs. Malformed records are ignored and duplicates are removed; blocked or full storage keeps favorites usable for the current session. Filtering does not issue API requests or change the selected image URL. No accounts, backend, or new dependencies were added.
+
+**Validation:** `npm test` passes all 29 tests; `npm run build` and `npm run validate:catalog` pass, including all 410 frozen asset hashes. The [browser suite](e2e/avatar.spec.js) passes all eight new Favorites checks across desktop and Pixel 7 emulation, covering persistence, keyboard activation, collection/finish/version filtering, removing the last favorite, malformed and missing entries, invalid JSON, and unavailable storage. Desktop/mobile Favorites screenshots were visually reviewed in `test-results/favorites-desktop.png` and `test-results/favorites-mobile.png`. The full production browser suite reports 44 passes and two pre-existing failures (one per browser profile): the v4 fluffy fallback test expects the missing "Animated demonstration" caption (and subsequently a WebGL warning), while the unchanged caption and `.api-fur-notice` render empty text in HEAD. Historical experiment screenshots were preserved. Deployment and physical-device checks were not performed.
 
 - Store collection/ID pairs locally using the existing stored-state patterns. Add favorite buttons and a favorites filter, handle removed entries gracefully, and make clear that favorites stay on this device. No accounts or backend are needed.
 

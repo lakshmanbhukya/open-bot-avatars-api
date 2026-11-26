@@ -10,7 +10,7 @@ import {
   avatarFilename,
 } from "../lib/avatar-catalog.js";
 import { SITE_URL } from "../lib/site-url";
-import { useFlash } from "./studio/hooks";
+import { useFlash, useStoredState } from "./studio/hooks";
 import { copyText, downloadBlob } from "./studio/files";
 import { Icon, MenuButton, Segmented } from "./studio/ui";
 import { imageUrl, usageExample, retryDelaySeconds } from "./api-urls";
@@ -27,6 +27,16 @@ const finishes: Record<string, string> = {
   original: "Original plush",
   fluffy: "Fluffy",
 };
+type Favorite = { collection: string; id: string };
+const EMPTY_FAVORITES: Favorite[] = [];
+function reviveFavorites(raw: unknown): Favorite[] | undefined {
+  if (!Array.isArray(raw)) return undefined;
+  return raw.filter((entry, index) =>
+    entry && typeof entry.collection === "string" && typeof entry.id === "string" &&
+    Object.hasOwn(labels, entry.collection) && entry.id.length > 0 &&
+    raw.findIndex(other => other?.collection === entry.collection && other?.id === entry.id) === index,
+  ).map(({ collection, id }) => ({ collection, id }));
+}
 type Pick = NonNullable<ReturnType<typeof catalogForVersion>>[number] & {
   version: string;
   url: string;
@@ -41,6 +51,18 @@ export function Api({ active = true }: { active?: boolean }) {
   const catalog = catalogForVersion(version)!;
   const [webglAvailable, setWebglAvailable] = useState<boolean | null>(null);
   const [collection, setCollection] = useState("");
+  const [favorites, setFavorites, favoritesReady] = useStoredState(
+    "open-bot-avatar:favorites", EMPTY_FAVORITES, reviveFavorites,
+  );
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const isFavorite = (entry: Favorite) => favorites.some(
+    favorite => favorite.collection === entry.collection && favorite.id === entry.id,
+  );
+  function toggleFavorite(entry: Favorite) {
+    setFavorites(previous => previous.some(favorite => favorite.collection === entry.collection && favorite.id === entry.id)
+      ? previous.filter(favorite => favorite.collection !== entry.collection || favorite.id !== entry.id)
+      : [...previous, { collection: entry.collection, id: entry.id }]);
+  }
   const [style, setStyle] = useState("flat");
   const [mode, setMode] = useState("choose");
   const [seed, setSeed] = useState("");
@@ -320,7 +342,7 @@ export function Api({ active = true }: { active?: boolean }) {
     (entry) => !collection || entry.collection === collection,
   );
   const visible = eligible.filter((entry) =>
-    supportsVariant(entry, "png", style),
+    supportsVariant(entry, "png", style) && (!favoritesOnly || isFavorite(entry)),
   );
   const availableFinishes = [
     ...new Set(
@@ -544,6 +566,17 @@ export function Api({ active = true }: { active?: boolean }) {
             />
           </div>
         </div>
+        {mode === "choose" && (
+          <div className="api-favorites-controls">
+            <label>
+              <input type="checkbox" checked={favoritesOnly} disabled={!favoritesReady}
+                onChange={event => setFavoritesOnly(event.target.checked)} />
+              Favorites only
+            </label>
+            <span>Favorites stay in this browser on this device.</span>
+            <span role="status">{visible.length} of {catalog.length} designs</span>
+          </div>
+        )}
         <div className="api-options-body">
           {mode === "seed" ? (
             <form
@@ -611,60 +644,80 @@ export function Api({ active = true }: { active?: boolean }) {
               {visible.map((entry) => {
                 const finish = style;
                 return (
-                  <button
-                    key={`${entry.collection}/${entry.id}`}
-                    aria-pressed={
-                      pick?.collection === entry.collection &&
-                      pick?.id === entry.id
-                    }
-                    onClick={() => {
-                      if (Date.now() < retryAt) return;
-                      setStyle(finish);
-                      load(
-                        imageUrl(
-                          entry.collection,
-                          finish,
-                          entry.id,
-                          "",
-                          version,
-                        ),
-                      );
-                    }}
-                  >
-                    <span
-                      className="api-catalog-image"
-                      data-collection={entry.collection}
+                  <div className="api-catalog-card" key={`${entry.collection}/${entry.id}`}>
+                    <button
+                      aria-pressed={
+                        pick?.collection === entry.collection &&
+                        pick?.id === entry.id
+                      }
+                      onClick={() => {
+                        if (Date.now() < retryAt) return;
+                        setStyle(finish);
+                        load(
+                          imageUrl(
+                            entry.collection,
+                            finish,
+                            entry.id,
+                            "",
+                            version,
+                          ),
+                        );
+                      }}
                     >
-                      {/* Wait for URL version/finish parsing before starting thumbnail downloads. */}
-                      {request && (
-                        <img
-                          src={`/avatars/v${version}/${entry.collection}/${avatarFilename(entry.id, "png", finish).replace(/\.png$/, "-thumb.webp")}`}
-                          alt=""
-                          width="112"
-                          height="112"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      )}
-                      <noscript>
-                        <img
-                          src={`/avatars/v${PICKER_VERSION}/${entry.collection}/${entry.id}-thumb.webp`}
-                          alt=""
-                          width="112"
-                          height="112"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </noscript>
-                    </span>
-                    <span className="api-catalog-name">
-                      {entry.name}
-                      {pick?.collection === entry.collection &&
-                        pick?.id === entry.id && <Icon name="check" />}
-                    </span>
-                  </button>
+                      <span
+                        className="api-catalog-image"
+                        data-collection={entry.collection}
+                      >
+                        {/* Wait for URL version/finish parsing before starting thumbnail downloads. */}
+                        {request && (
+                          <img
+                            src={`/avatars/v${version}/${entry.collection}/${avatarFilename(entry.id, "png", finish).replace(/\.png$/, "-thumb.webp")}`}
+                            alt=""
+                            width="112"
+                            height="112"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        )}
+                        <noscript>
+                          <img
+                            src={`/avatars/v${PICKER_VERSION}/${entry.collection}/${entry.id}-thumb.webp`}
+                            alt=""
+                            width="112"
+                            height="112"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </noscript>
+                      </span>
+                      <span className="api-catalog-name">
+                        {entry.name}
+                        {pick?.collection === entry.collection &&
+                          pick?.id === entry.id && <Icon name="check" />}
+                      </span>
+                    </button>
+                    <button
+                      className="api-favorite"
+                      aria-label={`${isFavorite(entry) ? "Remove" : "Add"} ${entry.name} ${isFavorite(entry) ? "from" : "to"} favorites`}
+                      title={`${isFavorite(entry) ? "Remove from" : "Add to"} favorites`}
+                      disabled={!favoritesReady}
+                      onClick={() => toggleFavorite(entry)}
+                      data-favorite={isFavorite(entry)}
+                    >
+                      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"
+                        fill={isFavorite(entry) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.5">
+                        <path d="m12 3 2.8 5.7 6.3.9-4.6 4.5 1.1 6.3-5.6-3-5.6 3 1.1-6.3L2.9 9.6l6.3-.9Z" />
+                      </svg>
+                    </button>
+                  </div>
                 );
               })}
+              {visible.length === 0 && (
+                <div className="api-favorites-empty">
+                  <p>No favorites match this collection and finish. Add favorites using the star beside a design.</p>
+                  <button className="btn" onClick={() => setFavoritesOnly(false)}>Show all avatars</button>
+                </div>
+              )}
             </div>
           )}
         </div>
