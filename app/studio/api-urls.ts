@@ -1,5 +1,7 @@
-export function imageUrl(collection = "", style = "flat", avatar = "", seed = "") {
-  const params = new URLSearchParams({ v: "3" });
+import { PICKER_VERSION } from "../lib/avatar-catalog.js";
+
+export function imageUrl(collection = "", style = "flat", avatar = "", seed = "", version = PICKER_VERSION) {
+  const params = new URLSearchParams({ v: version });
   if (collection) params.set("collection", collection);
   if (style !== "flat") params.set("style", style);
   if (avatar) params.set("avatar", avatar);

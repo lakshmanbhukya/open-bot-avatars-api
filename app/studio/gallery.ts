@@ -1,7 +1,8 @@
 import { examples, validateAvatar, type AvatarDefinition } from "open-bot-avatar";
 import upstream from "../lib/upstream/open-bot-avatar.json";
+import originals from "../lib/originals.json";
 
-export const GALLERY: AvatarDefinition[] = upstream.gallery.flatMap((raw) => {
+export const GALLERY: AvatarDefinition[] = [...upstream.gallery, ...originals.designs.map(d => d.definition)].flatMap((raw) => {
   const result = validateAvatar(raw);
   if (!result.ok || examples.some((e) => e.id === result.value.id)) return [];
   return [result.value];

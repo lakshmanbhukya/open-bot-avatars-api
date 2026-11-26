@@ -10,9 +10,12 @@
     "start": "next start",
     "test": "node --test test/*.test.js",
     "test:e2e": "playwright test",
-    "generate:avatars": "node scripts/generate-avatars.mjs && node scripts/generate-thumbnails.mjs",
+    "validate:catalog": "node scripts/validate-catalog.mjs",
+    "generate:avatars": "node scripts/generate-v5.mjs",
     "generate:thumbnails": "node scripts/generate-thumbnails.mjs",
-    "generate:watermark": "node scripts/generate-watermark.mjs"
+    "generate:watermark": "node scripts/generate-watermark.mjs",
+    "generate:v5": "node scripts/generate-v5.mjs",
+    "review:originals": "node scripts/review-originals.mjs"
   },
   "dependencies": {
     "@fontsource-variable/geist": "5.3.0",

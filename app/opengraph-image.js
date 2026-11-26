@@ -1,3 +1,4 @@
+import catalog from "./lib/catalogs/v5.json";
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -19,7 +20,7 @@ export default async function SocialImage() {
           await readFile(
             path.join(
               process.cwd(),
-              "public/avatars/v3",
+              "public/avatars/v5",
               collection,
               id + ".png",
             ),
@@ -57,7 +58,7 @@ export default async function SocialImage() {
           <span>One image URL.</span>
         </div>
         <div style={{ fontSize: 26, color: "#9a9a9a", marginTop: 28 }}>
-          Live editor. 41 original designs. Image API.
+          {`Live editor. ${catalog.length} original designs. Image API.`}
         </div>
         <div
           style={{

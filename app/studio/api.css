@@ -8,6 +8,7 @@
     .api-response-image.is-loading { opacity: .55; background: var(--card); border-radius: 16px; }
     .api-response-image img { width: min(100%, 400px); height: 100%; max-height: 400px; object-fit: contain; }
     .api-preview { width: min(100%, 400px); aspect-ratio: 1; }
+    .api-preview[role="button"]:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; border-radius: 12px; }
     .is-png .api-preview { width: min(100%, clamp(280px, 32vw, 400px)); background-color: #e5e7eb; background-image: conic-gradient(#b8bec8 25%, transparent 0 50%, #b8bec8 0 75%, transparent 0); background-size: 20px 20px; border-radius: 12px; }
     .api-response-caption { display: grid; align-content: center; justify-items: center; gap: 4px; min-height: 112px; padding-top: 8px; }
     .api-response-caption strong { font-size: 15px; font-weight: 500; }
@@ -42,6 +43,14 @@
     .api-field .popover { width: max(100%, 230px); min-width: 0; }
     .api-options-body { height: 350px; overflow-y: auto; scrollbar-width: thin; scrollbar-gutter: stable; }
     .api-catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; padding: 4px; }
+    .api-favorites-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin-bottom: 16px; color: var(--muted); font-size: 12px; }
+    .api-favorites-controls label { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--text); cursor: pointer; }
+    .api-favorites-controls input { accent-color: var(--text); width: 18px; height: 18px; }
+    .api-catalog-card { position: relative; min-width: 0; padding-top: 32px; }
+    .api-catalog-card > button:first-child { width: 100%; }
+    .api-catalog .api-favorite { position: absolute; top: 0; right: 0; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border-radius: 8px; }
+    .api-catalog .api-favorite[data-favorite="true"] { color: var(--text); }
+    .api-favorites-empty { grid-column: 1 / -1; padding: 16px; font-size: 13px; color: var(--muted); }
     .api-catalog button { display: grid; justify-items: center; gap: 4px; padding: 3px; border: 0; background: transparent; font-size: 12px; color: var(--muted); }
     .api-catalog button:is(:hover, :focus-visible, [aria-pressed="true"]) { color: var(--text); }
     .api-catalog button:is(:hover, :focus-visible, [aria-pressed="true"]) img {

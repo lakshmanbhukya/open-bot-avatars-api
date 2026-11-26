@@ -1,5 +1,5 @@
-import catalog from '../../lib/catalog.json' with { type: 'json' }
-import sources from '../../lib/upstream/sources.json' with { type: 'json' }
+import { catalogForVersion, PICKER_VERSION, supportsVariant } from '../../lib/avatar-catalog.js'
+import v5Sources from '../../lib/catalogs/v5-sources.json' with { type: 'json' }
 import { rateLimit } from '../../lib/rate-limit.js'
 
 export const dynamic = 'force-dynamic'
@@ -8,15 +8,25 @@ export const runtime = 'nodejs'
 export async function GET(request) {
   const limited = await rateLimit(request)
   if (limited) return limited
+  const versions = request ? new URL(request.url).searchParams.getAll('v') : []
+  const version = versions[0] ?? PICKER_VERSION
+  const catalog = catalogForVersion(version)
+  if (versions.length > 1 || !catalog) {
+    return Response.json({ error: 'Catalog version must be 5.' }, {
+      status: 400, headers: { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'no-store' }
+    })
+  }
   return Response.json({
-    version: 3,
+    version: Number(version),
     total: catalog.length,
-    sources,
+    sources: v5Sources,
     avatars: catalog.map(entry => ({
       ...entry,
-      url: '/api/avatar?' + new URLSearchParams({ v: '3', collection: entry.collection, avatar: entry.id }),
-      originalUrl: entry.styles.includes('original')
-        ? '/api/avatar?' + new URLSearchParams({ v: '3', collection: entry.collection, avatar: entry.id, style: 'original' }) : null
+      url: '/api/avatar?' + new URLSearchParams({ v: version, collection: entry.collection, avatar: entry.id }),
+      originalUrl: supportsVariant(entry, 'png', 'original')
+        ? '/api/avatar?' + new URLSearchParams({ v: version, collection: entry.collection, avatar: entry.id, style: 'original' }) : null,
+      fluffyUrl: supportsVariant(entry, 'png', 'fluffy')
+        ? '/api/avatar?' + new URLSearchParams({ v: version, collection: entry.collection, avatar: entry.id, style: 'fluffy' }) : null
     }))
   }, { headers: { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'public, max-age=86400' } })
 }

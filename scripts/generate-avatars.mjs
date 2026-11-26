@@ -1,4 +1,5 @@
-﻿import fs from 'node:fs/promises'
+import assert from 'node:assert/strict'
+import fs from 'node:fs/promises'
 import path from 'node:path'
 import { createCanvas, Path2D, ImageData, loadImage } from '@napi-rs/canvas'
 import { examples, renderAvatarSvg, validateAvatar } from 'open-bot-avatar'
@@ -15,12 +16,20 @@ globalThis.OffscreenCanvas = class {
   constructor(width, height) { return createCanvas(width, height) }
 }
 
-const root = path.resolve('public/avatars/v3')
+// Stage base images for the v5 bake; publishing happens only after GPU validation.
+const root = path.resolve('out/v5-bake')
 const catalog = []
 async function save(collection, file, data) {
   const dir = path.join(root, collection)
   await fs.mkdir(dir, { recursive: true })
   await fs.writeFile(path.join(dir, file), data)
+  if (file.endsWith('.png')) {
+    const canvas = createCanvas(224, 224)
+    const context = canvas.getContext('2d')
+    context.imageSmoothingQuality = 'high'
+    context.drawImage(await loadImage(data), 0, 0, 224, 224)
+    await fs.writeFile(path.join(dir, file.replace(/\.png$/, '-thumb.webp')), await canvas.encode('webp', 75))
+  }
 }
 for (const definition of [...examples, ...open.gallery]) {
   const validation = validateAvatar(definition)
@@ -62,5 +71,6 @@ for (const type of botAvatarTypes) {
   catalog.push({ collection: 'bot-avatars', id: type, name: preset.label, color: preset.color,
     renderedColor: color, formats: ['png'], styles: ['flat', 'original'], version: sources.botAvatars.version })
 }
-await fs.writeFile('app/lib/catalog.json', JSON.stringify(catalog, null, 2) + '\n')
+const published = JSON.parse(await fs.readFile('app/lib/catalogs/v5.json', 'utf8'))
+assert.deepEqual(catalog, published.filter(entry => entry.origin !== 'first-party').map(({ variants, category, origin, ...entry }) => ({ ...entry, styles: entry.styles.filter(style => style !== 'fluffy') })), 'Base catalog changed; publish new designs in a new version')
 console.log(`Generated ${catalog.length} official designs, including Libraries.dev original and flat materials.`)

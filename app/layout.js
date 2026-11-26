@@ -5,6 +5,7 @@ import "./studio/studio.css";
 import "./studio/site.css";
 import "./studio/api.css";
 import { SITE_URL } from "./lib/site-url";
+import catalog from "./lib/catalogs/v5.json";
 import { App } from "./studio/App";
 
 export const metadata = {
@@ -16,7 +17,7 @@ export const metadata = {
   ),
   title: "OpenBot Avatars API",
   description:
-    "Choose from 41 bot avatar designs, copy an image URL, and use it in your app. Repeatable seeds, PNG and SVG images, and no API key required.",
+    `Choose from ${catalog.length} bot avatar designs, copy an image URL, and use it in your app. Repeatable seeds, PNG and SVG images, and no API key required.`,
   openGraph: {
     title: "OpenBot Avatars API",
     description:

@@ -1,0 +1,5004 @@
+{
+  "measuredAt": "2026-11-25T05:11:27.569Z",
+  "commit": "fd6ed9089cd018496f5f8ece825f0c812f45cd0d",
+  "buildId": "groPEFmR2ehcrXTmAi9E4",
+  "node": "v24.17.0",
+  "playwright": "1.58.2",
+  "renderer": "0.4.0",
+  "host": {
+    "platform": "win32",
+    "release": "10.0.26300",
+    "cpu": "AMD Ryzen 5 5600H with Radeon Graphics         ",
+    "logicalCpus": 12,
+    "memoryBytes": 7883456512
+  },
+  "methodology": "Three fresh browser contexts per scenario with HTTP cache disabled, warm browser process and local production server; 3 s idle frame window, then 12 design switches (300 ms dwell), then post-GC heap/DOM measurement. First avatar is the first nonblank live preview canvas observed by rAF, including initial editor state before share options settle. Transfer sizes include document and loaded resources before switches. No performance pass/fail thresholds.",
+  "limitations": [
+    "Mobile is Pixel 7 viewport/touch emulation on the desktop GPU, not a physical phone.",
+    "Loopback delivery is not deployment latency. Mobile uses 4x CPU slowdown, 1.6 Mbps down / 750 Kbps up, 150 ms configured latency.",
+    "CDP JS heap excludes GPU memory; three samples do not establish a leak or population performance.",
+    "rAF intervals measure browser scheduling, not individual avatar paint duration. GPU/shader caches can remain warm between contexts."
+  ],
+  "samples": [
+    {
+      "profile": "desktop",
+      "scenario": "editor-flat",
+      "run": 1,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 818.3,
+      "fcpMs": 260,
+      "transferredBytes": 569775,
+      "encodedBodyBytes": 561975,
+      "requests": 26,
+      "resources": [
+        {
+          "url": "/editor",
+          "transferBytes": 3608,
+          "encodedBytes": 3308
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/_next/static/chunks/0p7zw4cus-0ve.js",
+          "transferBytes": 8591,
+          "encodedBytes": 8291
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        }
+      ],
+      "idleFrames": {
+        "count": 433,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 242.10000000149012,
+          "duration": 54,
+          "phase": "load"
+        },
+        {
+          "start": 509.8999999985099,
+          "duration": 312,
+          "phase": "load"
+        },
+        {
+          "start": 857.5,
+          "duration": 276,
+          "phase": "load"
+        },
+        {
+          "start": 1142.2999999970198,
+          "duration": 309,
+          "phase": "load"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 14558536,
+        "documents": 2,
+        "nodes": 5233,
+        "jsEventListeners": 394
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 15154264,
+        "documents": 2,
+        "nodes": 5253,
+        "jsEventListeners": 394
+      },
+      "strandDraws": 1
+    },
+    {
+      "profile": "desktop",
+      "scenario": "editor-flat",
+      "run": 2,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 597.2,
+      "fcpMs": 64,
+      "transferredBytes": 709907,
+      "encodedBodyBytes": 701807,
+      "requests": 27,
+      "resources": [
+        {
+          "url": "/editor",
+          "transferBytes": 3608,
+          "encodedBytes": 3308
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/_next/static/chunks/0p7zw4cus-0ve.js",
+          "transferBytes": 8591,
+          "encodedBytes": 8291
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        }
+      ],
+      "idleFrames": {
+        "count": 433,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 147.5,
+          "duration": 57,
+          "phase": "load"
+        },
+        {
+          "start": 471.69999999552965,
+          "duration": 127,
+          "phase": "load"
+        },
+        {
+          "start": 648.1999999955297,
+          "duration": 337,
+          "phase": "load"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 14592760,
+        "documents": 2,
+        "nodes": 5233,
+        "jsEventListeners": 394
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 15167640,
+        "documents": 2,
+        "nodes": 5253,
+        "jsEventListeners": 394
+      },
+      "strandDraws": 1
+    },
+    {
+      "profile": "desktop",
+      "scenario": "editor-flat",
+      "run": 3,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 583.7,
+      "fcpMs": 60,
+      "transferredBytes": 709907,
+      "encodedBodyBytes": 701807,
+      "requests": 27,
+      "resources": [
+        {
+          "url": "/editor",
+          "transferBytes": 3608,
+          "encodedBytes": 3308
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/_next/static/chunks/0p7zw4cus-0ve.js",
+          "transferBytes": 8591,
+          "encodedBytes": 8291
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        }
+      ],
+      "idleFrames": {
+        "count": 433,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 145.29999999701977,
+          "duration": 62,
+          "phase": "load"
+        },
+        {
+          "start": 463.3999999985099,
+          "duration": 122,
+          "phase": "load"
+        },
+        {
+          "start": 636.6999999955297,
+          "duration": 308,
+          "phase": "load"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 14675672,
+        "documents": 2,
+        "nodes": 5233,
+        "jsEventListeners": 394
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 15203596,
+        "documents": 2,
+        "nodes": 5253,
+        "jsEventListeners": 394
+      },
+      "strandDraws": 1
+    },
+    {
+      "profile": "desktop",
+      "scenario": "editor-fluffy",
+      "run": 1,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 575.9,
+      "fcpMs": 56,
+      "transferredBytes": 850039,
+      "encodedBodyBytes": 841639,
+      "requests": 28,
+      "resources": [
+        {
+          "url": "/editor",
+          "transferBytes": 3608,
+          "encodedBytes": 3308
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/_next/static/chunks/0p7zw4cus-0ve.js",
+          "transferBytes": 8591,
+          "encodedBytes": 8291
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        }
+      ],
+      "idleFrames": {
+        "count": 434,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7.099999999999909,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 136.30000000447035,
+          "duration": 59,
+          "phase": "load"
+        },
+        {
+          "start": 455.1000000014901,
+          "duration": 123,
+          "phase": "load"
+        },
+        {
+          "start": 628.6000000014901,
+          "duration": 100,
+          "phase": "load"
+        },
+        {
+          "start": 4322.20000000298,
+          "duration": 85,
+          "phase": "switches"
+        },
+        {
+          "start": 4752.80000000447,
+          "duration": 50,
+          "phase": "switches"
+        },
+        {
+          "start": 4803,
+          "duration": 120,
+          "phase": "switches"
+        },
+        {
+          "start": 5332.89999999851,
+          "duration": 60,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6773428,
+        "documents": 2,
+        "nodes": 730,
+        "jsEventListeners": 440
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 8335024,
+        "documents": 2,
+        "nodes": 750,
+        "jsEventListeners": 440
+      },
+      "strandDraws": 1120
+    },
+    {
+      "profile": "desktop",
+      "scenario": "editor-fluffy",
+      "run": 2,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 583.9,
+      "fcpMs": 60,
+      "transferredBytes": 709907,
+      "encodedBodyBytes": 701807,
+      "requests": 27,
+      "resources": [
+        {
+          "url": "/editor",
+          "transferBytes": 3608,
+          "encodedBytes": 3308
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/_next/static/chunks/0p7zw4cus-0ve.js",
+          "transferBytes": 8591,
+          "encodedBytes": 8291
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        }
+      ],
+      "idleFrames": {
+        "count": 434,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 146.19999999552965,
+          "duration": 61,
+          "phase": "load"
+        },
+        {
+          "start": 465.29999999701977,
+          "duration": 121,
+          "phase": "load"
+        },
+        {
+          "start": 635.3999999985099,
+          "duration": 122,
+          "phase": "load"
+        },
+        {
+          "start": 4347.89999999851,
+          "duration": 85,
+          "phase": "switches"
+        },
+        {
+          "start": 4825.79999999702,
+          "duration": 128,
+          "phase": "switches"
+        },
+        {
+          "start": 5332.10000000149,
+          "duration": 63,
+          "phase": "switches"
+        },
+        {
+          "start": 5395.79999999702,
+          "duration": 86,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6768680,
+        "documents": 2,
+        "nodes": 730,
+        "jsEventListeners": 440
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 8313468,
+        "documents": 2,
+        "nodes": 750,
+        "jsEventListeners": 440
+      },
+      "strandDraws": 1117
+    },
+    {
+      "profile": "desktop",
+      "scenario": "editor-fluffy",
+      "run": 3,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 594.4,
+      "fcpMs": 56,
+      "transferredBytes": 850039,
+      "encodedBodyBytes": 841639,
+      "requests": 28,
+      "resources": [
+        {
+          "url": "/editor",
+          "transferBytes": 3608,
+          "encodedBytes": 3308
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/_next/static/chunks/0p7zw4cus-0ve.js",
+          "transferBytes": 8591,
+          "encodedBytes": 8291
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        }
+      ],
+      "idleFrames": {
+        "count": 429,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7.099999999999909,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 139.69999999552965,
+          "duration": 62,
+          "phase": "load"
+        },
+        {
+          "start": 463.29999999701977,
+          "duration": 133,
+          "phase": "load"
+        },
+        {
+          "start": 653.8999999985099,
+          "duration": 124,
+          "phase": "load"
+        },
+        {
+          "start": 4424.29999999702,
+          "duration": 105,
+          "phase": "switches"
+        },
+        {
+          "start": 4884.89999999851,
+          "duration": 69,
+          "phase": "switches"
+        },
+        {
+          "start": 4954.5999999940395,
+          "duration": 168,
+          "phase": "switches"
+        },
+        {
+          "start": 5491.19999999553,
+          "duration": 71,
+          "phase": "switches"
+        },
+        {
+          "start": 5563.0999999940395,
+          "duration": 100,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6780812,
+        "documents": 2,
+        "nodes": 730,
+        "jsEventListeners": 440
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 8319728,
+        "documents": 2,
+        "nodes": 750,
+        "jsEventListeners": 440
+      },
+      "strandDraws": 1071
+    },
+    {
+      "profile": "desktop",
+      "scenario": "api-flat",
+      "run": 1,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 701.8,
+      "fcpMs": 120,
+      "transferredBytes": 446891,
+      "encodedBodyBytes": 427091,
+      "requests": 66,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5550,
+          "encodedBytes": 5250
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/controller-thumb.webp",
+          "transferBytes": 4064,
+          "encodedBytes": 3764
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug-thumb.webp",
+          "transferBytes": 2914,
+          "encodedBytes": 2614
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/barbell-thumb.webp",
+          "transferBytes": 4490,
+          "encodedBytes": 4190
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/lightbulb-thumb.webp",
+          "transferBytes": 3812,
+          "encodedBytes": 3512
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/chat-thumb.webp",
+          "transferBytes": 3534,
+          "encodedBytes": 3234
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/sprout-thumb.webp",
+          "transferBytes": 4506,
+          "encodedBytes": 4206
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/watering-can-thumb.webp",
+          "transferBytes": 4376,
+          "encodedBytes": 4076
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/book-thumb.webp",
+          "transferBytes": 3050,
+          "encodedBytes": 2750
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/brain-thumb.webp",
+          "transferBytes": 3866,
+          "encodedBytes": 3566
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bull-thumb.webp",
+          "transferBytes": 4796,
+          "encodedBytes": 4496
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bunny-thumb.webp",
+          "transferBytes": 4232,
+          "encodedBytes": 3932
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/camera-thumb.webp",
+          "transferBytes": 2696,
+          "encodedBytes": 2396
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cat-thumb.webp",
+          "transferBytes": 4626,
+          "encodedBytes": 4326
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cloud-thumb.webp",
+          "transferBytes": 3498,
+          "encodedBytes": 3198
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/egg-thumb.webp",
+          "transferBytes": 2846,
+          "encodedBytes": 2546
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/ghost-thumb.webp",
+          "transferBytes": 2916,
+          "encodedBytes": 2616
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/magnifier-thumb.webp",
+          "transferBytes": 4258,
+          "encodedBytes": 3958
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/palette-thumb.webp",
+          "transferBytes": 4010,
+          "encodedBytes": 3710
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/paint-brush-thumb.webp",
+          "transferBytes": 3938,
+          "encodedBytes": 3638
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/rocket-thumb.webp",
+          "transferBytes": 3568,
+          "encodedBytes": 3268
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/shield-thumb.webp",
+          "transferBytes": 3546,
+          "encodedBytes": 3246
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/star-thumb.webp",
+          "transferBytes": 4220,
+          "encodedBytes": 3920
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/witch-hat-thumb.webp",
+          "transferBytes": 4090,
+          "encodedBytes": 3790
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/clover-thumb.webp",
+          "transferBytes": 3390,
+          "encodedBytes": 3090
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/flower-thumb.webp",
+          "transferBytes": 3252,
+          "encodedBytes": 2952
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/triangle-thumb.webp",
+          "transferBytes": 2730,
+          "encodedBytes": 2430
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/square-thumb.webp",
+          "transferBytes": 3078,
+          "encodedBytes": 2778
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/blob-thumb.webp",
+          "transferBytes": 3124,
+          "encodedBytes": 2824
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/ghost-thumb.webp",
+          "transferBytes": 2140,
+          "encodedBytes": 1840
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/circle-thumb.webp",
+          "transferBytes": 3188,
+          "encodedBytes": 2888
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/drop-thumb.webp",
+          "transferBytes": 3084,
+          "encodedBytes": 2784
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/star-thumb.webp",
+          "transferBytes": 3160,
+          "encodedBytes": 2860
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/mech-thumb.webp",
+          "transferBytes": 3070,
+          "encodedBytes": 2770
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/droid-thumb.webp",
+          "transferBytes": 2778,
+          "encodedBytes": 2478
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/alien-thumb.webp",
+          "transferBytes": 3078,
+          "encodedBytes": 2778
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/hexagon-thumb.webp",
+          "transferBytes": 2952,
+          "encodedBytes": 2652
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/cat-thumb.webp",
+          "transferBytes": 3180,
+          "encodedBytes": 2880
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/cloud-thumb.webp",
+          "transferBytes": 2836,
+          "encodedBytes": 2536
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/pill-thumb.webp",
+          "transferBytes": 2420,
+          "encodedBytes": 2120
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/pebble-thumb.webp",
+          "transferBytes": 2844,
+          "encodedBytes": 2544
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/puddle-thumb.webp",
+          "transferBytes": 3224,
+          "encodedBytes": 2924
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/chunks/31q54y78br5x1.js",
+          "transferBytes": 1000,
+          "encodedBytes": 700
+        }
+      ],
+      "idleFrames": {
+        "count": 434,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 24,
+          "duration": 75,
+          "phase": "load"
+        },
+        {
+          "start": 256.29999999701977,
+          "duration": 63,
+          "phase": "load"
+        },
+        {
+          "start": 703.6000000014901,
+          "duration": 67,
+          "phase": "load"
+        },
+        {
+          "start": 4378.70000000298,
+          "duration": 55,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6212620,
+        "documents": 2,
+        "nodes": 389,
+        "jsEventListeners": 433
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 7816488,
+        "documents": 2,
+        "nodes": 393,
+        "jsEventListeners": 433
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "desktop",
+      "scenario": "api-flat",
+      "run": 2,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 753.3,
+      "fcpMs": 136,
+      "transferredBytes": 446891,
+      "encodedBodyBytes": 427091,
+      "requests": 66,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5550,
+          "encodedBytes": 5250
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/controller-thumb.webp",
+          "transferBytes": 4064,
+          "encodedBytes": 3764
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/barbell-thumb.webp",
+          "transferBytes": 4490,
+          "encodedBytes": 4190
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug-thumb.webp",
+          "transferBytes": 2914,
+          "encodedBytes": 2614
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/lightbulb-thumb.webp",
+          "transferBytes": 3812,
+          "encodedBytes": 3512
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/chat-thumb.webp",
+          "transferBytes": 3534,
+          "encodedBytes": 3234
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/sprout-thumb.webp",
+          "transferBytes": 4506,
+          "encodedBytes": 4206
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/watering-can-thumb.webp",
+          "transferBytes": 4376,
+          "encodedBytes": 4076
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/book-thumb.webp",
+          "transferBytes": 3050,
+          "encodedBytes": 2750
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/brain-thumb.webp",
+          "transferBytes": 3866,
+          "encodedBytes": 3566
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bull-thumb.webp",
+          "transferBytes": 4796,
+          "encodedBytes": 4496
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bunny-thumb.webp",
+          "transferBytes": 4232,
+          "encodedBytes": 3932
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/camera-thumb.webp",
+          "transferBytes": 2696,
+          "encodedBytes": 2396
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cat-thumb.webp",
+          "transferBytes": 4626,
+          "encodedBytes": 4326
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cloud-thumb.webp",
+          "transferBytes": 3498,
+          "encodedBytes": 3198
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/egg-thumb.webp",
+          "transferBytes": 2846,
+          "encodedBytes": 2546
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/ghost-thumb.webp",
+          "transferBytes": 2916,
+          "encodedBytes": 2616
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/magnifier-thumb.webp",
+          "transferBytes": 4258,
+          "encodedBytes": 3958
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/paint-brush-thumb.webp",
+          "transferBytes": 3938,
+          "encodedBytes": 3638
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/palette-thumb.webp",
+          "transferBytes": 4010,
+          "encodedBytes": 3710
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/rocket-thumb.webp",
+          "transferBytes": 3568,
+          "encodedBytes": 3268
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/shield-thumb.webp",
+          "transferBytes": 3546,
+          "encodedBytes": 3246
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/star-thumb.webp",
+          "transferBytes": 4220,
+          "encodedBytes": 3920
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/witch-hat-thumb.webp",
+          "transferBytes": 4090,
+          "encodedBytes": 3790
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/clover-thumb.webp",
+          "transferBytes": 3390,
+          "encodedBytes": 3090
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/flower-thumb.webp",
+          "transferBytes": 3252,
+          "encodedBytes": 2952
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/triangle-thumb.webp",
+          "transferBytes": 2730,
+          "encodedBytes": 2430
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/square-thumb.webp",
+          "transferBytes": 3078,
+          "encodedBytes": 2778
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/blob-thumb.webp",
+          "transferBytes": 3124,
+          "encodedBytes": 2824
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/ghost-thumb.webp",
+          "transferBytes": 2140,
+          "encodedBytes": 1840
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/circle-thumb.webp",
+          "transferBytes": 3188,
+          "encodedBytes": 2888
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/drop-thumb.webp",
+          "transferBytes": 3084,
+          "encodedBytes": 2784
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/star-thumb.webp",
+          "transferBytes": 3160,
+          "encodedBytes": 2860
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/droid-thumb.webp",
+          "transferBytes": 2778,
+          "encodedBytes": 2478
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/mech-thumb.webp",
+          "transferBytes": 3070,
+          "encodedBytes": 2770
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/alien-thumb.webp",
+          "transferBytes": 3078,
+          "encodedBytes": 2778
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/hexagon-thumb.webp",
+          "transferBytes": 2952,
+          "encodedBytes": 2652
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/cat-thumb.webp",
+          "transferBytes": 3180,
+          "encodedBytes": 2880
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/cloud-thumb.webp",
+          "transferBytes": 2836,
+          "encodedBytes": 2536
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/pill-thumb.webp",
+          "transferBytes": 2420,
+          "encodedBytes": 2120
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/pebble-thumb.webp",
+          "transferBytes": 2844,
+          "encodedBytes": 2544
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/puddle-thumb.webp",
+          "transferBytes": 3224,
+          "encodedBytes": 2924
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/31q54y78br5x1.js",
+          "transferBytes": 1000,
+          "encodedBytes": 700
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 435,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 31.399999998509884,
+          "duration": 89,
+          "phase": "load"
+        },
+        {
+          "start": 142,
+          "duration": 55,
+          "phase": "load"
+        },
+        {
+          "start": 288.09999999403954,
+          "duration": 91,
+          "phase": "load"
+        },
+        {
+          "start": 4485.79999999702,
+          "duration": 50,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6154596,
+        "documents": 2,
+        "nodes": 389,
+        "jsEventListeners": 433
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 7813444,
+        "documents": 2,
+        "nodes": 393,
+        "jsEventListeners": 433
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "desktop",
+      "scenario": "api-flat",
+      "run": 3,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 665.2,
+      "fcpMs": 120,
+      "transferredBytes": 446891,
+      "encodedBodyBytes": 427091,
+      "requests": 66,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5550,
+          "encodedBytes": 5250
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/controller-thumb.webp",
+          "transferBytes": 4064,
+          "encodedBytes": 3764
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/barbell-thumb.webp",
+          "transferBytes": 4490,
+          "encodedBytes": 4190
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug-thumb.webp",
+          "transferBytes": 2914,
+          "encodedBytes": 2614
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/lightbulb-thumb.webp",
+          "transferBytes": 3812,
+          "encodedBytes": 3512
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/chat-thumb.webp",
+          "transferBytes": 3534,
+          "encodedBytes": 3234
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/sprout-thumb.webp",
+          "transferBytes": 4506,
+          "encodedBytes": 4206
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/watering-can-thumb.webp",
+          "transferBytes": 4376,
+          "encodedBytes": 4076
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/book-thumb.webp",
+          "transferBytes": 3050,
+          "encodedBytes": 2750
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/brain-thumb.webp",
+          "transferBytes": 3866,
+          "encodedBytes": 3566
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bull-thumb.webp",
+          "transferBytes": 4796,
+          "encodedBytes": 4496
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bunny-thumb.webp",
+          "transferBytes": 4232,
+          "encodedBytes": 3932
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/camera-thumb.webp",
+          "transferBytes": 2696,
+          "encodedBytes": 2396
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cat-thumb.webp",
+          "transferBytes": 4626,
+          "encodedBytes": 4326
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cloud-thumb.webp",
+          "transferBytes": 3498,
+          "encodedBytes": 3198
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/egg-thumb.webp",
+          "transferBytes": 2846,
+          "encodedBytes": 2546
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/ghost-thumb.webp",
+          "transferBytes": 2916,
+          "encodedBytes": 2616
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/magnifier-thumb.webp",
+          "transferBytes": 4258,
+          "encodedBytes": 3958
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/paint-brush-thumb.webp",
+          "transferBytes": 3938,
+          "encodedBytes": 3638
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/palette-thumb.webp",
+          "transferBytes": 4010,
+          "encodedBytes": 3710
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/rocket-thumb.webp",
+          "transferBytes": 3568,
+          "encodedBytes": 3268
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/shield-thumb.webp",
+          "transferBytes": 3546,
+          "encodedBytes": 3246
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/star-thumb.webp",
+          "transferBytes": 4220,
+          "encodedBytes": 3920
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/witch-hat-thumb.webp",
+          "transferBytes": 4090,
+          "encodedBytes": 3790
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/clover-thumb.webp",
+          "transferBytes": 3390,
+          "encodedBytes": 3090
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/flower-thumb.webp",
+          "transferBytes": 3252,
+          "encodedBytes": 2952
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/triangle-thumb.webp",
+          "transferBytes": 2730,
+          "encodedBytes": 2430
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/square-thumb.webp",
+          "transferBytes": 3078,
+          "encodedBytes": 2778
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/blob-thumb.webp",
+          "transferBytes": 3124,
+          "encodedBytes": 2824
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/ghost-thumb.webp",
+          "transferBytes": 2140,
+          "encodedBytes": 1840
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/circle-thumb.webp",
+          "transferBytes": 3188,
+          "encodedBytes": 2888
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/drop-thumb.webp",
+          "transferBytes": 3084,
+          "encodedBytes": 2784
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/star-thumb.webp",
+          "transferBytes": 3160,
+          "encodedBytes": 2860
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/droid-thumb.webp",
+          "transferBytes": 2778,
+          "encodedBytes": 2478
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/mech-thumb.webp",
+          "transferBytes": 3070,
+          "encodedBytes": 2770
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/alien-thumb.webp",
+          "transferBytes": 3078,
+          "encodedBytes": 2778
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/hexagon-thumb.webp",
+          "transferBytes": 2952,
+          "encodedBytes": 2652
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/cat-thumb.webp",
+          "transferBytes": 3180,
+          "encodedBytes": 2880
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/cloud-thumb.webp",
+          "transferBytes": 2836,
+          "encodedBytes": 2536
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/pill-thumb.webp",
+          "transferBytes": 2420,
+          "encodedBytes": 2120
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/pebble-thumb.webp",
+          "transferBytes": 2844,
+          "encodedBytes": 2544
+        },
+        {
+          "url": "/avatars/v3/bot-avatars/puddle-thumb.webp",
+          "transferBytes": 3224,
+          "encodedBytes": 2924
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/31q54y78br5x1.js",
+          "transferBytes": 1000,
+          "encodedBytes": 700
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 428,
+        "medianMs": 6.900000000000091,
+        "p95Ms": 7.099999999999909,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 25.5,
+          "duration": 78,
+          "phase": "load"
+        },
+        {
+          "start": 124.60000000149012,
+          "duration": 55,
+          "phase": "load"
+        },
+        {
+          "start": 255.79999999701977,
+          "duration": 56,
+          "phase": "load"
+        },
+        {
+          "start": 4405.20000000298,
+          "duration": 56,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6152728,
+        "documents": 2,
+        "nodes": 389,
+        "jsEventListeners": 433
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 7811768,
+        "documents": 2,
+        "nodes": 393,
+        "jsEventListeners": 433
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "editor-flat",
+      "run": 1,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 4796.6,
+      "fcpMs": 816,
+      "transferredBytes": 429643,
+      "encodedBodyBytes": 422143,
+      "requests": 25,
+      "resources": [
+        {
+          "url": "/editor",
+          "transferBytes": 3608,
+          "encodedBytes": 3308
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/_next/static/chunks/0p7zw4cus-0ve.js",
+          "transferBytes": 8591,
+          "encodedBytes": 8291
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        }
+      ],
+      "idleFrames": {
+        "count": 426,
+        "medianMs": 6.900000000000546,
+        "p95Ms": 7,
+        "over33ms": 1
+      },
+      "longTasks": [
+        {
+          "start": 666.7000000029802,
+          "duration": 141,
+          "phase": "load"
+        },
+        {
+          "start": 1791.2000000029802,
+          "duration": 927,
+          "phase": "load"
+        },
+        {
+          "start": 3187.3000000044703,
+          "duration": 159,
+          "phase": "load"
+        },
+        {
+          "start": 3469.9000000059605,
+          "duration": 272,
+          "phase": "load"
+        },
+        {
+          "start": 3995.60000000149,
+          "duration": 101,
+          "phase": "load"
+        },
+        {
+          "start": 4137.5,
+          "duration": 76,
+          "phase": "load"
+        },
+        {
+          "start": 4311.60000000149,
+          "duration": 62,
+          "phase": "load"
+        },
+        {
+          "start": 4384.5,
+          "duration": 419,
+          "phase": "load"
+        },
+        {
+          "start": 4808,
+          "duration": 130,
+          "phase": "load"
+        },
+        {
+          "start": 4940.4000000059605,
+          "duration": 56,
+          "phase": "load"
+        },
+        {
+          "start": 5063.70000000298,
+          "duration": 1450,
+          "phase": "load"
+        },
+        {
+          "start": 8688.70000000298,
+          "duration": 51,
+          "phase": "idle"
+        },
+        {
+          "start": 10457.70000000298,
+          "duration": 71,
+          "phase": "switches"
+        },
+        {
+          "start": 10529.5,
+          "duration": 60,
+          "phase": "switches"
+        },
+        {
+          "start": 12571.30000000447,
+          "duration": 55,
+          "phase": "switches"
+        },
+        {
+          "start": 14723,
+          "duration": 60,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 14444244,
+        "documents": 2,
+        "nodes": 5187,
+        "jsEventListeners": 394
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 15046808,
+        "documents": 2,
+        "nodes": 5207,
+        "jsEventListeners": 394
+      },
+      "strandDraws": 1
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "editor-flat",
+      "run": 2,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 4355,
+      "fcpMs": 748,
+      "transferredBytes": 429643,
+      "encodedBodyBytes": 422143,
+      "requests": 25,
+      "resources": [
+        {
+          "url": "/editor",
+          "transferBytes": 3608,
+          "encodedBytes": 3308
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/_next/static/chunks/0p7zw4cus-0ve.js",
+          "transferBytes": 8591,
+          "encodedBytes": 8291
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        }
+      ],
+      "idleFrames": {
+        "count": 344,
+        "medianMs": 7,
+        "p95Ms": 20.700000000000728,
+        "over33ms": 1
+      },
+      "longTasks": [
+        {
+          "start": 620,
+          "duration": 121,
+          "phase": "load"
+        },
+        {
+          "start": 1724.2999999970198,
+          "duration": 249,
+          "phase": "load"
+        },
+        {
+          "start": 2030,
+          "duration": 152,
+          "phase": "load"
+        },
+        {
+          "start": 2291.7999999970198,
+          "duration": 90,
+          "phase": "load"
+        },
+        {
+          "start": 2384.5,
+          "duration": 68,
+          "phase": "load"
+        },
+        {
+          "start": 2454,
+          "duration": 850,
+          "phase": "load"
+        },
+        {
+          "start": 3347.7999999970198,
+          "duration": 74,
+          "phase": "load"
+        },
+        {
+          "start": 3595.5,
+          "duration": 118,
+          "phase": "load"
+        },
+        {
+          "start": 3769.39999999851,
+          "duration": 66,
+          "phase": "load"
+        },
+        {
+          "start": 3923.89999999851,
+          "duration": 55,
+          "phase": "load"
+        },
+        {
+          "start": 3988.0999999940395,
+          "duration": 373,
+          "phase": "load"
+        },
+        {
+          "start": 4366.0999999940395,
+          "duration": 116,
+          "phase": "load"
+        },
+        {
+          "start": 4596.39999999851,
+          "duration": 1653,
+          "phase": "load"
+        },
+        {
+          "start": 10058.39999999851,
+          "duration": 102,
+          "phase": "switches"
+        },
+        {
+          "start": 10162.09999999404,
+          "duration": 63,
+          "phase": "switches"
+        },
+        {
+          "start": 10673.79999999702,
+          "duration": 74,
+          "phase": "switches"
+        },
+        {
+          "start": 10748.79999999702,
+          "duration": 75,
+          "phase": "switches"
+        },
+        {
+          "start": 12828.29999999702,
+          "duration": 89,
+          "phase": "switches"
+        },
+        {
+          "start": 14922.79999999702,
+          "duration": 54,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 14444720,
+        "documents": 2,
+        "nodes": 5187,
+        "jsEventListeners": 394
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 15055232,
+        "documents": 2,
+        "nodes": 5207,
+        "jsEventListeners": 394
+      },
+      "strandDraws": 1
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "editor-flat",
+      "run": 3,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 5152.8,
+      "fcpMs": 824,
+      "transferredBytes": 429643,
+      "encodedBodyBytes": 422143,
+      "requests": 25,
+      "resources": [
+        {
+          "url": "/editor",
+          "transferBytes": 3608,
+          "encodedBytes": 3308
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/_next/static/chunks/0p7zw4cus-0ve.js",
+          "transferBytes": 8591,
+          "encodedBytes": 8291
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        }
+      ],
+      "idleFrames": {
+        "count": 434,
+        "medianMs": 6.900000000000546,
+        "p95Ms": 7,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 627.7999999970198,
+          "duration": 188,
+          "phase": "load"
+        },
+        {
+          "start": 1736.1000000014901,
+          "duration": 317,
+          "phase": "load"
+        },
+        {
+          "start": 2122,
+          "duration": 73,
+          "phase": "load"
+        },
+        {
+          "start": 2245.39999999851,
+          "duration": 58,
+          "phase": "load"
+        },
+        {
+          "start": 2346.5,
+          "duration": 69,
+          "phase": "load"
+        },
+        {
+          "start": 2416.1999999955297,
+          "duration": 589,
+          "phase": "load"
+        },
+        {
+          "start": 3008.1999999955297,
+          "duration": 96,
+          "phase": "load"
+        },
+        {
+          "start": 3110.1999999955297,
+          "duration": 117,
+          "phase": "load"
+        },
+        {
+          "start": 3535.1999999955297,
+          "duration": 338,
+          "phase": "load"
+        },
+        {
+          "start": 4203,
+          "duration": 128,
+          "phase": "load"
+        },
+        {
+          "start": 4483.60000000149,
+          "duration": 105,
+          "phase": "load"
+        },
+        {
+          "start": 4617.29999999702,
+          "duration": 541,
+          "phase": "load"
+        },
+        {
+          "start": 5162.60000000149,
+          "duration": 161,
+          "phase": "load"
+        },
+        {
+          "start": 5448.89999999851,
+          "duration": 1725,
+          "phase": "load"
+        },
+        {
+          "start": 11157.39999999851,
+          "duration": 80,
+          "phase": "switches"
+        },
+        {
+          "start": 11238.5,
+          "duration": 84,
+          "phase": "switches"
+        },
+        {
+          "start": 11777.5,
+          "duration": 55,
+          "phase": "switches"
+        },
+        {
+          "start": 13315,
+          "duration": 67,
+          "phase": "switches"
+        },
+        {
+          "start": 15458.19999999553,
+          "duration": 67,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 14445792,
+        "documents": 2,
+        "nodes": 5187,
+        "jsEventListeners": 394
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 15050920,
+        "documents": 2,
+        "nodes": 5207,
+        "jsEventListeners": 394
+      },
+      "strandDraws": 1
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "editor-fluffy",
+      "run": 1,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 3465,
+      "fcpMs": 760,
+      "transferredBytes": 429643,
+      "encodedBodyBytes": 422143,
+      "requests": 25,
+      "resources": [
+        {
+          "url": "/editor",
+          "transferBytes": 3608,
+          "encodedBytes": 3308
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/_next/static/chunks/0p7zw4cus-0ve.js",
+          "transferBytes": 8591,
+          "encodedBytes": 8291
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        }
+      ],
+      "idleFrames": {
+        "count": 435,
+        "medianMs": 6.900000000000546,
+        "p95Ms": 7.099999999999454,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 619.6999999955297,
+          "duration": 135,
+          "phase": "load"
+        },
+        {
+          "start": 1715.6000000014901,
+          "duration": 250,
+          "phase": "load"
+        },
+        {
+          "start": 2020.5,
+          "duration": 56,
+          "phase": "load"
+        },
+        {
+          "start": 2144.60000000149,
+          "duration": 265,
+          "phase": "load"
+        },
+        {
+          "start": 2638.39999999851,
+          "duration": 126,
+          "phase": "load"
+        },
+        {
+          "start": 2827.39999999851,
+          "duration": 73,
+          "phase": "load"
+        },
+        {
+          "start": 2951.89999999851,
+          "duration": 64,
+          "phase": "load"
+        },
+        {
+          "start": 3028.5,
+          "duration": 439,
+          "phase": "load"
+        },
+        {
+          "start": 3473.60000000149,
+          "duration": 138,
+          "phase": "load"
+        },
+        {
+          "start": 3614.39999999851,
+          "duration": 56,
+          "phase": "load"
+        },
+        {
+          "start": 3683.10000000149,
+          "duration": 381,
+          "phase": "load"
+        },
+        {
+          "start": 8139.5,
+          "duration": 352,
+          "phase": "switches"
+        },
+        {
+          "start": 8868.69999999553,
+          "duration": 254,
+          "phase": "switches"
+        },
+        {
+          "start": 9123.79999999702,
+          "duration": 581,
+          "phase": "switches"
+        },
+        {
+          "start": 10114,
+          "duration": 230,
+          "phase": "switches"
+        },
+        {
+          "start": 10345.10000000149,
+          "duration": 402,
+          "phase": "switches"
+        },
+        {
+          "start": 12100.89999999851,
+          "duration": 70,
+          "phase": "switches"
+        },
+        {
+          "start": 13984.5,
+          "duration": 71,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6572856,
+        "documents": 2,
+        "nodes": 684,
+        "jsEventListeners": 440
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 8184960,
+        "documents": 2,
+        "nodes": 704,
+        "jsEventListeners": 440
+      },
+      "strandDraws": 1109
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "editor-fluffy",
+      "run": 2,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 3457.2,
+      "fcpMs": 752,
+      "transferredBytes": 429643,
+      "encodedBodyBytes": 422143,
+      "requests": 25,
+      "resources": [
+        {
+          "url": "/editor",
+          "transferBytes": 3608,
+          "encodedBytes": 3308
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/_next/static/chunks/0p7zw4cus-0ve.js",
+          "transferBytes": 8591,
+          "encodedBytes": 8291
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        }
+      ],
+      "idleFrames": {
+        "count": 436,
+        "medianMs": 6.900000000000546,
+        "p95Ms": 7.099999999999454,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 612.5,
+          "duration": 135,
+          "phase": "load"
+        },
+        {
+          "start": 1724.7999999970198,
+          "duration": 239,
+          "phase": "load"
+        },
+        {
+          "start": 2011.6000000014901,
+          "duration": 59,
+          "phase": "load"
+        },
+        {
+          "start": 2117.89999999851,
+          "duration": 274,
+          "phase": "load"
+        },
+        {
+          "start": 2643.60000000149,
+          "duration": 117,
+          "phase": "load"
+        },
+        {
+          "start": 2809.7999999970198,
+          "duration": 75,
+          "phase": "load"
+        },
+        {
+          "start": 2953.10000000149,
+          "duration": 69,
+          "phase": "load"
+        },
+        {
+          "start": 3031.5,
+          "duration": 426,
+          "phase": "load"
+        },
+        {
+          "start": 3462.7000000029802,
+          "duration": 133,
+          "phase": "load"
+        },
+        {
+          "start": 3644.2000000029802,
+          "duration": 371,
+          "phase": "load"
+        },
+        {
+          "start": 8055.89999999851,
+          "duration": 372,
+          "phase": "switches"
+        },
+        {
+          "start": 8803.29999999702,
+          "duration": 276,
+          "phase": "switches"
+        },
+        {
+          "start": 9080.5,
+          "duration": 571,
+          "phase": "switches"
+        },
+        {
+          "start": 10095.10000000149,
+          "duration": 280,
+          "phase": "switches"
+        },
+        {
+          "start": 10375.79999999702,
+          "duration": 458,
+          "phase": "switches"
+        },
+        {
+          "start": 12276.5,
+          "duration": 70,
+          "phase": "switches"
+        },
+        {
+          "start": 14207.10000000149,
+          "duration": 74,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6576364,
+        "documents": 2,
+        "nodes": 684,
+        "jsEventListeners": 440
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 8192124,
+        "documents": 2,
+        "nodes": 704,
+        "jsEventListeners": 440
+      },
+      "strandDraws": 1108
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "editor-fluffy",
+      "run": 3,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 3475.7,
+      "fcpMs": 764,
+      "transferredBytes": 429643,
+      "encodedBodyBytes": 422143,
+      "requests": 25,
+      "resources": [
+        {
+          "url": "/editor",
+          "transferBytes": 3608,
+          "encodedBytes": 3308
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/_next/static/chunks/0p7zw4cus-0ve.js",
+          "transferBytes": 8591,
+          "encodedBytes": 8291
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/media/fluffy-thumbnails.0q16tb3_mz7xk.webp",
+          "transferBytes": 140132,
+          "encodedBytes": 139832
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        }
+      ],
+      "idleFrames": {
+        "count": 433,
+        "medianMs": 6.900000000000546,
+        "p95Ms": 7.100000000000364,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 619.6000000014901,
+          "duration": 138,
+          "phase": "load"
+        },
+        {
+          "start": 1726.7999999970198,
+          "duration": 242,
+          "phase": "load"
+        },
+        {
+          "start": 2016.6999999955297,
+          "duration": 60,
+          "phase": "load"
+        },
+        {
+          "start": 2120.6999999955297,
+          "duration": 273,
+          "phase": "load"
+        },
+        {
+          "start": 2644.2999999970198,
+          "duration": 126,
+          "phase": "load"
+        },
+        {
+          "start": 2826.10000000149,
+          "duration": 71,
+          "phase": "load"
+        },
+        {
+          "start": 2963.6999999955297,
+          "duration": 65,
+          "phase": "load"
+        },
+        {
+          "start": 3042.60000000149,
+          "duration": 439,
+          "phase": "load"
+        },
+        {
+          "start": 3486.89999999851,
+          "duration": 136,
+          "phase": "load"
+        },
+        {
+          "start": 3688.89999999851,
+          "duration": 363,
+          "phase": "load"
+        },
+        {
+          "start": 8048.79999999702,
+          "duration": 54,
+          "phase": "switches"
+        },
+        {
+          "start": 8103.19999999553,
+          "duration": 371,
+          "phase": "switches"
+        },
+        {
+          "start": 8849.79999999702,
+          "duration": 271,
+          "phase": "switches"
+        },
+        {
+          "start": 9121.39999999851,
+          "duration": 560,
+          "phase": "switches"
+        },
+        {
+          "start": 10112.60000000149,
+          "duration": 229,
+          "phase": "switches"
+        },
+        {
+          "start": 10342.5,
+          "duration": 303,
+          "phase": "switches"
+        },
+        {
+          "start": 11999.19999999553,
+          "duration": 79,
+          "phase": "switches"
+        },
+        {
+          "start": 13894.19999999553,
+          "duration": 76,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6575832,
+        "documents": 2,
+        "nodes": 684,
+        "jsEventListeners": 440
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 8186752,
+        "documents": 2,
+        "nodes": 704,
+        "jsEventListeners": 440
+      },
+      "strandDraws": 1105
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "api-flat",
+      "run": 1,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 3512.7,
+      "fcpMs": 1100,
+      "transferredBytes": 385053,
+      "encodedBodyBytes": 371253,
+      "requests": 46,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5550,
+          "encodedBytes": 5250
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/controller-thumb.webp",
+          "transferBytes": 4064,
+          "encodedBytes": 3764
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/barbell-thumb.webp",
+          "transferBytes": 4490,
+          "encodedBytes": 4190
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug-thumb.webp",
+          "transferBytes": 2914,
+          "encodedBytes": 2614
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/lightbulb-thumb.webp",
+          "transferBytes": 3812,
+          "encodedBytes": 3512
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/chat-thumb.webp",
+          "transferBytes": 3534,
+          "encodedBytes": 3234
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/sprout-thumb.webp",
+          "transferBytes": 4506,
+          "encodedBytes": 4206
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/watering-can-thumb.webp",
+          "transferBytes": 4376,
+          "encodedBytes": 4076
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/book-thumb.webp",
+          "transferBytes": 3050,
+          "encodedBytes": 2750
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/brain-thumb.webp",
+          "transferBytes": 3866,
+          "encodedBytes": 3566
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bull-thumb.webp",
+          "transferBytes": 4796,
+          "encodedBytes": 4496
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bunny-thumb.webp",
+          "transferBytes": 4232,
+          "encodedBytes": 3932
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/camera-thumb.webp",
+          "transferBytes": 2696,
+          "encodedBytes": 2396
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cat-thumb.webp",
+          "transferBytes": 4626,
+          "encodedBytes": 4326
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cloud-thumb.webp",
+          "transferBytes": 3498,
+          "encodedBytes": 3198
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/egg-thumb.webp",
+          "transferBytes": 2846,
+          "encodedBytes": 2546
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/ghost-thumb.webp",
+          "transferBytes": 2916,
+          "encodedBytes": 2616
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/magnifier-thumb.webp",
+          "transferBytes": 4258,
+          "encodedBytes": 3958
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/paint-brush-thumb.webp",
+          "transferBytes": 3938,
+          "encodedBytes": 3638
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/palette-thumb.webp",
+          "transferBytes": 4010,
+          "encodedBytes": 3710
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/rocket-thumb.webp",
+          "transferBytes": 3568,
+          "encodedBytes": 3268
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/shield-thumb.webp",
+          "transferBytes": 3546,
+          "encodedBytes": 3246
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/31q54y78br5x1.js",
+          "transferBytes": 1000,
+          "encodedBytes": 700
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        }
+      ],
+      "idleFrames": {
+        "count": 436,
+        "medianMs": 6.900000000000546,
+        "p95Ms": 7,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 674,
+          "duration": 365,
+          "phase": "load"
+        },
+        {
+          "start": 1265.1999999955297,
+          "duration": 54,
+          "phase": "load"
+        },
+        {
+          "start": 1629.1999999955297,
+          "duration": 105,
+          "phase": "load"
+        },
+        {
+          "start": 1938.8999999985099,
+          "duration": 243,
+          "phase": "load"
+        },
+        {
+          "start": 2268.89999999851,
+          "duration": 54,
+          "phase": "load"
+        },
+        {
+          "start": 2450.1999999955297,
+          "duration": 276,
+          "phase": "load"
+        },
+        {
+          "start": 3244.89999999851,
+          "duration": 109,
+          "phase": "load"
+        },
+        {
+          "start": 3388.5,
+          "duration": 130,
+          "phase": "load"
+        },
+        {
+          "start": 8427.29999999702,
+          "duration": 247,
+          "phase": "switches"
+        },
+        {
+          "start": 9115.59999999404,
+          "duration": 209,
+          "phase": "switches"
+        },
+        {
+          "start": 11933.89999999851,
+          "duration": 61,
+          "phase": "switches"
+        },
+        {
+          "start": 12377.39999999851,
+          "duration": 60,
+          "phase": "switches"
+        },
+        {
+          "start": 13937.89999999851,
+          "duration": 56,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6053276,
+        "documents": 2,
+        "nodes": 389,
+        "jsEventListeners": 433
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 7835664,
+        "documents": 2,
+        "nodes": 393,
+        "jsEventListeners": 433
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "api-flat",
+      "run": 2,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 5310.9,
+      "fcpMs": 1780,
+      "transferredBytes": 385053,
+      "encodedBodyBytes": 371253,
+      "requests": 46,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5550,
+          "encodedBytes": 5250
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/controller-thumb.webp",
+          "transferBytes": 4064,
+          "encodedBytes": 3764
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/barbell-thumb.webp",
+          "transferBytes": 4490,
+          "encodedBytes": 4190
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug-thumb.webp",
+          "transferBytes": 2914,
+          "encodedBytes": 2614
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/lightbulb-thumb.webp",
+          "transferBytes": 3812,
+          "encodedBytes": 3512
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/chat-thumb.webp",
+          "transferBytes": 3534,
+          "encodedBytes": 3234
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/sprout-thumb.webp",
+          "transferBytes": 4506,
+          "encodedBytes": 4206
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/watering-can-thumb.webp",
+          "transferBytes": 4376,
+          "encodedBytes": 4076
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/book-thumb.webp",
+          "transferBytes": 3050,
+          "encodedBytes": 2750
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/brain-thumb.webp",
+          "transferBytes": 3866,
+          "encodedBytes": 3566
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bull-thumb.webp",
+          "transferBytes": 4796,
+          "encodedBytes": 4496
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/camera-thumb.webp",
+          "transferBytes": 2696,
+          "encodedBytes": 2396
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bunny-thumb.webp",
+          "transferBytes": 4232,
+          "encodedBytes": 3932
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cat-thumb.webp",
+          "transferBytes": 4626,
+          "encodedBytes": 4326
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cloud-thumb.webp",
+          "transferBytes": 3498,
+          "encodedBytes": 3198
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/egg-thumb.webp",
+          "transferBytes": 2846,
+          "encodedBytes": 2546
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/ghost-thumb.webp",
+          "transferBytes": 2916,
+          "encodedBytes": 2616
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/magnifier-thumb.webp",
+          "transferBytes": 4258,
+          "encodedBytes": 3958
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/paint-brush-thumb.webp",
+          "transferBytes": 3938,
+          "encodedBytes": 3638
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/palette-thumb.webp",
+          "transferBytes": 4010,
+          "encodedBytes": 3710
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/rocket-thumb.webp",
+          "transferBytes": 3568,
+          "encodedBytes": 3268
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/shield-thumb.webp",
+          "transferBytes": 3546,
+          "encodedBytes": 3246
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/chunks/31q54y78br5x1.js",
+          "transferBytes": 1000,
+          "encodedBytes": 700
+        }
+      ],
+      "idleFrames": {
+        "count": 429,
+        "medianMs": 6.900000000000546,
+        "p95Ms": 7.100000000000364,
+        "over33ms": 0
+      },
+      "longTasks": [
+        {
+          "start": 665.7999999970198,
+          "duration": 1103,
+          "phase": "load"
+        },
+        {
+          "start": 1875,
+          "duration": 256,
+          "phase": "load"
+        },
+        {
+          "start": 2378.6999999955297,
+          "duration": 267,
+          "phase": "load"
+        },
+        {
+          "start": 2671.7999999970198,
+          "duration": 255,
+          "phase": "load"
+        },
+        {
+          "start": 2996.60000000149,
+          "duration": 62,
+          "phase": "load"
+        },
+        {
+          "start": 3171.39999999851,
+          "duration": 253,
+          "phase": "load"
+        },
+        {
+          "start": 3899.39999999851,
+          "duration": 87,
+          "phase": "load"
+        },
+        {
+          "start": 3986.60000000149,
+          "duration": 162,
+          "phase": "load"
+        },
+        {
+          "start": 4167.29999999702,
+          "duration": 53,
+          "phase": "load"
+        },
+        {
+          "start": 4240.39999999851,
+          "duration": 432,
+          "phase": "load"
+        },
+        {
+          "start": 4854.5,
+          "duration": 462,
+          "phase": "load"
+        },
+        {
+          "start": 10157.89999999851,
+          "duration": 214,
+          "phase": "switches"
+        },
+        {
+          "start": 10843.10000000149,
+          "duration": 111,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6058868,
+        "documents": 2,
+        "nodes": 389,
+        "jsEventListeners": 434
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 7843180,
+        "documents": 2,
+        "nodes": 393,
+        "jsEventListeners": 434
+      },
+      "strandDraws": 0
+    },
+    {
+      "profile": "mobile-emulated",
+      "scenario": "api-flat",
+      "run": 3,
+      "gpu": {
+        "webgl2": true,
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "firstAvatarMs": 4038.7,
+      "fcpMs": 968,
+      "transferredBytes": 385053,
+      "encodedBodyBytes": 371253,
+      "requests": 46,
+      "resources": [
+        {
+          "url": "/",
+          "transferBytes": 5550,
+          "encodedBytes": 5250
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug.png",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/_next/static/chunks/42w-b5api9d7d.css",
+          "transferBytes": 8891,
+          "encodedBytes": 8591
+        },
+        {
+          "url": "/_next/static/chunks/310vm2bl3xxpt.js",
+          "transferBytes": 2270,
+          "encodedBytes": 1970
+        },
+        {
+          "url": "/_next/static/chunks/1wnov70f88xjy.js",
+          "transferBytes": 7950,
+          "encodedBytes": 7650
+        },
+        {
+          "url": "/_next/static/chunks/39_j1bdzreq0m.js",
+          "transferBytes": 72052,
+          "encodedBytes": 71752
+        },
+        {
+          "url": "/_next/static/chunks/0c1ad7rcpjghx.js",
+          "transferBytes": 46746,
+          "encodedBytes": 46446
+        },
+        {
+          "url": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "transferBytes": 4654,
+          "encodedBytes": 4354
+        },
+        {
+          "url": "/_next/static/chunks/3pz1rbe_s_1ti.js",
+          "transferBytes": 616,
+          "encodedBytes": 316
+        },
+        {
+          "url": "/_next/static/chunks/3ayaokc8agyhh.js",
+          "transferBytes": 44112,
+          "encodedBytes": 43812
+        },
+        {
+          "url": "/_next/static/chunks/3q3y9zt65jthc.js",
+          "transferBytes": 14716,
+          "encodedBytes": 14416
+        },
+        {
+          "url": "/_next/static/chunks/3qfy96eoyh-ek.js",
+          "transferBytes": 3815,
+          "encodedBytes": 3515
+        },
+        {
+          "url": "/studio/watermark.svg",
+          "transferBytes": 10282,
+          "encodedBytes": 9982
+        },
+        {
+          "url": "/_next/static/media/geist-latin-wght-normal.20f3xrkj613ah.woff2",
+          "transferBytes": 29700,
+          "encodedBytes": 29400
+        },
+        {
+          "url": "/_next/static/media/geist-mono-latin-400-normal.1pils9mz99gi8.woff2",
+          "transferBytes": 10164,
+          "encodedBytes": 9864
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/controller-thumb.webp",
+          "transferBytes": 4064,
+          "encodedBytes": 3764
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/barbell-thumb.webp",
+          "transferBytes": 4490,
+          "encodedBytes": 4190
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/mug-thumb.webp",
+          "transferBytes": 2914,
+          "encodedBytes": 2614
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/lightbulb-thumb.webp",
+          "transferBytes": 3812,
+          "encodedBytes": 3512
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/chat-thumb.webp",
+          "transferBytes": 3534,
+          "encodedBytes": 3234
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/sprout-thumb.webp",
+          "transferBytes": 4506,
+          "encodedBytes": 4206
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/watering-can-thumb.webp",
+          "transferBytes": 4376,
+          "encodedBytes": 4076
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/book-thumb.webp",
+          "transferBytes": 3050,
+          "encodedBytes": 2750
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/brain-thumb.webp",
+          "transferBytes": 3866,
+          "encodedBytes": 3566
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bull-thumb.webp",
+          "transferBytes": 4796,
+          "encodedBytes": 4496
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/bunny-thumb.webp",
+          "transferBytes": 4232,
+          "encodedBytes": 3932
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/camera-thumb.webp",
+          "transferBytes": 2696,
+          "encodedBytes": 2396
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cat-thumb.webp",
+          "transferBytes": 4626,
+          "encodedBytes": 4326
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/cloud-thumb.webp",
+          "transferBytes": 3498,
+          "encodedBytes": 3198
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/egg-thumb.webp",
+          "transferBytes": 2846,
+          "encodedBytes": 2546
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/ghost-thumb.webp",
+          "transferBytes": 2916,
+          "encodedBytes": 2616
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/magnifier-thumb.webp",
+          "transferBytes": 4258,
+          "encodedBytes": 3958
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/paint-brush-thumb.webp",
+          "transferBytes": 3938,
+          "encodedBytes": 3638
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/palette-thumb.webp",
+          "transferBytes": 4010,
+          "encodedBytes": 3710
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/rocket-thumb.webp",
+          "transferBytes": 3568,
+          "encodedBytes": 3268
+        },
+        {
+          "url": "/avatars/v3/open-bot-avatar/shield-thumb.webp",
+          "transferBytes": 3546,
+          "encodedBytes": 3246
+        },
+        {
+          "url": "/icon.svg",
+          "transferBytes": 3883,
+          "encodedBytes": 3583
+        },
+        {
+          "url": "/",
+          "transferBytes": 472,
+          "encodedBytes": 172
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 489,
+          "encodedBytes": 189
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 487,
+          "encodedBytes": 187
+        },
+        {
+          "url": "/api/avatar",
+          "transferBytes": 12766,
+          "encodedBytes": 12466
+        },
+        {
+          "url": "/",
+          "transferBytes": 2050,
+          "encodedBytes": 1750
+        },
+        {
+          "url": "/editor",
+          "transferBytes": 2102,
+          "encodedBytes": 1802
+        },
+        {
+          "url": "/docs",
+          "transferBytes": 6881,
+          "encodedBytes": 6581
+        },
+        {
+          "url": "/_next/static/chunks/05xnthpi1ui0r.js",
+          "transferBytes": 1097,
+          "encodedBytes": 797
+        },
+        {
+          "url": "/_next/static/chunks/31q54y78br5x1.js",
+          "transferBytes": 1000,
+          "encodedBytes": 700
+        }
+      ],
+      "idleFrames": {
+        "count": 393,
+        "medianMs": 6.900000000000546,
+        "p95Ms": 13.900000000000546,
+        "over33ms": 1
+      },
+      "longTasks": [
+        {
+          "start": 623.3999999985099,
+          "duration": 338,
+          "phase": "load"
+        },
+        {
+          "start": 1627.8999999985099,
+          "duration": 118,
+          "phase": "load"
+        },
+        {
+          "start": 1891.2000000029802,
+          "duration": 311,
+          "phase": "load"
+        },
+        {
+          "start": 2384.5,
+          "duration": 79,
+          "phase": "load"
+        },
+        {
+          "start": 2575.60000000149,
+          "duration": 383,
+          "phase": "load"
+        },
+        {
+          "start": 2959.7000000029802,
+          "duration": 63,
+          "phase": "load"
+        },
+        {
+          "start": 3392.7999999970198,
+          "duration": 51,
+          "phase": "load"
+        },
+        {
+          "start": 3447.5,
+          "duration": 60,
+          "phase": "load"
+        },
+        {
+          "start": 3594,
+          "duration": 152,
+          "phase": "load"
+        },
+        {
+          "start": 3776.2000000029802,
+          "duration": 264,
+          "phase": "load"
+        },
+        {
+          "start": 8109.89999999851,
+          "duration": 88,
+          "phase": "switches"
+        },
+        {
+          "start": 9029.70000000298,
+          "duration": 80,
+          "phase": "switches"
+        },
+        {
+          "start": 9560,
+          "duration": 503,
+          "phase": "switches"
+        },
+        {
+          "start": 10176.39999999851,
+          "duration": 56,
+          "phase": "switches"
+        },
+        {
+          "start": 10578.79999999702,
+          "duration": 163,
+          "phase": "switches"
+        }
+      ],
+      "memoryBefore": {
+        "heapBytesAfterGC": 6207116,
+        "documents": 2,
+        "nodes": 389,
+        "jsEventListeners": 433
+      },
+      "memoryAfter12Switches": {
+        "heapBytesAfterGC": 7836168,
+        "documents": 2,
+        "nodes": 393,
+        "jsEventListeners": 433
+      },
+      "strandDraws": 0
+    }
+  ],
+  "api": [
+    {
+      "query": "/api/avatars",
+      "run": 1,
+      "durationMs": 45.211999999999534,
+      "bytes": 11323,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatars",
+      "run": 2,
+      "durationMs": 7.222999999998137,
+      "bytes": 11323,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatars",
+      "run": 3,
+      "durationMs": 4.729900000005728,
+      "bytes": 11323,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug",
+      "run": 1,
+      "durationMs": 3.7739000000001397,
+      "bytes": 12466,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug",
+      "run": 2,
+      "durationMs": 2.7995999999984633,
+      "bytes": 12466,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug",
+      "run": 3,
+      "durationMs": 2.532600000005914,
+      "bytes": 12466,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&seed=baseline",
+      "run": 1,
+      "durationMs": 3.3123999999952503,
+      "bytes": 23531,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&seed=baseline",
+      "run": 2,
+      "durationMs": 2.889599999994971,
+      "bytes": 23531,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&seed=baseline",
+      "run": 3,
+      "durationMs": 3.5463000000163447,
+      "bytes": 23531,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug&format=svg",
+      "run": 1,
+      "durationMs": 4.2537999999767635,
+      "bytes": 16396,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug&format=svg",
+      "run": 2,
+      "durationMs": 3.768500000005588,
+      "bytes": 16396,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3&collection=open-bot-avatar&avatar=mug&format=svg",
+      "run": 3,
+      "durationMs": 3.4047000000136904,
+      "bytes": 16396,
+      "cacheControl": "public, max-age=86400"
+    },
+    {
+      "query": "/api/avatar?v=3",
+      "run": 1,
+      "durationMs": 3.64000000001397,
+      "bytes": 36363,
+      "cacheControl": "no-store"
+    },
+    {
+      "query": "/api/avatar?v=3",
+      "run": 2,
+      "durationMs": 3.3975999999966007,
+      "bytes": 23720,
+      "cacheControl": "no-store"
+    },
+    {
+      "query": "/api/avatar?v=3",
+      "run": 3,
+      "durationMs": 3.4508999999961816,
+      "bytes": 10207,
+      "cacheControl": "no-store"
+    }
+  ],
+  "chromium": "145.0.7632.6",
+  "result": "Completed desktop and mobile-emulated production baseline; physical mobile measurements pending."
+}

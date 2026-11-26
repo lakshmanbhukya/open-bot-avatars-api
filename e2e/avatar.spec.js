@@ -6,12 +6,189 @@ const mug = '/?collection=open-bot-avatar&avatar=mug'
 const nav = page => page.getByRole('navigation', { name: 'Site' })
 const ready = page => expect(page.getByRole('button', { name: 'Copy endpoint', exact: true })).toBeEnabled()
 
+test('favorites persist, combine with finishes, and preserve the selected image', async ({ page }, testInfo) => {
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=mug')
+  await ready(page)
+  const url = await page.locator('#api-image-url').inputValue()
+  const star = page.getByRole('button', { name: 'Add Teapot to favorites', exact: true })
+  await star.focus()
+  await star.press('Enter')
+  await page.getByRole('checkbox', { name: 'Favorites only' }).check()
+  await expect(page.locator('.api-catalog-card')).toHaveCount(1)
+  await expect(page.getByRole('button', { name: 'Teapot', exact: true })).toBeVisible()
+  await expect(page.locator('#api-image-url')).toHaveValue(url)
+  await page.reload()
+  await ready(page)
+  await expect(page.getByRole('button', { name: 'Remove Teapot from favorites' })).toBeEnabled()
+  await page.goto('/?v=5&style=fluffy&collection=open-bot-avatar&avatar=mug')
+  await ready(page)
+  await page.getByRole('checkbox', { name: 'Favorites only' }).check()
+  await expect(page.locator('.api-catalog-card')).toHaveCount(1)
+  await expect(page.locator('.api-catalog-image img')).toHaveAttribute('src', /teapot-fluffy-thumb/)
+  await page.screenshot({ path: `test-results/favorites-${testInfo.project.name}.png`, fullPage: true })
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=mug')
+  await ready(page)
+  await page.getByRole('checkbox', { name: 'Favorites only' }).check()
+  await page.getByRole('button', { name: 'Remove Teapot from favorites' }).click()
+  await expect(page.locator('.api-catalog-card')).toHaveCount(0)
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('open-bot-avatar:favorites')))).toEqual([])
+})
+
+test('favorites ignore malformed and missing entries and distinguish collections', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('open-bot-avatar:favorites', JSON.stringify([
+    null, 12, {}, { collection: 'invalid', id: 'mug' },
+    { collection: 'open-bot-avatar', id: 'removed-design' },
+    { collection: 'bot-avatars', id: 'clover' },
+    { collection: 'bot-avatars', id: 'clover' },
+    { collection: 'open-bot-avatar', id: 'mug' },
+  ])))
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=mug')
+  await ready(page)
+  await page.getByRole('checkbox', { name: 'Favorites only' }).check()
+  await expect(page.locator('.api-catalog-card')).toHaveCount(1)
+  await expect(page.getByRole('button', { name: 'Remove Mug from favorites' })).toBeVisible()
+  await page.goto('/?v=5&collection=bot-avatars&avatar=clover&style=original')
+  await ready(page)
+  await page.getByRole('checkbox', { name: 'Favorites only' }).check()
+  await expect(page.locator('.api-catalog-card')).toHaveCount(1)
+  await expect(page.getByRole('button', { name: 'Remove Clover from favorites' })).toBeVisible()
+})
+
+for (const storage of ['invalid JSON', 'unavailable']) {
+  test(`favorites still work when storage is ${storage}`, async ({ page }) => {
+    await page.addInitScript(mode => {
+      if (mode === 'invalid JSON') localStorage.setItem('open-bot-avatar:favorites', '{broken')
+      else {
+        Storage.prototype.getItem = () => { throw new Error('Storage unavailable') }
+        Storage.prototype.setItem = () => { throw new Error('Storage unavailable') }
+      }
+    }, storage)
+    await page.goto(mug)
+    await ready(page)
+    await page.getByRole('button', { name: 'Add Mug to favorites', exact: true }).click()
+    await page.getByRole('checkbox', { name: 'Favorites only' }).check()
+    await expect(page.locator('.api-catalog-card')).toHaveCount(1)
+    await page.getByRole('button', { name: 'Remove Mug from favorites', exact: true }).click()
+    await expect(page.locator('.api-catalog-card')).toHaveCount(0)
+    await expect(page.getByText('Favorites stay in this browser on this device.')).toBeVisible()
+  })
+}
+
+test('Open Bot API previews jump and turn on click and keyboard, respecting reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=teapot')
+  await ready(page)
+  const preview = page.getByRole('button', { name: 'Teapot: jump and turn', exact: true })
+  await expect(preview.locator('canvas')).toBeVisible()
+  await expect.poll(() => preview.evaluate(element => element.getAnimations().length)).toBe(0)
+  const url = await page.locator('#api-image-url').inputValue()
+  const inkPixels = () => preview.locator('canvas').evaluate(canvas => {
+    const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data
+    let ink = 0
+    for (let i = 0; i < pixels.length; i += 4) if (pixels[i + 3] > 200 && Math.max(pixels[i], pixels[i + 1], pixels[i + 2]) < 80) ink++
+    return ink
+  })
+  const frontInk = await inkPixels()
+  expect(frontInk).toBeGreaterThan(100)
+  for (const activate of [() => preview.click(), () => preview.press('Enter'), () => preview.press('Space')]) {
+    await activate()
+    expect(await preview.evaluate(element => getComputedStyle(element).transform)).not.toBe('none')
+    // Halfway through the real 3D turn, the eyes face away from the viewer.
+    await expect.poll(inkPixels).toBeLessThan(frontInk / 2)
+    await expect.poll(() => preview.evaluate(element => element.getAnimations().length)).toBe(0)
+    await expect.poll(inkPixels).toBeGreaterThan(100)
+    await expect(page.locator('#api-image-url')).toHaveValue(url)
+  }
+  await preview.click()
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await expect(page.getByRole('button', { name: 'Teapot: jump and turn', exact: true })).toHaveCount(0)
+  expect(await page.locator('.api-response-image .api-preview').evaluate(element => element.getAnimations().length)).toBe(0)
+})
+
+for (const [collection, avatar] of [['open-bot-avatar', 'teapot'], ['bot-avatars', 'clover']]) {
+test(`${collection} API previews automatically repeat every ten seconds and stop for reduced motion`, async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await page.addInitScript(() => {
+    window.previewJumps = []
+    const animate = Element.prototype.animate
+    Element.prototype.animate = function (...args) {
+      if (this.matches('.api-preview')) window.previewJumps.push(performance.now())
+      return animate.apply(this, args)
+    }
+    const click = HTMLCanvasElement.prototype.click
+    HTMLCanvasElement.prototype.click = function () {
+      if (this.matches('[data-bot-avatar]')) window.previewJumps.push(performance.now())
+      return click.call(this)
+    }
+  })
+  await page.goto(`/?v=5&collection=${collection}&avatar=${avatar}`)
+  await ready(page)
+  await expect.poll(() => page.evaluate(() => window.previewJumps.length)).toBeGreaterThan(0)
+  await expect.poll(() => page.evaluate(() => window.previewJumps.length), { timeout: 12000 }).toBeGreaterThan(1)
+  const times = await page.evaluate(() => window.previewJumps)
+  expect(times[1] - times[0]).toBeGreaterThan(9700)
+  expect(times[1] - times[0]).toBeLessThan(10600)
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await expect(page.getByRole('button', { name: 'Teapot: jump and turn', exact: true })).toHaveCount(0)
+  const stopped = await page.evaluate(() => window.previewJumps.length)
+  await page.clock.install()
+  await page.clock.runFor(20000)
+  expect(await page.evaluate(() => window.previewJumps.length)).toBe(stopped)
+})
+}
+
+test('v5 originals work in the picker, live editor, shares, and exports', async ({ page, context }, testInfo) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=teapot&style=fluffy')
+  await ready(page)
+  const designs = [['Mushroom', 'mushroom'], ['Jellybean', 'jellybean'], ['Ringed Planet', 'ringed-planet'], ['Lighthouse', 'lighthouse'], ['Sailboat', 'sailboat'], ['Teapot', 'teapot']]
+  for (const [name, id] of designs) {
+    await page.locator('.api-catalog').getByRole('button', { name, exact: true }).click()
+    await ready(page)
+    await expect(page.locator('.api-response-caption strong')).toHaveText(name)
+    await expect(page.locator('.api-response-image canvas')).toHaveCount(1)
+    await expect(page.locator('#api-image-url')).toHaveValue(new RegExp(`v=5.*avatar=${id}.*style=fluffy`))
+  }
+  await page.getByRole('button', { name: 'Preview PNG', exact: true }).click()
+  await page.screenshot({ path: `experiments/v5-originals/ui-${testInfo.project.name}.png`, fullPage: true })
+  const selected = await page.locator('#api-image-url').inputValue()
+  await page.getByRole('button', { name: 'Share avatar', exact: true }).click()
+  const shared = new URL(await page.evaluate(() => navigator.clipboard.readText()))
+  await page.goto('/?' + shared.searchParams)
+  await ready(page)
+  await expect(page.locator('#api-image-url')).toHaveValue(selected)
+  const download = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'Download PNG', exact: true }).click()
+  const saved = await download
+  expect(saved.suggestedFilename()).toBe('teapot-fluffy-v5.png')
+  expect(await readFile(await saved.path())).toEqual(await readFile('public/avatars/v5/open-bot-avatar/teapot-fluffy.png'))
+  await page.getByRole('link', { name: 'Edit this avatar', exact: true }).click()
+  await expect(page).toHaveURL(/\/editor/)
+  for (const [name] of designs) {
+    await page.getByRole('list', { name: 'Avatars', exact: true }).getByRole('button', { name, exact: true }).click()
+    await expect(page.locator('.bot-cell.is-on')).toHaveAttribute('aria-label', name)
+    await expect(page.locator('.stage-avatar canvas')).toBeVisible()
+  }
+  await page.getByRole('radio', { name: 'Fluffy', exact: true }).click()
+  await expect(page.locator('.bots img[src$="-editor-thumb.webp"]')).toHaveCount(6)
+  await page.getByRole('radio', { name: 'Happy', exact: true }).click()
+  await page.getByRole('button', { name: 'Copy', exact: true }).click()
+  await page.getByRole('menuitem', { name: /Original-color API URL/ }).click()
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('v=5&collection=open-bot-avatar&avatar=teapot')
+  await page.getByRole('button', { name: 'Export', exact: true }).click()
+  const svgDownload = page.waitForEvent('download')
+  await page.getByRole('menuitem', { name: /Download flat SVG/ }).click()
+  expect(await readFile(await (await svgDownload).path(), 'utf8')).toContain('#14b3a5')
+  await page.screenshot({ path: `experiments/v5-originals/editor-${testInfo.project.name}.png` })
+})
+
 test('home and docs have useful content without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false })
   const page = await context.newPage()
   await page.goto('http://localhost:3100/')
   await expect(page.getByRole('heading', { name: 'One request. One avatar.' })).toBeVisible()
   await expect(page.getByAltText('Example bot avatar; your requested image will appear here')).toBeVisible()
+  await expect(page.locator('.api-catalog-image img')).toHaveCount(47)
   await page.goto('http://localhost:3100/docs')
   await expect(page.getByRole('heading', { name: 'OpenBot Avatars API docs' })).toBeVisible()
   await expect(page.getByLabel('Shell example')).toContainText('curl')
@@ -43,10 +220,15 @@ test('selection, snippets and focus survive navigation and browser back', async 
 })
 
 test('share links use the deployed site and show a copied toast', async ({ page, context }) => {
+  const wrongVersionThumbnails = []
+  page.on('request', request => {
+    if (/\/avatars\/v(?!5\/)[^/]+\/.*-thumb\.webp/.test(new URL(request.url()).pathname)) wrongVersionThumbnails.push(request.url())
+  })
   await page.emulateMedia({ reducedMotion: 'no-preference' })
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await page.goto(mug)
   await ready(page)
+  expect(wrongVersionThumbnails).toEqual([])
   await expect(page.locator('.api-endpoint')).toContainText('https://open-bot-avatars-api.vercel.app/')
   await expect(page.getByLabel('HTML usage example')).not.toContainText('localhost')
   await page.getByRole('button', { name: 'Share avatar', exact: true }).click()
@@ -57,8 +239,116 @@ test('share links use the deployed site and show a copied toast', async ({ page,
   expect(shared.origin).toBe('https://open-bot-avatars-api.vercel.app')
   expect(shared.searchParams.get('collection')).toBe('open-bot-avatar')
   expect(shared.searchParams.get('avatar')).toBe('mug')
+  expect(shared.searchParams.get('v')).toBe('5')
   await expect(page.locator('.copy-toast')).toHaveCSS('opacity', '0', { timeout: 5000 })
   await expect(page.locator('.copy-toast')).toBeHidden()
+})
+
+test('versioned seeded and exact picker links preserve selection on reload', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+  for (const query of ['v=5&collection=open-bot-avatar&avatar=mug', 'v=5&collection=bot-avatars&seed=user-42&style=original', 'v=5&collection=open-bot-avatar&avatar=mug&style=fluffy', 'v=5&collection=open-bot-avatar&seed=user-42&style=fluffy']) {
+    await page.goto('/?' + query)
+    await ready(page)
+    const image = await page.locator('#api-image-url').inputValue()
+    await page.getByRole('button', { name: 'Share avatar', exact: true }).click()
+    const shared = new URL(await page.evaluate(() => navigator.clipboard.readText()))
+    expect(shared.searchParams.get('v')).toBe(new URLSearchParams(query).get('v'))
+    expect(shared.searchParams.get('style')).toBe(new URLSearchParams(query).get('style') ?? 'flat')
+    if (query.includes('seed=')) expect(shared.searchParams.get('seed')).toBe('user-42')
+    else expect(shared.searchParams.get('avatar')).toBe('mug')
+    await page.goto('/?' + shared.searchParams)
+    await ready(page)
+    await expect(page.locator('#api-image-url')).toHaveValue(image)
+    await page.reload()
+    await ready(page)
+    await expect(page.locator('#api-image-url')).toHaveValue(image)
+  }
+})
+
+test('v5 fluffy fallback, static response, copied URL and download keep the same coat', async ({ page, context }, testInfo) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=mug&style=fluffy')
+  await ready(page)
+  await expect(page.locator('.api-response-caption')).toContainText('Fluffy PNG')
+  await expect(page.locator('.api-response-caption')).toContainText('Animated demonstration')
+  await expect(page.locator('.api-response-image canvas')).toHaveCount(1)
+  await expect(page.locator('.api-fur-notice')).toContainText('WebGL2 is unavailable')
+  await expect(page.getByRole('button', { name: 'Download SVG', exact: true })).toHaveCount(0)
+  const url = await page.locator('#api-image-url').inputValue()
+  expect(new URL(url).searchParams.get('v')).toBe('5')
+  expect(new URL(url).searchParams.get('style')).toBe('fluffy')
+  await page.getByRole('button', { name: 'Copy URL', exact: true }).click()
+  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(url)
+  await page.getByRole('button', { name: 'Preview PNG', exact: true }).click()
+  await expect(page.locator('.api-response-caption')).toContainText('Actual returned PNG')
+  const png = await page.locator('.api-response-image img').evaluate(async image => Array.from(new Uint8Array(await (await fetch(image.src)).arrayBuffer())))
+  const expected = await readFile('public/avatars/v5/open-bot-avatar/mug-fluffy.png')
+  expect(Buffer.from(png)).toEqual(expected)
+  const download = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'Download PNG', exact: true }).click()
+  const file = await download
+  expect(file.suggestedFilename()).toBe('mug-fluffy-v5.png')
+  expect(await readFile(await file.path())).toEqual(expected)
+  await expect(page.locator('#api-image-url')).toHaveValue(url)
+  await page.locator('.api-hero').scrollIntoViewIfNeeded()
+  await page.screenshot({ path: testInfo.outputPath('v5-fluffy-response.png') })
+  await page.locator('.api-catalog').getByRole('button', { name: 'Controller', exact: true }).click()
+  await ready(page)
+  const switched = await page.locator('.api-response-image img').evaluate(async image => Array.from(new Uint8Array(await (await fetch(image.src)).arrayBuffer())))
+  expect(Buffer.from(switched)).toEqual(await readFile('public/avatars/v5/open-bot-avatar/controller-fluffy.png'))
+  expect(new URL(await page.locator('#api-image-url').inputValue()).searchParams.get('avatar')).toBe('controller')
+  await page.getByRole('button', { name: 'Show animation', exact: true }).click()
+  await expect(page.locator('.api-response-image canvas')).toHaveCount(1)
+  await expect(page.locator('#api-image-url')).toHaveValue(/avatar=controller.*style=fluffy/)
+})
+
+test('finish choices follow the version, collection, and exact format/style pairs', async ({ page }) => {
+  async function verifyStaticResponse() {
+    const selected = new URL(await page.locator('#api-image-url').inputValue())
+    const response = await page.request.get(new URL(selected.pathname + selected.search, page.url()).href)
+    expect(response.status()).toBe(200)
+    const shown = await page.locator('.api-response-image img').evaluate(async image => Array.from(new Uint8Array(await (await fetch(image.src)).arrayBuffer())))
+    expect(Buffer.from(shown)).toEqual(await response.body())
+  }
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=mug')
+  await ready(page)
+  await page.getByRole('group', { name: 'Finish', exact: true }).getByRole('button').click()
+  await page.getByRole('menuitem', { name: 'Fluffy', exact: true }).focus()
+  await page.keyboard.press('Enter')
+  await ready(page)
+  await expect(page.locator('#api-image-url')).toHaveValue(/style=fluffy/)
+  await expect(page.getByRole('button', { name: 'Download SVG', exact: true })).toHaveCount(0)
+  await expect(page.locator('.api-catalog-image img').first()).toHaveAttribute('src', /v5.*fluffy-thumb\.webp/)
+  await page.getByRole('button', { name: 'Preview PNG', exact: true }).click()
+  await verifyStaticResponse()
+  await page.getByRole('group', { name: 'Collection', exact: true }).getByRole('button').click()
+  await page.getByRole('menuitem', { name: /^Libraries.dev Bot Avatars/ }).click()
+  await ready(page)
+  expect(new URL(await page.locator('#api-image-url').inputValue()).searchParams.get('style')).toBe('flat')
+  await verifyStaticResponse()
+  await page.getByRole('group', { name: 'Finish', exact: true }).getByRole('button').click()
+  await expect(page.getByRole('menuitem', { name: 'Fluffy', exact: true })).toHaveCount(0)
+  await page.getByRole('menuitem', { name: 'Original plush', exact: true }).click()
+  await ready(page)
+  await expect(page.locator('.api-download-selection')).toContainText('Original plush')
+  await verifyStaticResponse()
+  await page.getByRole('radio', { name: 'Use a seed', exact: true }).click()
+  await page.getByLabel('Public user ID or seed').fill('v5-preview-check')
+  await page.getByRole('button', { name: 'Find avatar', exact: true }).click()
+  await ready(page)
+  await verifyStaticResponse()
+  await page.goto('/')
+  await ready(page)
+  expect(new URL(await page.locator('#api-image-url').inputValue()).searchParams.get('v')).toBe('5')
+})
+
+test('picker rejects retired and unpublished catalog versions', async ({ page }) => {
+  for (const version of ['1', '2', '3', '4', '6']) {
+    await page.goto(`/?v=${version}&collection=open-bot-avatar&avatar=mug`)
+    await expect(page.locator('.api-call-status[role="alert"]')).toContainText('requested catalog version is not available')
+    await expect(page.getByRole('button', { name: 'Copy endpoint', exact: true })).toBeDisabled()
+    await expect(page.getByRole('button', { name: 'Retry this request', exact: true })).toHaveCount(0)
+  }
 })
 
 test('API previews animate by default and offer a PNG preview', async ({ page }) => {
@@ -92,8 +382,8 @@ test('PNG and SVG downloads keep the selected design without navigation', async 
       const saved = page.waitForEvent('download')
       await page.getByRole('button', { name: `Download ${format.toUpperCase()}`, exact: true }).click()
       const file = await saved
-      expect(file.suggestedFilename()).toBe(`${params.get('avatar')}.${format}`)
-      const expected = await readFile(`public/avatars/v3/${params.get('collection')}/${params.get('avatar')}.${format}`)
+      expect(file.suggestedFilename()).toBe(`${params.get('avatar')}-${params.get('style') ?? 'flat'}-v${params.get('v')}.${format}`)
+      const expected = await readFile(`public/avatars/v${params.get('v')}/${params.get('collection')}/${params.get('avatar')}.${format}`)
       expect(await readFile(await file.path())).toEqual(expected)
       expect(page.url()).toBe(before)
       await expect(page.getByLabel('SELECTED IMAGE URL')).toHaveValue(selectedUrl)
@@ -113,7 +403,7 @@ test('SVG download errors and mismatched avatars never save an incorrect image',
     if (attempts === 1) {
       await route.fulfill({ status: 503, json: { error: 'Temporarily unavailable' } })
     } else if (attempts === 2) {
-      await route.fulfill({ status: 200, headers: { 'Content-Type': 'image/svg+xml', 'X-Avatar-Id': 'controller', 'X-Avatar-Collection': 'open-bot-avatar' }, body: await readFile('public/avatars/v3/open-bot-avatar/controller.svg') })
+      await route.fulfill({ status: 200, headers: { 'Content-Type': 'image/svg+xml', 'X-Avatar-Id': 'controller', 'X-Avatar-Collection': 'open-bot-avatar' }, body: await readFile('public/avatars/v5/open-bot-avatar/controller.svg') })
     } else await route.continue()
   })
   const downloads = []
@@ -128,7 +418,7 @@ test('SVG download errors and mismatched avatars never save an incorrect image',
   expect(downloads).toEqual([])
   const saved = page.waitForEvent('download')
   await page.getByRole('button', { name: 'Download SVG', exact: true }).click()
-  expect((await saved).suggestedFilename()).toBe('mug.svg')
+  expect((await saved).suggestedFilename()).toBe('mug-flat-v5.svg')
 })
 
 test('editing a selection preserves it across pages and exports the current PNG and flat SVG', async ({ page }) => {
@@ -210,7 +500,7 @@ test('rate-limit retry preserves the seed and waits for Retry-After', async ({ p
       await route.fulfill({ status: 429, headers: { 'Retry-After': '2' }, json: { error: 'Too many avatar requests. Please try again shortly.' } })
     } else await route.continue()
   })
-  await page.goto('/?v=3&collection=open-bot-avatar&seed=test-user')
+  await page.goto('/?v=5&collection=open-bot-avatar&seed=test-user')
   await expect(page.locator('.api-request').getByRole('button', { name: /Retry in/ })).toBeDisabled()
   await expect(page.getByLabel('Public user ID or seed')).toHaveValue('test-user')
   const retry = page.locator('.api-request').getByRole('button', { name: 'Retry this request', exact: true })
@@ -232,7 +522,7 @@ test('gallery selection, PNG download and narrow layouts remain usable', async (
   if (testInfo.project.name === 'mobile') await expect(page.locator('.api-selection-preview')).toBeInViewport()
   const download = page.waitForEvent('download')
   await page.getByRole('button', { name: 'Download PNG', exact: true }).click()
-  expect((await download).suggestedFilename()).toBe('controller.png')
+  expect((await download).suggestedFilename()).toBe('controller-flat-v5.png')
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
   if (testInfo.project.name === 'mobile') {
     expect(await page.locator('.api-options-body').evaluate(element => getComputedStyle(element).overflowY)).toBe('visible')

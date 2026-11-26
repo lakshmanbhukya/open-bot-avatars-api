@@ -1,0 +1,114 @@
+{
+  "source": "OpenBot Avatars first-party geometry, authored for the v5 expansion",
+  "license": "MIT",
+  "designs": [
+    {
+      "color": "#14b3a5",
+      "category": "object",
+      "definition": {
+        "version": 1,
+        "id": "teapot",
+        "name": "Teapot",
+        "body": {
+          "path": "M50 34C66 34 75 44 75 60C75 76 66 85 50 85C34 85 25 76 25 60C25 44 34 34 50 34ZM35 38C36 29 41 25 46 25V21C46 16 54 16 54 21V25C59 25 64 29 65 38ZM29 50C22 50 17 45 15 37C14 34 10 34 9 37C8 51 14 67 29 71ZM71 42C85 40 92 48 92 59C92 70 84 77 71 74ZM74 50V66C81 66 85 63 85 58C85 53 81 50 74 50Z"
+        },
+        "eyes": {
+          "x": 50,
+          "y": 58,
+          "spacing": 16,
+          "scale": 1.05
+        }
+      }
+    },
+    {
+      "color": "#f2384b",
+      "category": "nature",
+      "definition": {
+        "version": 1,
+        "id": "mushroom",
+        "name": "Mushroom",
+        "body": {
+          "path": "M35 45H65L69 77C70 84 63 87 50 87C37 87 30 84 31 77ZM50 13C70 13 84 29 89 46C91 53 87 57 80 57H20C13 57 9 53 11 46C16 29 30 13 50 13Z"
+        },
+        "eyes": {
+          "x": 50,
+          "y": 37,
+          "spacing": 17,
+          "scale": 1.1
+        }
+      }
+    },
+    {
+      "color": "#ec4899",
+      "category": "food",
+      "definition": {
+        "version": 1,
+        "id": "jellybean",
+        "name": "Jellybean",
+        "body": {
+          "path": "M32 21C46 14 57 20 59 32C61 43 66 45 76 46C90 48 94 65 85 77C75 91 52 91 35 80C17 69 10 50 17 34C20 28 25 24 32 21Z"
+        },
+        "eyes": {
+          "x": 41,
+          "y": 52,
+          "spacing": 15,
+          "scale": 1.05
+        }
+      }
+    },
+    {
+      "color": "#8b5cf6",
+      "category": "nature",
+      "definition": {
+        "version": 1,
+        "id": "ringed-planet",
+        "name": "Ringed Planet",
+        "body": {
+          "path": "M50 19C67 19 80 32 80 49C80 66 67 79 50 79C33 79 20 66 20 49C20 32 33 19 50 19ZM22 51L26 60C19 65 14 71 17 73C26 77 77 51 85 37C88 32 84 32 77 35L72 28C84 23 98 26 90 40C79 58 24 88 12 79C5 73 8 62 22 51Z"
+        },
+        "eyes": {
+          "x": 49,
+          "y": 47,
+          "spacing": 16,
+          "scale": 1.05
+        }
+      }
+    },
+    {
+      "color": "#f8a01c",
+      "category": "object",
+      "definition": {
+        "version": 1,
+        "id": "lighthouse",
+        "name": "Lighthouse",
+        "body": {
+          "path": "M30 35H70L78 78H78C82 78 84 80 84 84C84 87 82 88 78 88H22C18 88 16 87 16 84C16 80 18 78 22 78H22ZM36 23H64V39H36ZM47 10C49 8 51 8 53 10L73 24C77 27 75 31 71 31H29C25 31 23 27 27 24Z"
+        },
+        "eyes": {
+          "x": 50,
+          "y": 59,
+          "spacing": 16,
+          "scale": 1.05
+        }
+      }
+    },
+    {
+      "color": "#1f7cf2",
+      "category": "object",
+      "definition": {
+        "version": 1,
+        "id": "sailboat",
+        "name": "Sailboat",
+        "body": {
+          "path": "M60 12C63 10 65 12 65 16V67H16C12 67 12 64 14 60C10 48 10 23 60 12ZM71 34C71 31 74 30 76 34L90 61C92 65 90 67 86 67H71ZM61 60H68V78H61ZM13 73H87C90 73 92 76 89 79L80 88C78 90 75 91 71 91H29C25 91 22 90 20 88L11 79C8 76 10 73 13 73Z"
+        },
+        "eyes": {
+          "x": 44,
+          "y": 52,
+          "spacing": 15,
+          "scale": 1
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "teapot",
+    "schema": "PASS",
+    "faceEnvelope": "PASS",
+    "upstreamStrict": "SKIPPED: upstream checkout / avatar-validate.ts unavailable"
+  },
+  {
+    "id": "mushroom",
+    "schema": "PASS",
+    "faceEnvelope": "PASS",
+    "upstreamStrict": "SKIPPED: upstream checkout / avatar-validate.ts unavailable"
+  },
+  {
+    "id": "jellybean",
+    "schema": "PASS",
+    "faceEnvelope": "PASS",
+    "upstreamStrict": "SKIPPED: upstream checkout / avatar-validate.ts unavailable"
+  },
+  {
+    "id": "ringed-planet",
+    "schema": "PASS",
+    "faceEnvelope": "PASS",
+    "upstreamStrict": "SKIPPED: upstream checkout / avatar-validate.ts unavailable"
+  },
+  {
+    "id": "lighthouse",
+    "schema": "PASS",
+    "faceEnvelope": "PASS",
+    "upstreamStrict": "SKIPPED: upstream checkout / avatar-validate.ts unavailable"
+  },
+  {
+    "id": "sailboat",
+    "schema": "PASS",
+    "faceEnvelope": "PASS",
+    "upstreamStrict": "SKIPPED: upstream checkout / avatar-validate.ts unavailable"
+  }
+]
