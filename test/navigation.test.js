@@ -8,14 +8,14 @@ test('API is home while saved editor and picker links keep their destination', (
   assert.equal(readRoute('', '?avatar=mug&color=blue'), 'studio')
   assert.equal(readRoute('', '?def=shared-definition'), 'studio')
   assert.equal(readRoute('', '?collection=open-bot-avatar&avatar=mug'), 'api')
-  assert.equal(readRoute('', '?v=4&seed=user-42'), 'api')
+  assert.equal(readRoute('', '?v=5&seed=user-42'), 'api')
   assert.equal(readRoute('#/', ''), 'studio')
   assert.equal(readRoute('#/api', '?avatar=mug'), 'api')
   assert.equal(readRoute('#/docs', ''), 'docs')
 })
 
 test('integration examples preserve URLs and escape HTML and shell values', () => {
-  const url = 'https://example.com/api/avatar?v=4&seed=user-42'
+  const url = 'https://example.com/api/avatar?v=5&seed=user-42'
   assert.equal(usageExample('URL', url), url)
   assert.ok(usageExample('HTML', url).includes('&amp;seed=user-42'))
   assert.ok(usageExample('React', url).includes('src=' + JSON.stringify(url)))

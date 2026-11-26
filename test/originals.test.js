@@ -6,8 +6,6 @@ import { GET as avatar } from '../app/api/avatar/route.js'
 import { GET as list } from '../app/api/avatars/route.js'
 import { validateCatalog, validateFrozenAssets } from '../scripts/validate-catalog.mjs'
 import { avatarFilename } from '../app/lib/avatar-catalog.js'
-import frozenV4 from './fixtures/v4-compatibility.json' with { type: 'json' }
-import v4 from '../app/lib/catalogs/v4.json' with { type: 'json' }
 import frozenV5 from './fixtures/v5-compatibility.json' with { type: 'json' }
 import v5 from '../app/lib/catalogs/v5.json' with { type: 'json' }
 import originals from '../app/lib/originals.json' with { type: 'json' }
@@ -21,7 +19,6 @@ test('v5 adds six unique original silhouettes with valid face room, categories, 
   assert.equal(checkOriginals().length, 6)
   assert.deepEqual(await validateCatalog(v5, { version: '5' }), { designs: 47, images: 123, thumbnails: 94 })
   for (const { definition, color, category } of originals.designs) {
-    assert(!v4.some(e => e.collection === 'open-bot-avatar' && e.id === definition.id))
     const entry = v5.find(e => e.collection === 'open-bot-avatar' && e.id === definition.id)
     assert.equal(entry.category, category)
     assert.equal(entry.origin, 'first-party')
@@ -38,13 +35,8 @@ test('v5 adds six unique original silhouettes with valid face room, categories, 
       assert.deepEqual(data, await readFile(`public/avatars/v5/${entry.collection}/${avatarFilename(entry.id, format, style)}`))
       if (format === 'svg') assert.equal(data.toString(), renderAvatarSvg(definition, { size: 512, color, reducedMotion: true }))
     }
-    const absent = await avatar(new Request(`http://localhost/api/avatar?v=4&collection=open-bot-avatar&avatar=${definition.id}`))
-    assert.equal(absent.status, 400)
   }
-  // The previous release is copied, not re-rendered, for the expanded catalog.
-  for (const [file, hash] of Object.entries(frozenV4.assets)) {
-    assert.equal(createHash('sha256').update(await readFile('public/avatars/v5/' + file)).digest('hex'), hash)
-  }
+
 })
 
 test('v5 catalog, seed selections, and image bytes remain frozen', async () => {

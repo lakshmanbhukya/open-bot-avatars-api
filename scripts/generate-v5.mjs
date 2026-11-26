@@ -7,16 +7,15 @@ import { createHash } from 'node:crypto'
 import { chromium } from '@playwright/test'
 import { createCanvas, loadImage } from '@napi-rs/canvas'
 import { examples, renderAvatarSvg, validateAvatar } from 'open-bot-avatar'
-import v4 from '../app/lib/catalogs/v4.json' with { type: 'json' }
 import upstream from '../app/lib/upstream/open-bot-avatar.json' with { type: 'json' }
 
 import { thumbnailKey, THUMB_VIEW, THUMB_LOOK } from '../app/studio/studio/outline.ts'
 import originals from '../app/lib/originals.json' with { type: 'json' }
 import v5 from '../app/lib/catalogs/v5.json' with { type: 'json' }
 
-const version = process.argv[2] ?? '4'
-assert(['4', '5'].includes(version))
-const catalog = version === '5' ? v5.filter(x => originals.designs.some(d => d.definition.id === x.id) && x.collection === 'open-bot-avatar') : v4
+const version = '5'
+assert(process.argv[2] === undefined || process.argv[2] === version, 'Only v5 generation is supported')
+const catalog = v5
 const require = createRequire(import.meta.url)
 const runtime = { node: 'v24.17.0', playwright: '1.58.2', chromium: '145.0.7632.6', renderer: '0.4.0' }
 assert.equal(process.version, runtime.node)
@@ -24,29 +23,26 @@ assert.equal(require('@playwright/test/package.json').version, runtime.playwrigh
 assert.equal(require('open-bot-avatar/package.json').version, runtime.renderer)
 const root = process.cwd()
 const stage = path.resolve(`out/v${version}-bake`)
-const evidence = path.resolve(version === '5' ? 'experiments/v5-originals' : 'experiments/v4-fluffy')
+const evidence = path.resolve('experiments/v5-bake')
 const tempRoot = path.resolve(os.tmpdir())
-const temp = await fs.mkdtemp(path.join(tempRoot, 'fluffy-v4-'))
+const temp = await fs.mkdtemp(path.join(tempRoot, 'fluffy-v5-'))
 const report = { runtime, platform: `${os.platform()} ${os.release()} ${os.arch()}`, captures: [], result: 'Running' }
 const browsers = []
 try {
   await fs.mkdir(stage, { recursive: true })
   await fs.mkdir(evidence, { recursive: true })
   // Work in staging; a failed or flat-fallback bake cannot replace published assets.
-  if (version === '4') await import('./generate-avatars.mjs')
-  else {
-    await fs.cp('public/avatars/v4', stage, { recursive: true })
-    for (const { definition, color } of originals.designs) {
-      const dir = path.join(stage, 'open-bot-avatar')
-      const svg = renderAvatarSvg(definition, { size: 512, color, reducedMotion: true })
-      await fs.writeFile(path.join(dir, definition.id + '.svg'), svg)
-      const canvas = createCanvas(512, 512)
-      canvas.getContext('2d').drawImage(await loadImage(Buffer.from(svg)), 0, 0)
-      await fs.writeFile(path.join(dir, definition.id + '.png'), canvas.toBuffer('image/png'))
-      const thumb = createCanvas(224, 224)
-      thumb.getContext('2d').drawImage(canvas, 0, 0, 224, 224)
-      await fs.writeFile(path.join(dir, definition.id + '-thumb.webp'), await thumb.encode('webp', 75))
-    }
+  await import('./generate-avatars.mjs')
+  for (const { definition, color } of originals.designs) {
+    const dir = path.join(stage, 'open-bot-avatar')
+    const svg = renderAvatarSvg(definition, { size: 512, color, reducedMotion: true })
+    await fs.writeFile(path.join(dir, definition.id + '.svg'), svg)
+    const canvas = createCanvas(512, 512)
+    canvas.getContext('2d').drawImage(await loadImage(Buffer.from(svg)), 0, 0)
+    await fs.writeFile(path.join(dir, definition.id + '.png'), canvas.toBuffer('image/png'))
+    const thumb = createCanvas(224, 224)
+    thumb.getContext('2d').drawImage(canvas, 0, 0, 224, 224)
+    await fs.writeFile(path.join(dir, definition.id + '-thumb.webp'), await thumb.encode('webp', 75))
   }
   await fs.writeFile(path.join(temp, 'entry.js'), `import { mountAvatar } from 'open-bot-avatar/dom';
     window.mountDefinition = options => { window.avatar = mountAvatar(document.getElementById('avatar'), options) };`)
@@ -78,10 +74,10 @@ try {
     }, null, { timeout: 30_000, polling: 100 })
   }
   const sheets = []
-  const smallSheet = createCanvas(960, 4 * 100)
+  const smallSheet = createCanvas(960, Math.ceil(catalog.filter(x => x.collection === 'open-bot-avatar').length / 6) * 100)
   const smallContext = smallSheet.getContext('2d')
   smallContext.fillStyle = '#ddd'
-  smallContext.fillRect(0, 0, 960, 400)
+  smallContext.fillRect(0, 0, smallSheet.width, smallSheet.height)
   let index = 0
   for (const entry of catalog.filter(x => x.collection === 'open-bot-avatar')) {
     const definition = [...examples, ...upstream.gallery, ...originals.designs.map(d => d.definition)].find(x => x.id === entry.id)
@@ -131,7 +127,7 @@ try {
           const thumb = createCanvas(224, 224)
           thumb.getContext('2d').drawImage(image, 0, 0, 224, 224)
           await fs.writeFile(path.join(stage, entry.collection, `${entry.id}-fluffy-thumb.webp`), await thumb.encode('webp', 75))
-          if (version === '5') {
+          if (entry.origin === 'first-party') {
             await page.evaluate(({ view, lookAt }) => {
               window.previous = null
               window.avatar.update({ view, lookAt })
@@ -174,10 +170,8 @@ try {
   for (const collection of ['open-bot-avatar', 'bot-avatars']) {
     for (const file of await fs.readdir(path.join(stage, collection))) await publish(path.join(`public/avatars/v${version}`, collection, file), await fs.readFile(path.join(stage, collection, file)))
   }
-  if (version === '5') {
-    const thumbs = Object.fromEntries(originals.designs.map(({ definition, color }) => [thumbnailKey(validateAvatar(definition).value, color), '/avatars/v5/open-bot-avatar/' + definition.id + '-editor-thumb.webp']))
-    await fs.writeFile('app/studio/studio/original-thumbnails.json', JSON.stringify(thumbs, null, 2) + '\n')
-  }
+  const thumbs = Object.fromEntries(originals.designs.map(({ definition, color }) => [thumbnailKey(validateAvatar(definition).value, color), '/avatars/v5/open-bot-avatar/' + definition.id + '-editor-thumb.webp']))
+  await fs.writeFile('app/studio/studio/original-thumbnails.json', JSON.stringify(thumbs, null, 2) + '\n')
   report.result = `PASS: ${report.captures.length} GPU coats and disabled-WebGL controls verified; 512/64 px visual sheets saved for review.`
 } catch (error) {
   report.result = `FAIL: ${error.message}`
@@ -187,6 +181,6 @@ try {
   await fs.mkdir(evidence, { recursive: true })
   await fs.writeFile(path.join(evidence, 'result.json'), JSON.stringify(report, null, 2) + '\n')
   assert.equal(path.dirname(path.resolve(temp)), tempRoot)
-  assert(path.basename(temp).startsWith('fluffy-v4-'))
+  assert(path.basename(temp).startsWith('fluffy-v5-'))
   await fs.rm(temp, { recursive: true, force: true })
 }

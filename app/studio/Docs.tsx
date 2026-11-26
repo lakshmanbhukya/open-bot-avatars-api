@@ -51,12 +51,12 @@ function Code({ snippet, language }: { snippet: keyof typeof snippets; language:
 }
 
 const PARAMETERS = [
-  ["v", "5 (default), or 4 (frozen). Include v=5 in saved URLs to keep the same selection when future versions are added."],
+  ["v", "5 (default and only supported version). Include v=5 in saved URLs to keep the same selection when future versions are added."],
   ["seed", "A public identifier of 1–128 JavaScript string code units. The same seed with the same version and filters selects the same avatar. Cannot be combined with avatar."],
   ["collection", "open-bot-avatar or bot-avatars. Omit to select from collections compatible with the requested format and style."],
   ["avatar", "An exact design ID from /api/avatars. Requires collection. Omit both avatar and seed for a random selection."],
   ["format", "png (default) or svg. SVG is available only for Open Bot with flat style; fluffy SVG is rejected."],
-  ["style", "flat (default), fluffy (Open Bot PNG only, v4 and v5), or original (Libraries.dev PNG only). Check the catalog variants for valid pairs."],
+  ["style", "flat (default), fluffy (Open Bot PNG only), or original (Libraries.dev PNG only). Check the catalog variants for valid pairs."],
 ];
 
 export function Docs() {

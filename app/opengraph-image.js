@@ -20,7 +20,7 @@ export default async function SocialImage() {
           await readFile(
             path.join(
               process.cwd(),
-              "public/avatars/v4",
+              "public/avatars/v5",
               collection,
               id + ".png",
             ),

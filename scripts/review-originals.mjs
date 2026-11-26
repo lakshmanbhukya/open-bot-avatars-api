@@ -6,7 +6,7 @@ import { createCanvas, Path2D, loadImage } from '@napi-rs/canvas'
 import { examples, validateAvatar, renderAvatarSvg } from 'open-bot-avatar'
 import originals from '../app/lib/originals.json' with { type: 'json' }
 import upstream from '../app/lib/upstream/open-bot-avatar.json' with { type: 'json' }
-import v4 from '../app/lib/catalogs/v4.json' with { type: 'json' }
+import v5 from '../app/lib/catalogs/v5.json' with { type: 'json' }
 
 // This conservative face-envelope check supplements the public schema; it is not the upstream strict validator.
 export function checkOriginals() {
@@ -36,7 +36,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   await fs.mkdir(dir, { recursive: true })
   const sheet = createCanvas(720, 6 * 84), ctx = sheet.getContext('2d')
   ctx.fillStyle = '#eeeeee'; ctx.fillRect(0, 0, sheet.width, sheet.height)
-  const entries = [...originals.designs.map(d => ({ ...d.definition, fresh: true })), ...v4.map(entry => ({
+  const entries = [...originals.designs.map(d => ({ ...d.definition, fresh: true })), ...v5.filter(entry => entry.origin !== 'first-party').map(entry => ({
     id: entry.id, name: entry.name, collection: entry.collection,
     ...[...examples, ...upstream.gallery].find(d => entry.collection === 'open-bot-avatar' && d.id === entry.id)
   }))]
@@ -47,7 +47,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       ctx.save(); ctx.translate(x + 29, y + 5); ctx.scale(.32, .32)
       ctx.fillStyle = '#151515'; ctx.fill(new Path2D(entry.body.path)); ctx.restore()
     } else {
-      const image = await loadImage(`public/avatars/v4/${entry.collection}/${entry.id}.png`)
+      const image = await loadImage(`public/avatars/v5/${entry.collection}/${entry.id}.png`)
       const small = createCanvas(32, 32), c = small.getContext('2d'); c.drawImage(image, 0, 0, 32, 32)
       c.globalCompositeOperation = 'source-in'; c.fillStyle = '#151515'; c.fillRect(0, 0, 32, 32)
       ctx.drawImage(small, x + 29, y + 5)

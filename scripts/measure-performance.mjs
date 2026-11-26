@@ -9,8 +9,8 @@ import { chromium, devices } from '@playwright/test'
 // Run against a production build, in isolation from the ordinary WebGL-disabled E2E suite.
 const require = createRequire(import.meta.url)
 const output = path.resolve(process.argv[2] ?? 'experiments/performance-baseline')
-const scenarios = process.argv[3]?.split(',') ?? ['editor-flat', 'editor-fluffy', 'api-flat', 'api-v4-flat', 'api-fluffy', 'api-fluffy-live']
-assert(scenarios.length > 0 && scenarios.every(scenario => ['editor-flat', 'editor-fluffy', 'api-flat', 'api-v4-flat', 'api-fluffy', 'api-fluffy-live'].includes(scenario)), 'Unknown measurement scenario')
+const scenarios = process.argv[3]?.split(',') ?? ['editor-flat', 'editor-fluffy', 'api-flat', 'api-fluffy', 'api-fluffy-live']
+assert(scenarios.length > 0 && scenarios.every(scenario => ['editor-flat', 'editor-fluffy', 'api-flat', 'api-fluffy', 'api-fluffy-live'].includes(scenario)), 'Unknown measurement scenario')
 const existing = await fs.stat(path.join(output, 'result.json')).catch(error => {
   if (error.code !== 'ENOENT') throw error
   return null
@@ -95,7 +95,7 @@ try {
             requestAnimationFrame(tick)
           }, { requireCanvas: scenario !== 'api-fluffy' })
           const api = scenario.startsWith('api-')
-          const apiQuery = scenario === 'api-flat' ? '/?collection=open-bot-avatar&avatar=mug' : `/?v=4&collection=open-bot-avatar&avatar=mug&style=${scenario.startsWith('api-fluffy') ? 'fluffy' : 'flat'}`
+          const apiQuery = scenario === 'api-flat' ? '/?collection=open-bot-avatar&avatar=mug' : `/?v=5&collection=open-bot-avatar&avatar=mug&style=${scenario.startsWith('api-fluffy') ? 'fluffy' : 'flat'}`
           await page.goto(origin + (api ? apiQuery : `/editor?avatar=mug&material=${scenario === 'editor-flat' ? 'flat' : 'fluffy'}`), { waitUntil: 'networkidle', timeout: 90_000 })
           if (scenario === 'api-fluffy') {
             await page.evaluate(() => { window.measurement.firstAvatarMs = null; window.measurement.animationRequestedAt = performance.now() })
@@ -156,7 +156,7 @@ try {
   }
   const context = await browser.newContext()
   try {
-    for (const query of ['/api/avatars', '/api/avatar?v=4&collection=open-bot-avatar&avatar=mug', '/api/avatar?v=4&seed=baseline', '/api/avatar?v=4&collection=open-bot-avatar&avatar=mug&format=svg', '/api/avatar?v=4', '/api/avatars?v=4', '/api/avatar?v=4&collection=open-bot-avatar&avatar=mug&style=fluffy', '/api/avatar?v=4&style=fluffy&seed=baseline']) {
+    for (const query of ['/api/avatars', '/api/avatar?v=5&collection=open-bot-avatar&avatar=mug', '/api/avatar?v=5&seed=baseline', '/api/avatar?v=5&collection=open-bot-avatar&avatar=mug&format=svg', '/api/avatar?v=5', '/api/avatars?v=5', '/api/avatar?v=5&collection=open-bot-avatar&avatar=mug&style=fluffy', '/api/avatar?v=5&style=fluffy&seed=baseline']) {
       for (let run = 1; run <= 3; run++) {
         const start = performance.now()
         const response = await context.request.get(origin + query)

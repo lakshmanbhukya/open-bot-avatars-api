@@ -3,12 +3,11 @@ import assert from 'node:assert/strict'
 import { readRoute, href } from '../app/studio/navigation.ts'
 import { retryDelaySeconds } from '../app/studio/api-urls.ts'
 import { avatarAsset } from '../app/lib/avatar-assets.js'
-import { createHash } from 'node:crypto'
 import { GET as avatar } from '../app/api/avatar/route.js'
 import { GET as list } from '../app/api/avatars/route.js'
-import { validateCatalog, validateFrozenAssets } from '../scripts/validate-catalog.mjs'
-import v4 from '../app/lib/catalogs/v4.json' with { type: 'json' }
-import frozenV4 from './fixtures/v4-compatibility.json' with { type: 'json' }
+import { validateCatalog } from '../scripts/validate-catalog.mjs'
+import v5 from '../app/lib/catalogs/v5.json' with { type: 'json' }
+import frozenV5 from './fixtures/v5-compatibility.json' with { type: 'json' }
 import { readFile } from 'node:fs/promises'
 import { avatarFilename, supportsVariant } from '../app/lib/avatar-catalog.js'
 
@@ -59,7 +58,7 @@ test('unversioned catalog, seeded, exact, and fluffy requests default to v5', as
 })
 
 test('retired, unpublished, empty, and duplicate versions return readable errors', async () => {
-  for (const query of ['v=1', 'v=2', 'v=3', 'v=6', 'v=', 'v=4&v=4']) {
+  for (const query of ['v=1', 'v=2', 'v=3', 'v=4', 'v=6', 'v=', 'v=5&v=5']) {
     for (const endpoint of [avatar, list]) {
       const response = await endpoint(new Request('http://localhost/api/avatar?' + query))
       assert.equal(response.status, 400, query)
@@ -71,8 +70,8 @@ test('retired, unpublished, empty, and duplicate versions return readable errors
 })
 
 test('catalog validation checks every image and rejects damaged metadata, definitions, and missing assets', async () => {
-  assert.deepEqual(await validateCatalog(v4), { designs: 41, images: 105, thumbnails: 82 })
-  const mug = v4.find(entry => entry.id === 'mug')
+  assert.deepEqual(await validateCatalog(v5), { designs: 47, images: 123, thumbnails: 94 })
+  const mug = v5.find(entry => entry.id === 'mug')
   await assert.rejects(validateCatalog([mug, mug]), /Duplicate catalog entry/)
   await assert.rejects(validateCatalog([{ ...mug, color: '' }]), /Missing or invalid color/)
   await assert.rejects(validateCatalog([mug], { definitions: [{ id: 'mug', body: { path: '' } }] }), /Invalid or missing definition/)
@@ -81,56 +80,41 @@ test('catalog validation checks every image and rejects damaged metadata, defini
   await assert.rejects(validateCatalog([mug], { assetRoot: 'test/fixtures/no-assets-here' }), /ENOENT/)
 })
 
-test('v4 advertises valid pairs and serves every variant from its own asset directory', async () => {
-  const response = await list(new Request('http://localhost/api/avatars?v=4'))
-  assert.deepEqual(await response.json(), frozenV4.catalogResponse)
-  assert.equal(v4.length, 41)
-  assert.deepEqual(await validateCatalog(v4, { version: '4' }), { designs: 41, images: 105, thumbnails: 82 })
-  for (const entry of v4) {
+test('v5 advertises valid pairs and serves every variant from its own asset directory', async () => {
+  const response = await list(new Request('http://localhost/api/avatars?v=5'))
+  assert.deepEqual(await response.json(), frozenV5.catalogResponse)
+  assert.equal(v5.length, 47)
+  assert.deepEqual(await validateCatalog(v5, { version: '5' }), { designs: 47, images: 123, thumbnails: 94 })
+  for (const entry of v5) {
     assert.equal(supportsVariant(entry, 'svg', 'fluffy'), false)
     assert.equal(supportsVariant(entry, 'png', 'fluffy'), entry.collection === 'open-bot-avatar')
     for (const { format, style } of entry.variants) {
-      const params = new URLSearchParams({ v: '4', collection: entry.collection, avatar: entry.id, format, style })
+      const params = new URLSearchParams({ v: '5', collection: entry.collection, avatar: entry.id, format, style })
       const image = await avatar(new Request('http://localhost/api/avatar?' + params))
       assert.equal(image.status, 200, params.toString())
       assert.equal(image.headers.get('content-location'), '/api/avatar?' + params)
       assert.equal(image.headers.get('access-control-allow-origin'), '*')
       assert.equal(image.headers.get('cache-control'), 'public, max-age=86400')
-      assert.deepEqual(Buffer.from(await image.arrayBuffer()), await readFile(`public/avatars/v4/${entry.collection}/${avatarFilename(entry.id, format, style)}`))
+      assert.deepEqual(Buffer.from(await image.arrayBuffer()), await readFile(`public/avatars/v5/${entry.collection}/${avatarFilename(entry.id, format, style)}`))
     }
   }
 })
 
-test('v4 seeds, catalog, and all published assets are frozen for future catalog expansion', async () => {
-  for (const fixture of frozenV4.requests) {
-    const response = await avatar(new Request('http://localhost/api/avatar?' + fixture.query))
-    assert.equal(response.status, 200, fixture.query)
-    assert.equal(response.headers.get('content-location'), fixture.location)
-    assert.equal(response.headers.get('x-avatar-id'), fixture.id)
-    assert.equal(response.headers.get('x-avatar-collection'), fixture.collection)
-    assert.equal(createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex'), fixture.sha256)
-  }
-  for (const [file, expected] of Object.entries(frozenV4.assets)) {
-    assert.equal(createHash('sha256').update(await readFile('public/avatars/v4/' + file)).digest('hex'), expected, file)
-  }
-  assert.equal(await validateFrozenAssets(), 187)
-})
-
-test('v4 rejects incompatible fluffy requests and preserves versioned caching and random no-store', async () => {
-  for (const query of ['v=4&collection=open-bot-avatar&style=fluffy&format=svg', 'v=4&collection=bot-avatars&style=fluffy', 'v=4&style=fluffy&format=svg']) {
+test('v5 rejects incompatible fluffy requests and preserves versioned caching and random no-store', async () => {
+  for (const query of ['v=5&collection=open-bot-avatar&style=fluffy&format=svg', 'v=5&collection=bot-avatars&style=fluffy', 'v=5&style=fluffy&format=svg']) {
     const response = await avatar(new Request('http://localhost/api/avatar?' + query))
     assert.equal(response.status, 400, query)
     assert.equal(response.headers.get('cache-control'), 'no-store')
     assert((await response.json()).error)
   }
-  const url = 'http://localhost/api/avatar?v=4&collection=open-bot-avatar&avatar=mug&style=fluffy'
+  const url = 'http://localhost/api/avatar?v=5&collection=open-bot-avatar&avatar=mug&style=fluffy'
   const image = await avatar(new Request(url))
   const cached = await avatar(new Request(url, { headers: { 'If-None-Match': image.headers.get('etag') } }))
   assert.equal(cached.status, 304)
   assert.equal(await cached.text(), '')
-  assert.match(cached.headers.get('content-location'), /v=4/)
-  const random = await avatar(new Request('http://localhost/api/avatar?v=4&style=fluffy'))
+  assert.match(cached.headers.get('content-location'), /v=5/)
+  const random = await avatar(new Request('http://localhost/api/avatar?v=5&style=fluffy'))
   assert.equal(random.status, 200)
   assert.equal(random.headers.get('cache-control'), 'no-store')
-  assert.strictEqual(await avatarAsset('open-bot-avatar', 'mug.png'), await avatarAsset('open-bot-avatar', 'mug.png', '4'))
+  assert.strictEqual(await avatarAsset('open-bot-avatar', 'mug.png'), await avatarAsset('open-bot-avatar', 'mug.png', '5'))
 })

@@ -107,7 +107,7 @@ export function Api({ active = true }: { active?: boolean }) {
     if (params.getAll("v").length > 1 || !catalogForVersion(sharedVersion)) {
       setLoading(false);
       setError(
-        "The requested catalog version is not available. This picker supports versions 4 and 5.",
+        "The requested catalog version is not available. This picker supports version 5.",
       );
       return;
     }
@@ -391,7 +391,7 @@ export function Api({ active = true }: { active?: boolean }) {
               )
             ) : (
               <img
-                src="/avatars/v4/open-bot-avatar/mug.png"
+                src="/avatars/v5/open-bot-avatar/mug.png"
                 alt="Example bot avatar; your requested image will appear here"
                 width="512"
                 height="512"

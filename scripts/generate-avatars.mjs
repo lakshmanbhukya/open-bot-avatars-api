@@ -16,8 +16,8 @@ globalThis.OffscreenCanvas = class {
   constructor(width, height) { return createCanvas(width, height) }
 }
 
-// Stage base images for the v4 bake; publishing happens only after GPU validation.
-const root = path.resolve('out/v4-bake')
+// Stage base images for the v5 bake; publishing happens only after GPU validation.
+const root = path.resolve('out/v5-bake')
 const catalog = []
 async function save(collection, file, data) {
   const dir = path.join(root, collection)
@@ -71,6 +71,6 @@ for (const type of botAvatarTypes) {
   catalog.push({ collection: 'bot-avatars', id: type, name: preset.label, color: preset.color,
     renderedColor: color, formats: ['png'], styles: ['flat', 'original'], version: sources.botAvatars.version })
 }
-const published = JSON.parse(await fs.readFile('app/lib/catalogs/v4.json', 'utf8'))
-assert.deepEqual(catalog, published.map(({ variants, ...entry }) => ({ ...entry, styles: entry.styles.filter(style => style !== 'fluffy') })), 'Base catalog changed; publish new designs in a new version')
+const published = JSON.parse(await fs.readFile('app/lib/catalogs/v5.json', 'utf8'))
+assert.deepEqual(catalog, published.filter(entry => entry.origin !== 'first-party').map(({ variants, category, origin, ...entry }) => ({ ...entry, styles: entry.styles.filter(style => style !== 'fluffy') })), 'Base catalog changed; publish new designs in a new version')
 console.log(`Generated ${catalog.length} official designs, including Libraries.dev original and flat materials.`)

@@ -39,9 +39,13 @@ test/
 !scripts/
 scripts/*
 !scripts/review-originals.mjs
+!scripts/generate-v5.mjs
 !experiments/
 experiments/*
 !experiments/v5-originals/
+!experiments/v5-bake/
+experiments/v5-bake/*
+!experiments/v5-bake/result.json
 !test/
 test/*
 !test/originals.test.js

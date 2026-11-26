@@ -6,15 +6,13 @@ import { createHash } from 'node:crypto'
 import { examples, validateAvatar } from 'open-bot-avatar'
 import { botAvatarTypes } from 'bot-avatars'
 import { createCanvas, loadImage } from '@napi-rs/canvas'
-import v4 from '../app/lib/catalogs/v4.json' with { type: 'json' }
 import v5 from '../app/lib/catalogs/v5.json' with { type: 'json' }
 import originals from '../app/lib/originals.json' with { type: 'json' }
 import { variantsFor, avatarFilename } from '../app/lib/avatar-catalog.js'
 import upstream from '../app/lib/upstream/open-bot-avatar.json' with { type: 'json' }
-import frozenV4 from '../test/fixtures/v4-compatibility.json' with { type: 'json' }
 import frozenV5 from '../test/fixtures/v5-compatibility.json' with { type: 'json' }
 
-export async function validateCatalog(entries, { version = '4', assetRoot = `public/avatars/v${version}`, definitions = [...examples, ...upstream.gallery, ...originals.designs.map(d => d.definition)] } = {}) {
+export async function validateCatalog(entries, { version = '5', assetRoot = `public/avatars/v${version}`, definitions = [...examples, ...upstream.gallery, ...originals.designs.map(d => d.definition)] } = {}) {
   assert(Array.isArray(entries) && entries.length > 0, 'Catalog must contain entries')
   const seen = new Set()
   let images = 0, thumbnails = 0
@@ -77,9 +75,9 @@ export async function validateCatalog(entries, { version = '4', assetRoot = `pub
   return { designs: seen.size, images, thumbnails }
 }
 
-export async function validateFrozenAssets(version = '4') {
-  assert(['4', '5'].includes(version), 'Unsupported frozen version')
-  const fixture = version === '4' ? frozenV4 : frozenV5
+export async function validateFrozenAssets(version = '5') {
+  assert(version === '5', 'Unsupported frozen version')
+  const fixture = frozenV5
   for (const [file, expected] of Object.entries(fixture.assets)) {
     const data = await readFile(path.join(`public/avatars/v${version}`, file))
     assert.equal(createHash('sha256').update(data).digest('hex'), expected, `Published v${version} asset changed: ${file}`)
@@ -88,5 +86,5 @@ export async function validateFrozenAssets(version = '4') {
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  console.log({ v4: await validateCatalog(v4), v5: await validateCatalog(v5, { version: '5' }), frozenV4AssetHashes: await validateFrozenAssets(), frozenV5AssetHashes: await validateFrozenAssets('5') })
+  console.log({ v5: await validateCatalog(v5), frozenV5AssetHashes: await validateFrozenAssets() })
 }

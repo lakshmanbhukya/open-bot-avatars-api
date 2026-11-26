@@ -246,7 +246,7 @@ test('share links use the deployed site and show a copied toast', async ({ page,
 
 test('versioned seeded and exact picker links preserve selection on reload', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
-  for (const query of ['v=4&collection=open-bot-avatar&avatar=mug', 'v=4&collection=bot-avatars&seed=user-42&style=original', 'v=4&collection=open-bot-avatar&avatar=mug&style=fluffy', 'v=4&collection=open-bot-avatar&seed=user-42&style=fluffy']) {
+  for (const query of ['v=5&collection=open-bot-avatar&avatar=mug', 'v=5&collection=bot-avatars&seed=user-42&style=original', 'v=5&collection=open-bot-avatar&avatar=mug&style=fluffy', 'v=5&collection=open-bot-avatar&seed=user-42&style=fluffy']) {
     await page.goto('/?' + query)
     await ready(page)
     const image = await page.locator('#api-image-url').inputValue()
@@ -265,9 +265,9 @@ test('versioned seeded and exact picker links preserve selection on reload', asy
   }
 })
 
-test('v4 fluffy fallback, static response, copied URL and download keep the same coat', async ({ page, context }, testInfo) => {
+test('v5 fluffy fallback, static response, copied URL and download keep the same coat', async ({ page, context }, testInfo) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
-  await page.goto('/?v=4&collection=open-bot-avatar&avatar=mug&style=fluffy')
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=mug&style=fluffy')
   await ready(page)
   await expect(page.locator('.api-response-caption')).toContainText('Fluffy PNG')
   await expect(page.locator('.api-response-caption')).toContainText('Animated demonstration')
@@ -275,27 +275,27 @@ test('v4 fluffy fallback, static response, copied URL and download keep the same
   await expect(page.locator('.api-fur-notice')).toContainText('WebGL2 is unavailable')
   await expect(page.getByRole('button', { name: 'Download SVG', exact: true })).toHaveCount(0)
   const url = await page.locator('#api-image-url').inputValue()
-  expect(new URL(url).searchParams.get('v')).toBe('4')
+  expect(new URL(url).searchParams.get('v')).toBe('5')
   expect(new URL(url).searchParams.get('style')).toBe('fluffy')
   await page.getByRole('button', { name: 'Copy URL', exact: true }).click()
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(url)
   await page.getByRole('button', { name: 'Preview PNG', exact: true }).click()
   await expect(page.locator('.api-response-caption')).toContainText('Actual returned PNG')
   const png = await page.locator('.api-response-image img').evaluate(async image => Array.from(new Uint8Array(await (await fetch(image.src)).arrayBuffer())))
-  const expected = await readFile('public/avatars/v4/open-bot-avatar/mug-fluffy.png')
+  const expected = await readFile('public/avatars/v5/open-bot-avatar/mug-fluffy.png')
   expect(Buffer.from(png)).toEqual(expected)
   const download = page.waitForEvent('download')
   await page.getByRole('button', { name: 'Download PNG', exact: true }).click()
   const file = await download
-  expect(file.suggestedFilename()).toBe('mug-fluffy-v4.png')
+  expect(file.suggestedFilename()).toBe('mug-fluffy-v5.png')
   expect(await readFile(await file.path())).toEqual(expected)
   await expect(page.locator('#api-image-url')).toHaveValue(url)
   await page.locator('.api-hero').scrollIntoViewIfNeeded()
-  await page.screenshot({ path: testInfo.outputPath('v4-fluffy-response.png') })
+  await page.screenshot({ path: testInfo.outputPath('v5-fluffy-response.png') })
   await page.locator('.api-catalog').getByRole('button', { name: 'Controller', exact: true }).click()
   await ready(page)
   const switched = await page.locator('.api-response-image img').evaluate(async image => Array.from(new Uint8Array(await (await fetch(image.src)).arrayBuffer())))
-  expect(Buffer.from(switched)).toEqual(await readFile('public/avatars/v4/open-bot-avatar/controller-fluffy.png'))
+  expect(Buffer.from(switched)).toEqual(await readFile('public/avatars/v5/open-bot-avatar/controller-fluffy.png'))
   expect(new URL(await page.locator('#api-image-url').inputValue()).searchParams.get('avatar')).toBe('controller')
   await page.getByRole('button', { name: 'Show animation', exact: true }).click()
   await expect(page.locator('.api-response-image canvas')).toHaveCount(1)
@@ -310,7 +310,7 @@ test('finish choices follow the version, collection, and exact format/style pair
     const shown = await page.locator('.api-response-image img').evaluate(async image => Array.from(new Uint8Array(await (await fetch(image.src)).arrayBuffer())))
     expect(Buffer.from(shown)).toEqual(await response.body())
   }
-  await page.goto('/?v=4&collection=open-bot-avatar&avatar=mug')
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=mug')
   await ready(page)
   await page.getByRole('group', { name: 'Finish', exact: true }).getByRole('button').click()
   await page.getByRole('menuitem', { name: 'Fluffy', exact: true }).focus()
@@ -318,7 +318,7 @@ test('finish choices follow the version, collection, and exact format/style pair
   await ready(page)
   await expect(page.locator('#api-image-url')).toHaveValue(/style=fluffy/)
   await expect(page.getByRole('button', { name: 'Download SVG', exact: true })).toHaveCount(0)
-  await expect(page.locator('.api-catalog-image img').first()).toHaveAttribute('src', /v4.*fluffy-thumb\.webp/)
+  await expect(page.locator('.api-catalog-image img').first()).toHaveAttribute('src', /v5.*fluffy-thumb\.webp/)
   await page.getByRole('button', { name: 'Preview PNG', exact: true }).click()
   await verifyStaticResponse()
   await page.getByRole('group', { name: 'Collection', exact: true }).getByRole('button').click()
@@ -333,7 +333,7 @@ test('finish choices follow the version, collection, and exact format/style pair
   await expect(page.locator('.api-download-selection')).toContainText('Original plush')
   await verifyStaticResponse()
   await page.getByRole('radio', { name: 'Use a seed', exact: true }).click()
-  await page.getByLabel('Public user ID or seed').fill('v4-preview-check')
+  await page.getByLabel('Public user ID or seed').fill('v5-preview-check')
   await page.getByRole('button', { name: 'Find avatar', exact: true }).click()
   await ready(page)
   await verifyStaticResponse()
@@ -342,8 +342,8 @@ test('finish choices follow the version, collection, and exact format/style pair
   expect(new URL(await page.locator('#api-image-url').inputValue()).searchParams.get('v')).toBe('5')
 })
 
-test('picker does not silently replace an unpublished catalog version', async ({ page }) => {
-  for (const version of ['1', '2', '3', '6']) {
+test('picker rejects retired and unpublished catalog versions', async ({ page }) => {
+  for (const version of ['1', '2', '3', '4', '6']) {
     await page.goto(`/?v=${version}&collection=open-bot-avatar&avatar=mug`)
     await expect(page.locator('.api-call-status[role="alert"]')).toContainText('requested catalog version is not available')
     await expect(page.getByRole('button', { name: 'Copy endpoint', exact: true })).toBeDisabled()
@@ -403,7 +403,7 @@ test('SVG download errors and mismatched avatars never save an incorrect image',
     if (attempts === 1) {
       await route.fulfill({ status: 503, json: { error: 'Temporarily unavailable' } })
     } else if (attempts === 2) {
-      await route.fulfill({ status: 200, headers: { 'Content-Type': 'image/svg+xml', 'X-Avatar-Id': 'controller', 'X-Avatar-Collection': 'open-bot-avatar' }, body: await readFile('public/avatars/v4/open-bot-avatar/controller.svg') })
+      await route.fulfill({ status: 200, headers: { 'Content-Type': 'image/svg+xml', 'X-Avatar-Id': 'controller', 'X-Avatar-Collection': 'open-bot-avatar' }, body: await readFile('public/avatars/v5/open-bot-avatar/controller.svg') })
     } else await route.continue()
   })
   const downloads = []
@@ -500,7 +500,7 @@ test('rate-limit retry preserves the seed and waits for Retry-After', async ({ p
       await route.fulfill({ status: 429, headers: { 'Retry-After': '2' }, json: { error: 'Too many avatar requests. Please try again shortly.' } })
     } else await route.continue()
   })
-  await page.goto('/?v=4&collection=open-bot-avatar&seed=test-user')
+  await page.goto('/?v=5&collection=open-bot-avatar&seed=test-user')
   await expect(page.locator('.api-request').getByRole('button', { name: /Retry in/ })).toBeDisabled()
   await expect(page.getByLabel('Public user ID or seed')).toHaveValue('test-user')
   const retry = page.locator('.api-request').getByRole('button', { name: 'Retry this request', exact: true })

@@ -1,10 +1,8 @@
-import v4 from './catalogs/v4.json' with { type: 'json' }
 import v5 from './catalogs/v5.json' with { type: 'json' }
 
 export const PICKER_VERSION = '5'
 
 export function catalogForVersion(version) {
-  if (version === '4') return v4
   if (version === '5') return v5
   return null
 }

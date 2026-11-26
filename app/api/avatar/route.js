@@ -28,7 +28,7 @@ export async function GET(request) {
   if (seed !== null && (!seed || seed.length > 128)) return error('Provide one seed of 1 to 128 characters.')
   const selectedVersion = params.get('v') ?? PICKER_VERSION
   const catalog = catalogForVersion(selectedVersion)
-  if (!catalog) return error('Version must be 4 or 5.')
+  if (!catalog) return error('Version must be 5.')
   const catalogUrl = `/api/avatars?v=${selectedVersion}`
   const collection = params.get('collection')
   if (collection !== null && !collections.includes(collection)) return error('Collection must be open-bot-avatar or bot-avatars.')
