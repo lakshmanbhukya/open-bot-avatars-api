@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-export const alt = "Your bot. Your style. Matching fluffy and flat avatars from OpenBot Avatars API v5.";
+export const alt = "Side project. Big personality. Fluffy and flat bot avatars from OpenBot Avatars API v5.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -49,10 +49,10 @@ export default async function SocialImage() {
             lineHeight: 1.05,
           }}
         >
-          Your bot. Your style.
+          Side project. Big personality.
         </div>
         <div style={{ fontSize: 26, color: "#b0b0b0", marginTop: 16 }}>
-          Fluffy or flat. Customize it. Copy the image URL.
+          Skip the default. 47 bot avatars in flat and fluffy styles.
         </div>
       </div>
       <div
