@@ -49,6 +49,7 @@ experiments/v5-bake/*
 !test/
 test/*
 !test/originals.test.js
+!test/diagnostics.test.js
 !test/fixtures/
 test/fixtures/*
 !test/fixtures/v5-compatibility.json

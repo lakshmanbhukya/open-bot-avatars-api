@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto'
 import { isIP } from 'node:net'
+import { reportFailure } from './diagnostics.js'
 
 const script = `
 local count = redis.call('INCR', KEYS[1])
@@ -40,8 +41,10 @@ export function createRateLimiter({ limit = 180, windowMs = 60_000, maxKeys = 10
     const url = env.UPSTASH_REDIS_REST_URL
     const token = env.UPSTASH_REDIS_REST_TOKEN
     if (url || token || env.VERCEL === '1') {
+      let category = 'configuration'
       try {
         if (!url || !token || new URL(url).protocol !== 'https:') throw Error('Invalid rate limit store configuration')
+        category = 'connection'
         const response = await fetcher(url, {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
@@ -49,11 +52,13 @@ export function createRateLimiter({ limit = 180, windowMs = 60_000, maxKeys = 10
           cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(1500)
         })
         if (!response.ok) throw Error('Rate limit store unavailable')
+        category = 'invalid-response'
         const { result } = await response.json()
         if (!Array.isArray(result) || result.length !== 2 || !result.every(Number.isSafeInteger)
           || result[0] < 1 || result[1] < 0) throw Error('Invalid rate limit store response')
         return result[0] > limit ? refusal(429, result[1] / 1000) : null
       } catch {
+        reportFailure('redis', category)
         // A configured shared store must not silently fall back to a weaker local limit.
         return refusal(503, 5)
       }

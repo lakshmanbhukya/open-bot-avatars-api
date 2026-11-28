@@ -2,6 +2,7 @@ import { createHash, randomUUID } from 'node:crypto'
 import { avatarAsset } from '../../lib/avatar-assets.js'
 import { catalogForVersion, PICKER_VERSION, supportsVariant, avatarFilename } from '../../lib/avatar-catalog.js'
 import { rateLimit } from '../../lib/rate-limit.js'
+import { reportFailure } from '../../lib/diagnostics.js'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
@@ -52,7 +53,8 @@ export async function GET(request) {
   let asset
   try {
     asset = await avatarAsset(entry.collection, file, selectedVersion)
-  } catch {
+  } catch (error) {
+    reportFailure('image-asset', error?.code === 'ENOENT' ? 'missing-file' : 'read-failure')
     return Response.json({ error: 'This avatar is temporarily unavailable. Please try again shortly.' }, {
       status: 503, headers: { ...cors, 'Access-Control-Expose-Headers': 'Retry-After', 'Cache-Control': 'no-store', 'Retry-After': '5' }
     })
