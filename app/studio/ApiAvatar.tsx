@@ -1,5 +1,5 @@
 import { examples } from "open-bot-avatar";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, useEffect, useRef, useState } from "react";
 import { BotAvatar } from "./BotAvatar";
 import { GALLERY } from "./gallery";
 import { usePrefersReducedMotion } from "./studio/hooks";
@@ -67,7 +67,7 @@ export function ApiAvatar({ collection, id, color, style, src, name }: {
     {definition ? <BotAvatar definition={definition} color={color} material={style === "fluffy" ? "fluffy" : "flat"}
       state="idle" view={view} followPointer={!reduced && !jumping} lookAt={jumping ? { x: 0, y: 0 } : null}
       reducedMotion={reduced} label={label} />
-      : collection === "bot-avatars" ? <Suspense fallback={fallback}><LibrariesAvatar id={id} style={style} reduced={reduced} src={src} label={label} /></Suspense>
+      : collection === "bot-avatars" ? <LibrariesAvatar id={id} style={style} reduced={reduced} src={src} label={label} />
       : fallback}
   </div>;
 }

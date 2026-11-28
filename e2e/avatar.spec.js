@@ -270,9 +270,9 @@ test('v5 fluffy fallback, static response, copied URL and download keep the same
   await page.goto('/?v=5&collection=open-bot-avatar&avatar=mug&style=fluffy')
   await ready(page)
   await expect(page.locator('.api-response-caption')).toContainText('Fluffy PNG')
-  await expect(page.locator('.api-response-caption')).toContainText('Animated demonstration')
+  await expect(page.locator('.api-response-caption')).not.toContainText('Animated demonstration')
   await expect(page.locator('.api-response-image canvas')).toHaveCount(1)
-  await expect(page.locator('.api-fur-notice')).toContainText('WebGL2 is unavailable')
+  await expect(page.locator('.api-fur-notice')).toBeEmpty()
   await expect(page.getByRole('button', { name: 'Download SVG', exact: true })).toHaveCount(0)
   const url = await page.locator('#api-image-url').inputValue()
   expect(new URL(url).searchParams.get('v')).toBe('5')
@@ -595,3 +595,47 @@ test('keyboard controls, menus, settings and editor exports retain visible focus
   expect((await download).suggestedFilename()).toMatch(/\.png$/)
   await expect(exp).toBeFocused()
 })
+
+for (const failure of ['import', 'render', 'stalled import']) {
+  test(`animated preview recovers from ${failure} failure`, async ({ page, context }, testInfo) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+    let intercepted = false
+    let release = () => {}
+    if (failure !== 'render') {
+      await page.route('**/_next/static/chunks/*.js', async route => {
+        const response = await route.fetch()
+        if ((await response.text()).includes('jump and turn')) {
+          intercepted = true
+          if (failure === 'stalled import') await new Promise(resolve => { release = resolve })
+          await route.abort()
+        } else await route.fulfill({ response })
+      })
+    } else {
+      await page.emulateMedia({ reducedMotion: 'no-preference' })
+      await page.addInitScript(() => {
+        const animate = Element.prototype.animate
+        Element.prototype.animate = function (...args) {
+          if (this.classList.contains('api-preview')) throw new Error('Simulated renderer error')
+          return animate.apply(this, args)
+        }
+      })
+    }
+    await page.goto(mug)
+    await ready(page)
+    await expect(page.getByText('Animation unavailable. Your PNG is ready.')).toBeVisible({ timeout: 20_000 })
+    if (failure !== 'render') expect(intercepted).toBe(true)
+    const fallback = page.locator('.api-preview-failure')
+    await expect(fallback.locator('img')).toBeVisible()
+    await page.getByRole('button', { name: 'Copy URL', exact: true }).click()
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain('/api/avatar?')
+    const download = page.waitForEvent('download')
+    await page.getByRole('button', { name: 'Download PNG', exact: true }).click()
+    expect((await download).suggestedFilename()).toBe('mug-flat-v5.png')
+    await fallback.scrollIntoViewIfNeeded()
+    await page.screenshot({ path: `test-results/preview-${failure.replaceAll(' ', '-')}-${testInfo.project.name}.png` })
+    await page.getByRole('button', { name: 'Show PNG', exact: true }).click()
+    await expect(page.locator('.api-response-image img')).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Show animation', exact: true })).toBeVisible()
+    release()
+  })
+}

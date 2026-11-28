@@ -1,6 +1,7 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
+import { PreviewBoundary } from "./PreviewBoundary";
 import Link from "next/link";
 import {
   catalogForVersion,
@@ -372,7 +373,13 @@ export function Api({ active = true }: { active?: boolean }) {
                   />
                 </div>
               ) : (
-                <Suspense
+                <PreviewBoundary
+                  key={`${pick.version}/${pick.collection}/${pick.id}/${pick.style}`}
+                  failure={<div className="api-preview-failure">
+                    <img src={preview} alt={pick.name} width="512" height="512" />
+                    <p role="status">Animation unavailable. Your PNG is ready.</p>
+                    <button className="btn btn-sm" onClick={() => setPreviewMode("png")}>Show PNG</button>
+                  </div>}
                   fallback={
                     <img
                       src={preview}
@@ -387,7 +394,7 @@ export function Api({ active = true }: { active?: boolean }) {
                     {...pick}
                     src={preview}
                   />
-                </Suspense>
+                </PreviewBoundary>
               )
             ) : (
               <img
