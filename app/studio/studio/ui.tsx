@@ -47,14 +47,14 @@ interface SegmentedProps<T extends string> {
   size?: "sm" | "md";
 }
 
-/** Radio group styled as a segmented control; arrow keys move the selection. */
+/** Radio group styled as a segmented control; arrows and Home/End move selection. */
 export function Segmented<T extends string>({ label, value, options, onChange, size = "md" }: SegmentedProps<T>) {
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
   const onKey = (event: KeyboardEvent, index: number) => {
     const step = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 0;
-    if (!step) return;
+    if (!step && event.key !== "Home" && event.key !== "End") return;
     event.preventDefault();
-    const next = (index + step + options.length) % options.length;
+    const next = event.key === "Home" ? 0 : event.key === "End" ? options.length - 1 : (index + step + options.length) % options.length;
     onChange(options[next].value);
     refs.current[next]?.focus();
   };
@@ -146,11 +146,12 @@ export function MenuButton({ icon, label, items, done, placement = "top" }: { ic
   }, [open]);
   const onKey = (event: KeyboardEvent) => {
     const step = event.key === "ArrowDown" ? 1 : event.key === "ArrowUp" ? -1 : 0;
-    if (!step) return;
+    if (!step && event.key !== "Home" && event.key !== "End") return;
     event.preventDefault();
     const buttons = [...(list.current?.querySelectorAll<HTMLButtonElement>("button") ?? [])];
     const at = buttons.indexOf(document.activeElement as HTMLButtonElement);
-    buttons[(at + step + buttons.length) % buttons.length]?.focus();
+    const next = event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1 : (at + step + buttons.length) % buttons.length;
+    buttons[next]?.focus();
   };
   return (
     <div className="menu" ref={root}>
