@@ -150,7 +150,7 @@ test('v5 originals work in the picker, live editor, shares, and exports', async 
     await expect(page.locator('#api-image-url')).toHaveValue(new RegExp(`v=5.*avatar=${id}.*style=fluffy`))
   }
   await page.getByRole('button', { name: 'Preview PNG', exact: true }).click()
-  await page.screenshot({ path: `experiments/v5-originals/ui-${testInfo.project.name}.png`, fullPage: true })
+  await page.screenshot({ path: testInfo.outputPath('v5-originals-ui.png'), fullPage: true })
   const selected = await page.locator('#api-image-url').inputValue()
   await page.getByRole('button', { name: 'Share avatar', exact: true }).click()
   const shared = new URL(await page.evaluate(() => navigator.clipboard.readText()))
@@ -179,7 +179,7 @@ test('v5 originals work in the picker, live editor, shares, and exports', async 
   const svgDownload = page.waitForEvent('download')
   await page.getByRole('menuitem', { name: /Download flat SVG/ }).click()
   expect(await readFile(await (await svgDownload).path(), 'utf8')).toContain('#14b3a5')
-  await page.screenshot({ path: `experiments/v5-originals/editor-${testInfo.project.name}.png` })
+  await page.screenshot({ path: testInfo.outputPath('v5-originals-editor.png') })
 })
 
 test('home and docs have useful content without JavaScript', async ({ browser }) => {
