@@ -11,11 +11,12 @@
     "test": "node --test test/*.test.js",
     "test:e2e": "playwright test",
     "validate:catalog": "node scripts/validate-catalog.mjs",
-    "generate:avatars": "node scripts/generate-v5.mjs",
+    "generate:avatars": "npm run generate:v5",
     "generate:thumbnails": "node scripts/generate-thumbnails.mjs",
     "generate:watermark": "node scripts/generate-watermark.mjs",
-    "generate:v5": "node scripts/generate-v5.mjs",
-    "review:originals": "node scripts/review-originals.mjs"
+    "generate:v5": "node scripts/generate-v5.mjs && npm run generate:sizes",
+    "review:originals": "node scripts/review-originals.mjs",
+    "generate:sizes": "node scripts/generate-sizes.mjs"
   },
   "dependencies": {
     "@fontsource-variable/geist": "5.3.0",

@@ -42,6 +42,7 @@ type Pick = NonNullable<ReturnType<typeof catalogForVersion>>[number] & {
   url: string;
   requestUrl: string;
   style: string;
+  size: string;
   blob: Blob;
   preview: string;
 };
@@ -64,6 +65,7 @@ export function Api({ active = true }: { active?: boolean }) {
       ? previous.filter(favorite => favorite.collection !== entry.collection || favorite.id !== entry.id)
       : [...previous, { collection: entry.collection, id: entry.id }]);
   }
+  const [size, setSize] = useState("512");
   const [style, setStyle] = useState("flat");
   const [mode, setMode] = useState("choose");
   const [seed, setSeed] = useState("");
@@ -94,7 +96,10 @@ export function Api({ active = true }: { active?: boolean }) {
     return () => window.clearInterval(timer);
   }, [retryAt]);
 
-  function load(url: string) {
+  function load(url: string, requestedSize = size) {
+    const params = new URL(url, window.location.origin).searchParams;
+    if (!params.has("size") && requestedSize !== "512") params.set("size", requestedSize);
+    url = `/api/avatar?${params}`;
     if (Date.now() < retryAt) return;
     setLoading(true);
     setError("");
@@ -120,6 +125,7 @@ export function Api({ active = true }: { active?: boolean }) {
       return;
     }
     setVersion(sharedVersion);
+    setSize(params.get("size") ?? "512");
     const requestedCollection = params.get("collection") ?? "";
     const validCollection = Object.hasOwn(labels, requestedCollection)
       ? requestedCollection
@@ -133,7 +139,7 @@ export function Api({ active = true }: { active?: boolean }) {
       setMode("seed");
     }
     const query = new URLSearchParams({ v: sharedVersion });
-    for (const key of ["collection", "style", "avatar", "seed"]) {
+    for (const key of ["collection", "style", "avatar", "seed", "size"]) {
       for (const value of params.getAll(key)) query.append(key, value);
     }
     load(`/api/avatar?${query}`);
@@ -190,6 +196,7 @@ export function Api({ active = true }: { active?: boolean }) {
         );
         const finish = params.get("style") ?? "flat";
         if (
+          (params.get("size") ?? "512") !== (new URL(requestedUrl, window.location.origin).searchParams.get("size") ?? "512") ||
           !entry ||
           responseVersion !==
             new URL(requestedUrl, window.location.origin).searchParams.get(
@@ -212,6 +219,7 @@ export function Api({ active = true }: { active?: boolean }) {
           url,
           requestUrl: requestedUrl,
           style: finish,
+          size: params.get("size") ?? "512",
           blob,
           preview: URL.createObjectURL(blob),
         });
@@ -300,7 +308,7 @@ export function Api({ active = true }: { active?: boolean }) {
         blob = await response.blob();
       }
       downloadBlob(
-        `${selected.id}-${selected.style}-v${selected.version}.${format}`,
+        `${selected.id}-${selected.style}-v${selected.version}${format === "png" && selected.size !== "512" ? `-${selected.size}px` : ""}.${format}`,
         blob,
       );
       setMessage(`${selected.name} ${format.toUpperCase()} downloaded.`);
@@ -326,6 +334,7 @@ export function Api({ active = true }: { active?: boolean }) {
           avatar: pick.id,
           style: pick.style,
         });
+    if (pick.size !== "512") params.set("size", pick.size);
     void copy(new URL(`/?${params}`, origin).href, "Avatar link copied.");
   }
 
@@ -422,7 +431,7 @@ export function Api({ active = true }: { active?: boolean }) {
               {showPng ? "Show animation" : "Preview PNG"}
             </button>
             <span>
-              {showPng ? "Actual returned PNG · 512 × 512 · Transparent" : ""}
+              {showPng ? `Actual returned PNG · ${pick?.size ?? "512"} × ${pick?.size ?? "512"} · Transparent` : ""}
             </span>
             {!showPng && pick?.style === "fluffy" && (
               <span className="api-fur-notice">
@@ -840,6 +849,20 @@ export function Api({ active = true }: { active?: boolean }) {
           <code>{snippet}</code>
         </pre>
         <div className="api-usage-footer">
+          <label className="api-size-label" htmlFor="api-png-size">PNG size
+            <select id="api-png-size" value={size} disabled={loading || retryIn > 0 || !pick}
+              onChange={event => {
+                const next = event.target.value;
+                setSize(next);
+                const params = selectedSeed
+                  ? new URL(pick!.requestUrl, window.location.origin).searchParams
+                  : new URLSearchParams({ v: pick!.version, collection: pick!.collection, avatar: pick!.id, style: pick!.style });
+                params.set("size", next);
+                load(`/api/avatar?${params}`, next);
+              }}>
+              {["64", "128", "256", "512"].map(value => <option key={value} value={value}>{value} px</option>)}
+            </select>
+          </label>
           <div className="api-buttons">
             <button
               className="api-share"

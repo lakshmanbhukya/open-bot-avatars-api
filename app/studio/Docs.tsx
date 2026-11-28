@@ -57,6 +57,7 @@ const PARAMETERS = [
   ["collection", "open-bot-avatar or bot-avatars. Omit to select from collections compatible with the requested format and style."],
   ["avatar", "An exact design ID from /api/avatars. Requires collection. Omit both avatar and seed for a random selection."],
   ["format", "png (default) or svg. SVG is available only for Open Bot with flat style; fluffy SVG is rejected."],
+  ["size", "64, 128, 256, or 512 (default), for PNG only. Cannot be combined with SVG, even at 512. Size changes resolution without changing seeded design selection."],
   ["style", "flat (default), fluffy (Open Bot PNG only), or original (Libraries.dev PNG only). Check the catalog variants for valid pairs."],
 ];
 
@@ -72,7 +73,7 @@ export async function Docs() {
       <ul className="what">
         <li>{catalog.length} designs across two collections.</li>
         <li>Random images, repeatable seeds, and exact avatar URLs.</li>
-        <li>Transparent 512 × 512 PNGs, plus native SVGs for Open Bot Avatar.</li>
+        <li>Transparent PNGs at 64, 128, 256, or 512 px, plus native SVGs for Open Bot Avatar.</li>
       </ul>
       <p>Try requests in the <Link href="/">API playground</Link>. Artwork credits and MIT license details are on the <a href="/license">license page</a>.</p>
     </section>
@@ -116,6 +117,10 @@ export async function Docs() {
     <table className="props"><tbody>{PARAMETERS.map(([name, description]) => <tr key={name}>
       <th scope="row"><code>{name}</code></th><td>{description}</td>
     </tr>)}</tbody></table>
+
+    <h2>Smaller PNGs</h2>
+    <p>Add <code>size=64</code>, <code>size=128</code>, or <code>size=256</code> for a smaller transparent PNG. Omit size for the existing 512 px image. Size does not change the selected design, finish, or seed mapping. Each size has its own canonical URL and ETag.</p>
+    <p><a href="/api/avatar?v=5&amp;collection=open-bot-avatar&amp;avatar=mug&amp;size=64">Try a 64 px mug</a>. Use the PNG size control in the playground to copy and download that size. SVG requests must omit size.</p>
 
     <h2>Save a random result</h2>
     <p>A random request returns the chosen image’s exact, reusable path in the <code>Content-Location</code> response header. Resolve it against the API host and save that URL to keep the same image.</p>

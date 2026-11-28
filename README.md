@@ -32,6 +32,19 @@ The [hosted API](https://open-bot-avatars-api.vercel.app/) returns a transparent
 | `/api/avatars?v=5`                                                   | v5 catalog, valid format/style pairs, and image URLs.    |
 | `/api/avatar` and `/api/avatars`                                     | Default to v5, including seed-only requests.             |
 
+For smaller PNGs, add `size=64`, `size=128`, or `size=256` to an image URL.
+Omit `size` for the existing 512 px image. Size preserves seeded design selection
+and is PNG-only; SVG requests must omit it. The playground copies and downloads
+the selected PNG size.
+
+Smaller images are pre-generated from the frozen 512 px assets:
+
+```sh
+npm run generate:sizes
+```
+
+`npm run generate:v5` also generates these derivatives after baking the catalog.
+
 ## Development
 
 Requires Node.js 24 and npm.

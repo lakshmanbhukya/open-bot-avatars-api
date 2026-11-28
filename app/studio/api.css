@@ -90,6 +90,8 @@
     .api-example-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
     .api-landing pre.api-embed { min-height: 180px; margin: 0; padding: 20px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13px; }
     .api-usage-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; min-height: 48px; margin-top: 12px; font-size: 12px; color: var(--muted); }
+    .api-size-label { display: inline-flex; align-items: center; gap: 8px; }
+    .api-size-label select { min-height: 44px; padding: 8px 12px; color: var(--text); background: var(--card); border: 1px solid var(--line-strong); border-radius: 8px; font: inherit; }
     .api-status { min-height: 1.5em; }
     .api-share { font-size: inherit; text-decoration: underline; text-underline-offset: 4px; }
     .api-table-wrap { overflow-x: auto; }

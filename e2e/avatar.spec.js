@@ -546,6 +546,7 @@ test('legacy links still open the requested editor and docs pages', async ({ pag
   expect(errors).toEqual([])
 })
 
+
 test('keyboard controls, menus, settings and editor exports retain visible focus', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await page.goto(mug)
@@ -594,6 +595,40 @@ test('keyboard controls, menus, settings and editor exports retain visible focus
   await page.keyboard.press('Enter')
   expect((await download).suggestedFilename()).toMatch(/\.png$/)
   await expect(exp).toBeFocused()
+})
+
+test('smaller PNG selection preserves seeds, shares, downloads and SVG export', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+  await page.goto('/?v=5&collection=open-bot-avatar&seed=user-42&style=fluffy')
+  await ready(page)
+  const name = await page.locator('.api-response-caption strong').textContent()
+  await page.getByRole('combobox', { name: 'PNG size', exact: true }).selectOption('64')
+  await ready(page)
+  await expect(page.locator('.api-response-caption strong')).toHaveText(name)
+  const url = new URL(await page.locator('#api-image-url').inputValue())
+  expect(url.origin).toBe(new URL(page.url()).origin)
+  expect(url.searchParams.get('size')).toBe('64')
+  expect(url.searchParams.get('seed')).toBe('user-42')
+  await page.getByRole('button', { name: 'Preview PNG', exact: true }).click()
+  await expect(page.locator('.api-response-caption')).toContainText('64')
+  const download = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'Download PNG', exact: true }).click()
+  const png = await download
+  expect(png.suggestedFilename()).toMatch(/-64px\.png$/)
+  const image = await loadImage(await readFile(await png.path()))
+  expect([image.width, image.height]).toEqual([64, 64])
+  await page.getByRole('button', { name: 'Share avatar', exact: true }).click()
+  const shared = new URL(await page.evaluate(() => navigator.clipboard.readText()))
+  expect(shared.searchParams.get('size')).toBe('64')
+  await page.goto('/?' + shared.searchParams)
+  await ready(page)
+  await expect(page.getByRole('combobox', { name: 'PNG size', exact: true })).toHaveValue('64')
+  await expect(page.locator('#api-image-url')).toHaveValue(url.href)
+  await page.goto('/?v=5&collection=open-bot-avatar&avatar=mug&size=128')
+  await ready(page)
+  const svgDownload = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'Download SVG', exact: true }).click()
+  expect((await svgDownload).suggestedFilename()).toBe('mug-flat-v5.svg')
 })
 
 for (const failure of ['import', 'render', 'stalled import']) {

@@ -11,7 +11,7 @@ const cors = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Expose-Headers': 'Content-Location, X-Avatar-Collection, X-Avatar-Id, ETag'
 }
-const allowed = new Set(['v', 'seed', 'collection', 'avatar', 'format', 'style'])
+const allowed = new Set(['v', 'seed', 'collection', 'avatar', 'format', 'style', 'size'])
 const collections = ['open-bot-avatar', 'bot-avatars']
 
 export async function GET(request) {
@@ -35,6 +35,9 @@ export async function GET(request) {
   if (collection !== null && !collections.includes(collection)) return error('Collection must be open-bot-avatar or bot-avatars.')
   const format = params.get('format') ?? 'png'
   if (!['png', 'svg'].includes(format)) return error('Format must be png or svg.')
+  const size = params.get('size') ?? '512'
+  if (!['64', '128', '256', '512'].includes(size)) return error('Size must be 64, 128, 256, or 512.')
+  if (format !== 'png' && params.has('size')) return error('Size is supported only for PNG images.')
   const style = params.get('style') ?? 'flat'
   if (!['flat', 'original', 'fluffy'].includes(style)) return error('Style must be flat, original, or fluffy.')
   const id = params.get('avatar')
@@ -49,10 +52,11 @@ export async function GET(request) {
   const bytes = createHash('sha256').update(seed ?? randomUUID()).digest()
   const entry = candidates[id !== null ? 0 : bytes.readUInt32BE() % candidates.length]
   const query = new URLSearchParams({ v: selectedVersion, collection: entry.collection, avatar: entry.id, format, style })
+  if (size !== '512') query.set('size', size)
   const file = avatarFilename(entry.id, format, style)
   let asset
   try {
-    asset = await avatarAsset(entry.collection, file, selectedVersion)
+    asset = await avatarAsset(entry.collection, file, selectedVersion, size)
   } catch (error) {
     reportFailure('image-asset', error?.code === 'ENOENT' ? 'missing-file' : 'read-failure')
     return Response.json({ error: 'This avatar is temporarily unavailable. Please try again shortly.' }, {
