@@ -58,6 +58,30 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
+## Deployment
+
+Set `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` to your shared
+Upstash Redis credentials on Vercel. They are server-only secrets. Missing,
+invalid, or unavailable configured Redis causes API requests to return **503**;
+the app does not fall back to an in-memory quota on Vercel. Local development
+can leave both unset to use the per-process limiter.
+
+Set `NEXT_PUBLIC_SITE_URL` before building if copied links should use a fixed
+public origin. Otherwise client actions use the current browser origin. Server
+metadata uses `NEXT_PUBLIC_SITE_URL`, then server-only `SITE_URL`, then the
+hosting platform's production-domain fallback. Use matching origins if setting
+both variables. Public variables are included in the browser bundle at build
+time; never put credentials in them.
+
+Vercel supplies the trusted client-IP header automatically. On another reverse
+proxy, set `RATE_LIMIT_IP_HEADER` only to a header that the proxy overwrites with
+the client's IP. Without a trusted header, requests share one quota.
+
+After deployment, open `/api/avatars?v=5` and
+`/api/avatar?v=5&collection=open-bot-avatar&avatar=mug`, then copy an endpoint
+and an editor share link to confirm their origin and selected avatar. A 503
+means the server's Redis or image-asset diagnostics should be checked.
+
 ## Credits
 
 Built by Lakshman Bhukya, using artwork and renderers from [Open Bot Avatar](https://github.com/DominikScholz/open-bot-avatar) and [Libraries.dev](https://github.com/Jakubantalik/Libraries.dev/tree/main/packages/bot-avatars). The six first-party silhouettes are available under this project's MIT license.

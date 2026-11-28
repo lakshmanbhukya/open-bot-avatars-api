@@ -3,8 +3,7 @@ import { renderAvatarSvg } from "open-bot-avatar";
 import type { LibraryEntry } from "./BotPanel";
 import { copyText, downloadText, downloadPreview } from "./files";
 import type { ViewAngle } from "./Stage";
-import { SITE_URL } from "../../lib/site-url";
-import { useFlash } from "./hooks";
+import { useFlash, useSiteOrigin } from "./hooks";
 import type { LookState } from "./look";
 import { shareLink } from "./share";
 import { MenuButton } from "./ui";
@@ -12,6 +11,7 @@ import { PICKER_VERSION } from "../../lib/avatar-catalog.js";
 
 /** Export the selected design or copy its hosted API URL and editor link. */
 export function Actions({ entry, color, material, state, mood, view, previewRef }: { entry: LibraryEntry; color: string; material: LookState["material"]; state: LookState["state"]; mood: LookState["mood"]; view: ViewAngle; previewRef: RefObject<HTMLDivElement | null> }) {
+  const origin = useSiteOrigin();
   const [copied, flashCopied] = useFlash();
   const [problem, setProblem] = useState<string | null>(null);
   const { definition } = entry;
@@ -65,7 +65,7 @@ export function Actions({ entry, color, material, state, mood, view, previewRef 
               hint: "Hosted image: original color, flat still",
               onSelect: () => {
                 const params = new URLSearchParams({ v: PICKER_VERSION, collection: "open-bot-avatar", avatar: definition.id, format: "png", style: "flat" });
-                const url = new URL(`/api/avatar?${params}`, SITE_URL).href;
+                const url = new URL(`/api/avatar?${params}`, origin).href;
                 void copy(url, `Couldn’t reach the clipboard. The URL: ${url}`);
               },
             }] : []),
@@ -74,7 +74,7 @@ export function Actions({ entry, color, material, state, mood, view, previewRef 
               label: "Link",
               hint: "Opens it in this color, material, state and mood",
               onSelect: () => {
-                const link = shareLink(`${SITE_URL}/editor`, entry, { color, material, state, mood });
+                const link = shareLink(`${origin}/editor`, entry, { color, material, state, mood });
                 void copy(link, `Couldn’t reach the clipboard. The link: ${link}`);
               },
             },

@@ -1,4 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { siteOrigin } from "../../lib/site-url";
+
+export function useSiteOrigin() {
+  const [origin, setOrigin] = useState(() => siteOrigin());
+  useEffect(() => setOrigin(siteOrigin(window.location.origin)), []);
+  return origin;
+}
 
 export function usePrefersReducedMotion(): boolean {
   const query = "(prefers-reduced-motion: reduce)";

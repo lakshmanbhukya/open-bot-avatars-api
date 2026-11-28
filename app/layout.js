@@ -10,7 +10,7 @@ import { App } from "./studio/App";
 
 export const metadata = {
   metadataBase: new URL(
-    process.env.SITE_URL ||
+    process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL ||
       (process.env.VERCEL_PROJECT_PRODUCTION_URL
         ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
         : SITE_URL),

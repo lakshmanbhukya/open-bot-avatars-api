@@ -2,7 +2,8 @@ import { parse, render } from "sugar-high/core";
 import * as typescript from "sugar-high/lang/typescript";
 import * as shell from "sugar-high/lang/shell";
 import * as json from "sugar-high/lang/json";
-import { SITE_URL } from "../lib/site-url";
+import { siteOrigin } from "../lib/site-url";
+import { headers } from "next/headers";
 import Link from "next/link";
 import catalog from "../lib/catalogs/v5.json";
 import { CodeBlock } from "./CodeBlock";
@@ -11,20 +12,20 @@ function highlight(text: string, language: Parameters<typeof parse>[1]) {
   return { text, html: render(parse(text, language)) };
 }
 
-const snippets = {
-  curl: highlight(`curl "${SITE_URL}/api/avatar?v=5&seed=user-42" --output avatar.png`, shell),
+function snippetsFor(origin: string) { return {
+  curl: highlight(`curl "${origin}/api/avatar?v=5&seed=user-42" --output avatar.png`, shell),
   react: highlight(`export function UserAvatar({ userId }: { userId: string }) {
   const params = new URLSearchParams({ v: "5", seed: userId });
   return (
     <img
-      src={"${SITE_URL}/api/avatar?" + params}
+      src={"${origin}/api/avatar?" + params}
       width={64}
       height={64}
       alt="User avatar"
     />
   );
 }`, typescript),
-  save: highlight(`const response = await fetch('${SITE_URL}/api/avatar?v=5');
+  save: highlight(`const response = await fetch('${origin}/api/avatar?v=5');
 if (!response.ok) {
   const { error } = await response.json();
   throw new Error(error);
@@ -34,7 +35,7 @@ const location = response.headers.get('Content-Location');
 if (!location) throw new Error('Missing avatar URL');
 const avatarUrl = new URL(location, response.url).href;
 // Store avatarUrl on the user's profile to keep this exact image.`, typescript),
-  catalog: highlight(`const response = await fetch('${SITE_URL}/api/avatars?v=5');
+  catalog: highlight(`const response = await fetch('${origin}/api/avatars?v=5');
 if (!response.ok) throw new Error('Could not load the catalog');
 const { total, avatars } = await response.json();
 
@@ -44,9 +45,9 @@ const avatarUrl = new URL(avatars[0].url, response.url).href;`, typescript),
   error: highlight(`{
   "error": "Choose an avatar or a seed, not both."
 }`, json),
-};
+}; }
 
-function Code({ snippet, language }: { snippet: keyof typeof snippets; language: string }) {
+function Code({ snippet, language, snippets }: { snippet: keyof ReturnType<typeof snippetsFor>; language: string; snippets: ReturnType<typeof snippetsFor> }) {
   return <CodeBlock {...snippets[snippet]} language={language} />;
 }
 
@@ -59,7 +60,11 @@ const PARAMETERS = [
   ["style", "flat (default), fluffy (Open Bot PNG only), or original (Libraries.dev PNG only). Check the catalog variants for valid pairs."],
 ];
 
-export function Docs() {
+export async function Docs() {
+  const requestHeaders = await headers();
+  const protocol = requestHeaders.get("x-forwarded-proto") === "https" ? "https" : "http";
+  const origin = siteOrigin(`${protocol}://${requestHeaders.get("host") || "localhost:3000"}`);
+  const snippets = snippetsFor(origin);
   return <main className="page docs api-page">
     <section className="page-head">
       <h1>OpenBot Avatars API docs</h1>
@@ -74,9 +79,9 @@ export function Docs() {
 
     <h2>Quick start</h2>
     <p>Use the image endpoint directly in an image tag. Each request without a seed or avatar picks a random design; repeats are possible.</p>
-    <CodeBlock language="HTML" text={`<img src="${SITE_URL}/api/avatar?v=5" width="64" height="64" alt="Bot avatar">`} />
-    <p>These examples use the hosted API at <a href={SITE_URL}>{SITE_URL}</a> and work from your app’s domain. If you host your own copy, replace this origin with your deployment’s public URL.</p>
-    <Code snippet="curl" language="Shell" />
+    <CodeBlock language="HTML" text={`<img src="${origin}/api/avatar?v=5" width="64" height="64" alt="Bot avatar">`} />
+    <p>These examples use the API at <a href={origin}>{origin}</a> and work from your app’s domain. To target another deployment, replace this origin with that deployment’s public URL.</p>
+    <Code snippets={snippets} snippet="curl" language="Shell" />
 
     <h2>Endpoints</h2>
     <div className="api-table-wrap"><table className="props">
@@ -91,7 +96,7 @@ export function Docs() {
     <h2>Repeatable avatars with seeds</h2>
     <p>Use <code>/api/avatar?v=5&amp;seed=user-42</code> to select an avatar consistently for a user. Include the version and keep the collection, format, and style filters the same to retain the selection. Candidate membership and ordering are frozen within each version. Different seeds can select the same design.</p>
     <p>Seeds are visible in URLs. Use a public identifier rather than an email address, password, or other private value. Encode seed values with <code>URLSearchParams</code>.</p>
-    <Code snippet="react" language="TSX" />
+    <Code snippets={snippets} snippet="react" language="TSX" />
 
     <h2>Choose a specific design</h2>
     <p>Read the catalog for valid IDs and supported combinations. Use <code>collection</code> and <code>avatar</code> together for an exact selection.</p>
@@ -104,17 +109,17 @@ export function Docs() {
         ["/api/avatar?v=5&collection=bot-avatars&style=original", "Random Libraries.dev design in its original plush style"],
       ].map(([url, description]) => <tr key={url}><td><a href={url}><code>{url}</code></a></td><td>{description}</td></tr>)}</tbody>
     </table></div>
-    <Code snippet="catalog" language="JavaScript" />
+    <Code snippets={snippets} snippet="catalog" language="JavaScript" />
 
     <h2>Query parameters</h2>
-    <p>These parameters apply to <code>GET /api/avatar</code>. Omitting <code>v</code> selects version 5 for all requests, including seeds and fluffy PNGs. Version 4 remains available with its original 41 designs. Include <code>v=5</code> in saved URLs.</p>
+    <p>These parameters apply to <code>GET /api/avatar</code>. Omitting <code>v</code> selects version 5 for all requests, including seeds and fluffy PNGs. Retired versions are rejected. Include <code>v=5</code> in saved URLs.</p>
     <table className="props"><tbody>{PARAMETERS.map(([name, description]) => <tr key={name}>
       <th scope="row"><code>{name}</code></th><td>{description}</td>
     </tr>)}</tbody></table>
 
     <h2>Save a random result</h2>
     <p>A random request returns the chosen image’s exact, reusable path in the <code>Content-Location</code> response header. Resolve it against the API host and save that URL to keep the same image.</p>
-    <Code snippet="save" language="JavaScript" />
+    <Code snippets={snippets} snippet="save" language="JavaScript" />
 
     <h2>Responses, caching, and CORS</h2>
     <table className="props"><tbody>{[
@@ -129,7 +134,7 @@ export function Docs() {
     <h2>Errors</h2>
     <p>Both endpoints share a limit of 180 requests per minute per client IP at the application server. Excess requests return <code>429</code>; wait for the number of seconds in <code>Retry-After</code> before retrying. Cached images do not consume this quota. If the shared limiter is unavailable, requests return <code>503</code> with retry guidance.</p>
     <p>Invalid requests return <code>400</code> with a JSON <code>error</code> message and <code>Cache-Control: no-store</code>. Unknown or duplicate parameters, invalid values, unknown avatar IDs, and unsupported format or style combinations are rejected.</p>
-    <Code snippet="error" language="JSON" />
+    <Code snippets={snippets} snippet="error" language="JSON" />
     <p>For example, do not combine <code>seed</code> with <code>avatar</code>, request SVG for Libraries.dev, fluffy SVG, or original plush for Open Bot Avatar. Check each v5 catalog entry’s <code>variants</code> pairs before constructing a URL; the format/style summaries are not a Cartesian product.</p>
 
     <h2>Hosted images and the editor</h2>

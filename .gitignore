@@ -50,6 +50,7 @@ experiments/v5-bake/*
 test/*
 !test/originals.test.js
 !test/diagnostics.test.js
+!test/site-origin.test.js
 !test/fixtures/
 test/fixtures/*
 !test/fixtures/v5-compatibility.json

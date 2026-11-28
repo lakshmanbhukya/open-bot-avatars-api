@@ -9,8 +9,7 @@ import {
   variantsFor,
   avatarFilename,
 } from "../lib/avatar-catalog.js";
-import { SITE_URL } from "../lib/site-url";
-import { useFlash, useStoredState } from "./studio/hooks";
+import { useFlash, useStoredState, useSiteOrigin } from "./studio/hooks";
 import { copyText, downloadBlob } from "./studio/files";
 import { Icon, MenuButton, Segmented } from "./studio/ui";
 import { imageUrl, usageExample, retryDelaySeconds } from "./api-urls";
@@ -47,6 +46,7 @@ type Pick = NonNullable<ReturnType<typeof catalogForVersion>>[number] & {
 };
 
 export function Api({ active = true }: { active?: boolean }) {
+  const origin = useSiteOrigin();
   const [version, setVersion] = useState<string>(PICKER_VERSION);
   const catalog = catalogForVersion(version)!;
   const [webglAvailable, setWebglAvailable] = useState<boolean | null>(null);
@@ -242,14 +242,14 @@ export function Api({ active = true }: { active?: boolean }) {
   const selectedSeed =
     new URLSearchParams(pick?.requestUrl.split("?")[1]).get("seed") ?? "";
   const selectedUrl = canCopy
-    ? `${SITE_URL}${selectedSeed ? pick.requestUrl : pick.url}`
+    ? `${origin}${selectedSeed ? pick.requestUrl : pick.url}`
     : "";
   const submittedSeed =
     new URLSearchParams(requestUrl.split("?")[1]).get("seed") ?? "";
-  const endpoint = selectedUrl || `${SITE_URL}${requestUrl}`;
+  const endpoint = selectedUrl || `${origin}${requestUrl}`;
   const snippet = usageExample(
     example,
-    selectedUrl || `${SITE_URL}${imageUrl("", "flat", "", "", version)}`,
+    selectedUrl || `${origin}${imageUrl("", "flat", "", "", version)}`,
   );
 
   async function copy(text: string, success: string) {
@@ -325,7 +325,7 @@ export function Api({ active = true }: { active?: boolean }) {
           avatar: pick.id,
           style: pick.style,
         });
-    void copy(new URL(`/?${params}`, SITE_URL).href, "Avatar link copied.");
+    void copy(new URL(`/?${params}`, origin).href, "Avatar link copied.");
   }
 
   function callApi() {
